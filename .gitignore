@@ -11,3 +11,25 @@ venv/
 .DS_Store
 Thumbs.db
 .vscode/
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.env
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Quarto / RStudio export
+*_cache/
+*.qmd-*
+rsconnect/
+.quarto/
+rstudio-export/
+
+# SO / editor
+.DS_Store
+Thumbs.db
+.vscode/
