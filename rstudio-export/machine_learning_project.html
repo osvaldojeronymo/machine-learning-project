@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR" xml:lang="pt-BR"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.29">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Bruno Lenz, Danilo Santos, Diogo de Araujo, Jonathan e Osvaldo Jeronymo Neto">
+
+<title>Projeto de Machine Learning I</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 1em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="machine_learning_project_files/libs/clipboard/clipboard.min.js"></script>
+<script src="machine_learning_project_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="machine_learning_project_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="machine_learning_project_files/libs/quarto-html/popper.min.js"></script>
+<script src="machine_learning_project_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="machine_learning_project_files/libs/quarto-html/anchor.min.js"></script>
+<link href="machine_learning_project_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="machine_learning_project_files/libs/quarto-html/quarto-syntax-highlighting-0815c480559380816a4d1ea211a47e91.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="machine_learning_project_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="machine_learning_project_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="machine_learning_project_files/libs/bootstrap/bootstrap-7bfc445d5145ff0366b23f01516eeac7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Índice</h2>
+   
+  <ul>
+  <li><a href="#introdução" id="toc-introdução" class="nav-link active" data-scroll-target="#introdução"><span class="header-section-number">1</span> Introdução</a></li>
+  <li><a href="#contexto" id="toc-contexto" class="nav-link" data-scroll-target="#contexto"><span class="header-section-number">2</span> Contexto</a>
+  <ul class="collapse">
+  <li><a href="#problema-de-negócio" id="toc-problema-de-negócio" class="nav-link" data-scroll-target="#problema-de-negócio"><span class="header-section-number">2.1</span> Problema de negócio</a></li>
+  <li><a href="#repositório" id="toc-repositório" class="nav-link" data-scroll-target="#repositório"><span class="header-section-number">2.2</span> Repositório</a></li>
+  <li><a href="#dados" id="toc-dados" class="nav-link" data-scroll-target="#dados"><span class="header-section-number">2.3</span> Dados</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Projeto de Machine Learning I</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Autor</div>
+    <div class="quarto-title-meta-contents">
+             <p>Bruno Lenz, Danilo Santos, Diogo de Araujo, Jonathan e Osvaldo Jeronymo Neto </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Data de Publicação</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">22 de agosto de 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introdução" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Introdução</h1>
+<p>Este projeto explora a aplicação de técnicas de <strong><em>Machine Learning (ML)</em></strong> para a análise de dados bancários multimodais, com o objetivo de desenvolver um modelo preditivo para otimizar campanhas de <strong><em>cross-sell</em></strong> (venda-cruzada). A análise se baseia no <strong><em>Multimodal Banking Dataset (MBD)</em></strong>, um conjunto de dados em larga escala que reflete interações reais de clientes corporativos.</p>
+<p>A metodologia adotada para alcançar esse objetivo abrange um ciclo completo de desenvolvimento de um modelo de <em>ML</em>. O processo inicia com a <strong>definição do problema de negócio</strong> e avança para as etapas de <strong>tratamento e transformação dos dados</strong>, que são cruciais dado o caráter multimodal do <em>dataset</em>. Subsequentemente, define-se a <strong>métrica de avaliação</strong> mais adequada para o problema de <em>cross-sell</em>, seguida pelo desenvolvimento e treinamento de uma solução de <em>ML</em> que emprega, no mínimo, três estimadores distintos. Para maximizar a performance, realiza-se a <strong>otimização de hiperparâmetros</strong> desses algoritmos, visando a melhoria da métrica de interesse. O projeto culmina com uma <strong>análise comparativa dos modelos</strong>, resultando na seleção do estimador de melhor desempenho.</p>
+<p>A relevância estratégica deste projeto é reforçada por evidências que apontam a maior propensão de clientes existentes em adquirir novos produtos da mesma instituição, uma prática conhecida como cross-selling (<span class="citation" data-cites="basten2023">Basten (<a href="#ref-basten2023" role="doc-biblioref">2023</a>)</span>). Portanto, o trabalho culmina não apenas na entrega de um modelo preditivo validado, mas também em uma análise sobre sua eficácia para a resolução do problema de negócio e um delineamento das etapas essenciais para sua futura implementação em um ambiente de produção.</p>
+</section>
+<section id="contexto" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Contexto</h1>
+<p>A primeira etapa do projeto consistiu na seleção de um <em>dataset</em> apropiado. A comunidade <a href="https://huggingface.co"><strong><em>Hugging Face</em></strong></a> foi a fonte escolhida, e dentro da diversidade de <em>dataset</em> contidos nessa comunidade optou-se pelo <a href="https://huggingface.co/papers/2409.17587">Multimodal Banking Dataset - MBD</a>.</p>
+<p>Conforme descrito por <span class="citation" data-cites="mollaev2025">Mollaev <em>et al.</em> (<a href="#ref-mollaev2025" role="doc-biblioref">2025</a>)</span>, o <strong>MBD</strong> é o primeiro conjunto de dados bancário multimodal, de larga escala e publicamente disponível. Esse <em>dataset</em> contém sequências de dados anonimizados de mais de 2 milhões de clientes corporativos de um grande banco. Este dataset inclui <strong>transações financeiras, dados de geolocalização, diálogos de suporte técnico e registros de compras de produtos</strong>. O obetivo da sua criação foi preencher a lacuna de dados abertos no setor financeiro, viabilizando o desenvolvimento de técnicas avançadas de aprendizado profundo. Adicionalmente, os autores propõem um novo <strong>benchmark multimodal</strong> com tarefas práticas como a previsão de futuras compras, que se alinha diretamente com os objetivos desse projeto.</p>
+<section id="problema-de-negócio" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="problema-de-negócio"><span class="header-section-number">2.1</span> Problema de negócio</h2>
+<p>O problema de negócio selecionado é a <strong>predição de propensão à compra em campanhas de <em>cross-sell</em> (venda-cruzada)</strong>. Uma campanha de <em>cross-sell</em> é uma iniciativa de marketing direcionada a clientes existentes, com o intuito de oferecer produtos complementares aos que já possuem. Por exemplo, oferecer seguro de vida a um cliente que recentemente contratou um financeiro imobiliário.</p>
+<p>O objetivo deste projeto é, portanto, treinar um modelo com o <strong>MBD</strong> para gerar um <em>score</em> de propensão para cada cliente. Esse <em>score</em> permitirá priorizar os clientes com maior probabilidade de aceitar uma oferta, otimizando os recursos da campanha e aumentando a sua taxa de conversão.</p>
+<p><strong>Delimitação do escopo: cross-sell <em>vs.</em> up-sell</strong></p>
+<p>Para garantir a clareza do objetivo, é necessária uma distinção: o escopo deste projeto é estritamente o <strong><em>cross-sell</em></strong>. É importante não confundi-lo com <strong><em>up-sell</em></strong>, que consiste em incentivar o cliente a adquirir uma versão mais avançada ou mais cara de um mesmo produto que ele já possui (ex: migrar de um cartão de crédito “Gold” para um “Platinum”). O modelo aqui desenvolvido focará exclusivamente na oferta de novos e diferentes produtos.</p>
+</section>
+<section id="repositório" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="repositório"><span class="header-section-number">2.2</span> Repositório</h2>
+<p>Os artefatos gerados durante o desenvolvimento deste projeto, incluindo notebooks, scripts e relatórios, estão organizados da seguinte forma e podem ser encontrados no seguinte repositório: <a href="https://github.com/osvaldojeronymo/machine-learning-project" class="uri">https://github.com/osvaldojeronymo/machine-learning-project</a>.</p>
+</section>
+<section id="dados" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="dados"><span class="header-section-number">2.3</span> Dados</h2>
+<p>O <a href="https://huggingface.co/datasets/ai-lab/MBD"><strong>MBD</strong></a> contém mais de 2 milhões de dados de clientes corporativos. Nesse projeto optou-se por trabalhar com <a href="https://huggingface.co/datasets/ai-lab/MBD-mini"><strong><em>MBD-mini dataset</em></strong></a>, que contém um subconjunto reduzido dos dados, essa estratégia facilitará os trabalhos de desenvolvimento e teste do modelo proposto. Esse <strong><em>MBD-mini dataset</em></strong> têm dados baseados em 10% de clientes únicos listados no <strong>MBD</strong>. Como apresentado por <span class="citation" data-cites="mollaev2025">Mollaev <em>et al.</em> (<a href="#ref-mollaev2025" role="doc-biblioref">2025</a>)</span> no <a href="#tbl-overview" class="quarto-xref">Quadro&nbsp;1</a>, têm-se:</p>
+<div id="tbl-overview" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-overview-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Quadro&nbsp;1— Visão geral de conjuntos de dados de transações existentes
+</figcaption>
+<div aria-describedby="tbl-overview-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 8%">
+<col style="width: 30%">
+<col style="width: 8%">
+<col style="width: 13%">
+<col style="width: 24%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Conjunto de dados</th>
+<th style="text-align: right;">Nº de clientes</th>
+<th>Tarefas-alvo (<em>downstream</em>)</th>
+<th style="text-align: right;">Nº de eventos</th>
+<th>Balanço de classes</th>
+<th>Modalidades</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>DataFusion</td>
+<td style="text-align: right;">22 mil</td>
+<td>Classificação binária; <em>matching</em> multimodal</td>
+<td style="text-align: right;">146 milhões</td>
+<td>Desbalanceado</td>
+<td>Transações; Clickstream</td>
+</tr>
+<tr class="even">
+<td>Alphabattle</td>
+<td style="text-align: right;">1,5 milhão</td>
+<td>Classificação binária</td>
+<td style="text-align: right;">443 milhões</td>
+<td>Desbalanceado</td>
+<td>Transações</td>
+</tr>
+<tr class="odd">
+<td>Age</td>
+<td style="text-align: right;">50 mil</td>
+<td>Classificação multiclasse</td>
+<td style="text-align: right;">44 milhões</td>
+<td>Balanceado</td>
+<td>Transações</td>
+</tr>
+<tr class="even">
+<td>Rosbank</td>
+<td style="text-align: right;">10 mil</td>
+<td>Classificação binária</td>
+<td style="text-align: right;">1 milhão</td>
+<td>Desbalanceado</td>
+<td>Transações</td>
+</tr>
+<tr class="odd">
+<td>Credit Card Transaction</td>
+<td style="text-align: right;">2 mil</td>
+<td>Classificação binária; Regressão</td>
+<td style="text-align: right;">2 milhões</td>
+<td>Altamente desbalanceado</td>
+<td>Transações</td>
+</tr>
+<tr class="even">
+<td>MBD-small (nosso)</td>
+<td style="text-align: right;">70 mil</td>
+<td>Classificação binária multirrótulo; <em>matching</em> multimodal</td>
+<td style="text-align: right;">80 milhões</td>
+<td>Desbalanceado</td>
+<td>Transações; Geostream (eventos geográficos); Diálogos</td>
+</tr>
+<tr class="odd">
+<td>MBD (nosso)</td>
+<td style="text-align: right;">2 milhões</td>
+<td>Classificação binária multirrótulo; <em>matching</em> multimodal</td>
+<td style="text-align: right;">2 bilhões</td>
+<td>Altamente desbalanceado</td>
+<td>Transações; Geostream (eventos geográficos); Diálogos</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p><strong>Fonte:</strong> <span class="citation" data-cites="mollaev2025">Mollaev <em>et al.</em> (<a href="#ref-mollaev2025" role="doc-biblioref">2025</a>)</span>. DOI: 10.48550/arXiv.2409.17587. <em>Tradução nossa.</em></p>
+
+</section>
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">Referências</h2><div id="refs" class="references csl-bib-body" data-entry-spacing="1" role="list">
+<div id="ref-basten2023" class="csl-entry" role="listitem">
+BASTEN, R., Christoph; Juelsrud. Cross-Selling in Bank–Household Relationships: Mechanisms and Implications for Pricing. <strong>The Review of Financial Studies</strong>, [<em>s. l.</em>], 2023. Disponível em: <a href="https://doi.org/10.1093/rfs/hhad062">https://doi.org/10.1093/rfs/hhad062. </a>
+</div>
+<div id="ref-mollaev2025" class="csl-entry" role="listitem">
+MOLLAEV, D. <em>et al.</em> <strong>Multimodal Banking Dataset: Understanding Client Needs through Event Sequences</strong>., 2025. Disponível em: <a href="https://arxiv.org/abs/2409.17587">https://arxiv.org/abs/2409.17587. </a>
+</div>
+</div></section></div></main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiada");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiada");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
