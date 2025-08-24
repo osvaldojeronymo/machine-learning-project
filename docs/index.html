@@ -106,8 +106,8 @@ div.csl-indent {
   <li><a href="#contexto" id="toc-contexto" class="nav-link" data-scroll-target="#contexto"><span class="header-section-number">2</span> Contexto</a>
   <ul class="collapse">
   <li><a href="#problema-de-negócio" id="toc-problema-de-negócio" class="nav-link" data-scroll-target="#problema-de-negócio"><span class="header-section-number">2.1</span> Problema de negócio</a></li>
-  <li><a href="#repositório" id="toc-repositório" class="nav-link" data-scroll-target="#repositório"><span class="header-section-number">2.2</span> Repositório</a></li>
-  <li><a href="#dados" id="toc-dados" class="nav-link" data-scroll-target="#dados"><span class="header-section-number">2.3</span> Dados</a></li>
+  <li><a href="#dados" id="toc-dados" class="nav-link" data-scroll-target="#dados"><span class="header-section-number">2.2</span> Dados</a></li>
+  <li><a href="#repositório" id="toc-repositório" class="nav-link" data-scroll-target="#repositório"><span class="header-section-number">2.3</span> Repositório</a></li>
   <li><a href="#pré-processamento" id="toc-pré-processamento" class="nav-link" data-scroll-target="#pré-processamento"><span class="header-section-number">2.4</span> Pré-processamento</a></li>
   <li><a href="#métricas" id="toc-métricas" class="nav-link" data-scroll-target="#métricas"><span class="header-section-number">2.5</span> Métricas</a></li>
   <li><a href="#estimadores" id="toc-estimadores" class="nav-link" data-scroll-target="#estimadores"><span class="header-section-number">2.6</span> Estimadores</a></li>
@@ -206,26 +206,8 @@ div.csl-indent {
 <p><strong>Delimitação do escopo: cross-sell <em>vs.</em> up-sell</strong></p>
 <p>Para garantir a clareza do objetivo, é necessária uma distinção: o escopo deste projeto é estritamente o <strong><em>cross-sell</em></strong>. É importante não confundi-lo com <strong><em>up-sell</em></strong>, que consiste em incentivar o cliente a adquirir uma versão mais avançada ou mais cara de um mesmo produto que ele já possui (ex: migrar de um cartão de crédito “Gold” para um “Platinum”). O modelo aqui desenvolvido focará exclusivamente na oferta de novos e diferentes produtos.</p>
 </section>
-<section id="repositório" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="repositório"><span class="header-section-number">2.2</span> Repositório</h2>
-<p>Os artefatos gerados durante o desenvolvimento deste projeto, incluindo notebooks, scripts e relatórios, estão organizados da seguinte forma e podem ser encontrados no seguinte repositório: <a href="https://github.com/osvaldojeronymo/machine-learning-project" class="uri">https://github.com/osvaldojeronymo/machine-learning-project</a>.</p>
-<pre><code>/notebooks
-  01_explore_mbd_mini.ipynb
-  02_features_tabular.ipynb
-  03_train_compare_tabular.ipynb
-  04_ptls_sequence_embeddings.ipynb
-/src
-  data_loading.py
-  features_trx.py / features_geo.py / features_dialog.py
-  train_tabular.py (Optuna + GroupKFold)
-  train_ptls.py
-/reports
-  metrics_by_fold.csv
-  feature_importance_{model}.csv
-  calibration_plots/</code></pre>
-</section>
-<section id="dados" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="dados"><span class="header-section-number">2.3</span> Dados</h2>
+<section id="dados" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="dados"><span class="header-section-number">2.2</span> Dados</h2>
 <p>O <a href="https://huggingface.co/datasets/ai-lab/MBD"><strong>MBD</strong></a> contém mais de 2 milhões de dados de clientes corporativos. Nesse projeto optou-se por trabalhar com <a href="https://huggingface.co/datasets/ai-lab/MBD-mini"><strong><em>MBD-mini dataset</em></strong></a>, que contém um subconjunto reduzido dos dados, essa estratégia facilitará os trabalhos de desenvolvimento e teste do modelo proposto. Esse <strong><em>MBD-mini dataset</em></strong> têm dados baseados em 10% de clientes únicos listados no <strong>MBD</strong>. Como apresentado por <span class="citation" data-cites="mollaev2025">Mollaev <em>et al.</em> (<a href="#ref-mollaev2025" role="doc-biblioref">2025</a>)</span> no <a href="#tbl-overview" class="quarto-xref">Quadro&nbsp;1</a>, têm-se:</p>
 <div id="tbl-overview" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -315,6 +297,24 @@ Quadro&nbsp;1— Visão geral de conjuntos de dados de transações existentes
 </figure>
 </div>
 <p><strong>Fonte:</strong> <span class="citation" data-cites="mollaev2025">Mollaev <em>et al.</em> (<a href="#ref-mollaev2025" role="doc-biblioref">2025</a>)</span>. DOI: 10.48550/arXiv.2409.17587. <em>Tradução nossa.</em></p>
+</section>
+<section id="repositório" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="repositório"><span class="header-section-number">2.3</span> Repositório</h2>
+<p>Os artefatos gerados durante o desenvolvimento deste projeto, incluindo notebooks, scripts e relatórios, estão organizados da seguinte forma e podem ser encontrados no seguinte repositório: <a href="https://github.com/osvaldojeronymo/machine-learning-project" class="uri">https://github.com/osvaldojeronymo/machine-learning-project</a>.</p>
+<pre><code>/notebooks
+  01_explore_mbd_mini.ipynb
+  02_features_tabular.ipynb
+  03_train_compare_tabular.ipynb
+  04_ptls_sequence_embeddings.ipynb
+/src
+  data_loading.py
+  features_trx.py / features_geo.py / features_dialog.py
+  train_tabular.py (Optuna + GroupKFold)
+  train_ptls.py
+/reports
+  metrics_by_fold.csv
+  feature_importance_{model}.csv
+  calibration_plots/</code></pre>
 </section>
 <section id="pré-processamento" class="level2" data-number="2.4">
 <h2 data-number="2.4" class="anchored" data-anchor-id="pré-processamento"><span class="header-section-number">2.4</span> Pré-processamento</h2>
