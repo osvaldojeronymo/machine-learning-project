@@ -33,13 +33,13 @@ A relevância estratégica deste projeto é reforçada por evidências que apont
 
 # Contexto
 
-A primeira etapa do projeto consistiu na seleção de um *dataset* apropiado. A comunidade [***Hugging Face***](https://huggingface.co) foi a fonte escolhida, e dentro da diversidade de *dataset* contidos nessa comunidade optou-se pelo  [Multimodal Banking Dataset - MBD](https://huggingface.co/papers/2409.17587).
+A primeira etapa do projeto consistiu na seleção de um *dataset* apropriado. A comunidade [***Hugging Face***](https://huggingface.co) foi a fonte escolhida, e dentro da diversidade de *dataset* contidos nessa comunidade optou-se pelo  [Multimodal Banking Dataset - MBD](https://huggingface.co/papers/2409.17587).
 
 Conforme descrito por @mollaev2025, o **MBD** é o primeiro conjunto de dados bancário multimodal, de larga escala e publicamente disponível. Esse *dataset* contém sequências de dados anonimizados de mais de 2 milhões de clientes corporativos de um grande banco. Este dataset inclui **transações financeiras, dados de geolocalização, diálogos de suporte técnico e registros de compras de produtos**. O objetivo da sua criação foi preencher a lacuna de dados abertos no setor financeiro, viabilizando o desenvolvimento de técnicas avançadas de aprendizado profundo. Adicionalmente, os autores propõem um novo **benchmark multimodal** com tarefas práticas como a previsão de futuras compras, que se alinha diretamente com os objetivos desse projeto.
 
 ## Problema de negócio
 
-O problema de negócio selecionado é a **predição de propensão à compra em campanhas de *cross-sell* (venda-cruzada)**. Uma campanha de *cross-sell* é uma iniciativa de marketing direcionada a clientes existentes, com o intuito de oferecer produtos complementares aos que já possuem. Por exemplo, oferecer seguro de vida a um cliente que recentemente contratou um financeiro imobiliário. 
+O problema de negócio selecionado é a **predição de propensão à compra em campanhas de *cross-sell* (venda-cruzada)**. Uma campanha de *cross-sell* é uma iniciativa de marketing direcionada a clientes existentes, com o intuito de oferecer produtos complementares aos que já possuem. Por exemplo, oferecer seguro de vida a um cliente que recentemente contratou um financiamento imobiliário. 
 
 O objetivo deste projeto é, portanto, treinar um modelo com o **MBD** para gerar um *score* de propensão para cada cliente. Esse *score* permitirá priorizar os clientes com maior probabilidade de aceitar uma oferta, otimizando os recursos da campanha e aumentando a sua taxa de conversão.
 
@@ -49,7 +49,7 @@ Para garantir a clareza do objetivo, é necessária uma distinção: o escopo de
 
 ## Dados
 
-O [**MBD**](https://huggingface.co/datasets/ai-lab/MBD) contém mais de 2 milhões de dados de clientes corporativos. Nesse projeto optou-se por trabalhar com [***MBD-mini dataset***](https://huggingface.co/datasets/ai-lab/MBD-mini), que contém um subconjunto reduzido dos dados, essa estratégia facilitará os trabalhos de desenvolvimento e teste do modelo proposto. Esse ***MBD-mini dataset*** têm dados baseados em 10% de clientes únicos listados no **MBD**. Como apresentado por @mollaev2025 no @tbl-overview, têm-se:
+O [**MBD**](https://huggingface.co/datasets/ai-lab/MBD) contém registros de mais de 2 milhões de clientes corporativos. Nesse projeto optou-se por trabalhar com [***MBD-mini dataset***](https://huggingface.co/datasets/ai-lab/MBD-mini), que contém um subconjunto reduzido dos dados, essa estratégia facilitará os trabalhos de desenvolvimento e teste do modelo proposto. Esse ***MBD-mini dataset*** têm dados baseados em 10% de clientes únicos listados no **MBD**. Como apresentado por @mollaev2025 no @tbl-overview, têm-se:
 
 : Visão geral de conjuntos de dados de transações existentes {#tbl-overview}
 
@@ -60,31 +60,35 @@ O [**MBD**](https://huggingface.co/datasets/ai-lab/MBD) contém mais de 2 milhõ
 | Age                       |        50 mil  | Classificação multiclasse                               |    44 milhões | Balanceado               | Transações                                  |
 | Rosbank                   |        10 mil  | Classificação binária                                   |     1 milhão  | Desbalanceado            | Transações                                  |
 | Credit Card Transaction   |         2 mil  | Classificação binária; Regressão                        |     2 milhões | Altamente desbalanceado  | Transações                                  |
-| MBD-small (nosso)         |        70 mil  | Classificação binária multirrótulo; *matching* multimodal |    80 milhões | Desbalanceado            | Transações; Geostream (eventos geográficos); Diálogos |
+| MBD-mini         |        70 mil  | Classificação binária multirrótulo; *matching* multimodal |    80 milhões | Desbalanceado            | Transações; Geostream (eventos geográficos); Diálogos |
 | MBD (nosso)               |      2 milhões | Classificação binária multirrótulo; *matching* multimodal |     2 bilhões | Altamente desbalanceado  | Transações; Geostream (eventos geográficos); Diálogos |
 
 **Fonte:** @mollaev2025. DOI: 10.48550/arXiv.2409.17587. *Tradução nossa.*
 
+Como a base é muito desbalanceada, a métrica-alvo será AUPRC; baseline aleatório ≈ prevalência da classe.
+
 ## Repositório
 
-Os artefatos gerados durante o desenvolvimento deste projeto, incluindo notebooks, scripts e relatórios, estão organizados da seguinte forma e podem ser encontrados no seguinte repositório: <https://github.com/osvaldojeronymo/machine-learning-project>.
+Os artefatos gerados durante o desenvolvimento estão organizados assim (com objetivo curto ao lado). Repositório: <https://github.com/osvaldojeronymo/machine-learning-project>.
 
-```
-/notebooks
-  01_explore_mbd_mini.ipynb
-  02_features_tabular.ipynb
-  03_train_compare_tabular.ipynb
-  04_ptls_sequence_embeddings.ipynb
-/src
-  data_loading.py
-  features_trx.py / features_geo.py / features_dialog.py
-  train_tabular.py (Optuna + GroupKFold)
-  train_ptls.py
-/reports
-  metrics_by_fold.csv
-  feature_importance_{model}.csv
-  calibration_plots/
-```
+- `/notebooks`
+  - `01_explore_mbd_mini.ipynb` — EDA inicial: esquema/volumetria de `targets` e `client_split`, prevalência por mês e por fold, artefatos em `reports/`.
+  - `02_features_tabular.ipynb` — Engenharia de atributos (trx/geo/dialog) com janelas temporais, *pooling* de embeddings e junção mensal `mon`.
+  - `03_train_compare_tabular.ipynb` — Treino/validação (GroupKFold por cliente), métricas (AUPRC, ROC-AUC, Precision@k), calibração, *feature importance*.
+  - `04_ptls_sequence_embeddings.ipynb` — Representações sequenciais (pytorch-lifestream) + cabeçote leve (MLP/GBM) para *late fusion*.
+
+- `/src`
+  - `data_loading.py` — Leitura do HF Hub (snapshot/cache), carregamento seguro sem vazamento temporal.
+  - `features_trx.py` — RFM, sazonalidade, entropias e contagens (transações).
+  - `features_geo.py` — Mobilidade/geohash, diversidade e recência (geo).
+  - `features_dialog.py` — *Pooling* + redução de dimensionalidade para embeddings de diálogo.
+  - `train_tabular.py` — Pipeline de treino (LR, LGBM/CatBoost), Optuna (TPE), *early stopping*, salvando métricas.
+  - `train_ptls.py` — Treino de representações/seqs (ptls) e integração no fluxo.
+
+- `/reports`
+  - `metrics_by_fold.csv` — Métricas por dobra.
+  - `feature_importance_{model}.csv` — Importâncias por estimador.
+  - `calibration_plots/` — Curvas de calibração e confiabilidade.
 
 ## Pré-processamento
 

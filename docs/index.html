@@ -197,18 +197,18 @@ div.csl-indent {
 </section>
 <section id="contexto" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Contexto</h1>
-<p>A primeira etapa do projeto consistiu na seleção de um <em>dataset</em> apropiado. A comunidade <a href="https://huggingface.co"><strong><em>Hugging Face</em></strong></a> foi a fonte escolhida, e dentro da diversidade de <em>dataset</em> contidos nessa comunidade optou-se pelo <a href="https://huggingface.co/papers/2409.17587">Multimodal Banking Dataset - MBD</a>.</p>
+<p>A primeira etapa do projeto consistiu na seleção de um <em>dataset</em> apropriado. A comunidade <a href="https://huggingface.co"><strong><em>Hugging Face</em></strong></a> foi a fonte escolhida, e dentro da diversidade de <em>dataset</em> contidos nessa comunidade optou-se pelo <a href="https://huggingface.co/papers/2409.17587">Multimodal Banking Dataset - MBD</a>.</p>
 <p>Conforme descrito por <span class="citation" data-cites="mollaev2025">Mollaev <em>et al.</em> (<a href="#ref-mollaev2025" role="doc-biblioref">2025</a>)</span>, o <strong>MBD</strong> é o primeiro conjunto de dados bancário multimodal, de larga escala e publicamente disponível. Esse <em>dataset</em> contém sequências de dados anonimizados de mais de 2 milhões de clientes corporativos de um grande banco. Este dataset inclui <strong>transações financeiras, dados de geolocalização, diálogos de suporte técnico e registros de compras de produtos</strong>. O objetivo da sua criação foi preencher a lacuna de dados abertos no setor financeiro, viabilizando o desenvolvimento de técnicas avançadas de aprendizado profundo. Adicionalmente, os autores propõem um novo <strong>benchmark multimodal</strong> com tarefas práticas como a previsão de futuras compras, que se alinha diretamente com os objetivos desse projeto.</p>
 <section id="problema-de-negócio" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="problema-de-negócio"><span class="header-section-number">2.1</span> Problema de negócio</h2>
-<p>O problema de negócio selecionado é a <strong>predição de propensão à compra em campanhas de <em>cross-sell</em> (venda-cruzada)</strong>. Uma campanha de <em>cross-sell</em> é uma iniciativa de marketing direcionada a clientes existentes, com o intuito de oferecer produtos complementares aos que já possuem. Por exemplo, oferecer seguro de vida a um cliente que recentemente contratou um financeiro imobiliário.</p>
+<p>O problema de negócio selecionado é a <strong>predição de propensão à compra em campanhas de <em>cross-sell</em> (venda-cruzada)</strong>. Uma campanha de <em>cross-sell</em> é uma iniciativa de marketing direcionada a clientes existentes, com o intuito de oferecer produtos complementares aos que já possuem. Por exemplo, oferecer seguro de vida a um cliente que recentemente contratou um financiamento imobiliário.</p>
 <p>O objetivo deste projeto é, portanto, treinar um modelo com o <strong>MBD</strong> para gerar um <em>score</em> de propensão para cada cliente. Esse <em>score</em> permitirá priorizar os clientes com maior probabilidade de aceitar uma oferta, otimizando os recursos da campanha e aumentando a sua taxa de conversão.</p>
 <p><strong>Delimitação do escopo: cross-sell <em>vs.</em> up-sell</strong></p>
 <p>Para garantir a clareza do objetivo, é necessária uma distinção: o escopo deste projeto é estritamente o <strong><em>cross-sell</em></strong>. É importante não confundi-lo com <strong><em>up-sell</em></strong>, que consiste em incentivar o cliente a adquirir uma versão mais avançada ou mais cara de um mesmo produto que ele já possui (ex: migrar de um cartão de crédito “Gold” para um “Platinum”). O modelo aqui desenvolvido focará exclusivamente na oferta de novos e diferentes produtos.</p>
 </section>
 <section id="dados" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="dados"><span class="header-section-number">2.2</span> Dados</h2>
-<p>O <a href="https://huggingface.co/datasets/ai-lab/MBD"><strong>MBD</strong></a> contém mais de 2 milhões de dados de clientes corporativos. Nesse projeto optou-se por trabalhar com <a href="https://huggingface.co/datasets/ai-lab/MBD-mini"><strong><em>MBD-mini dataset</em></strong></a>, que contém um subconjunto reduzido dos dados, essa estratégia facilitará os trabalhos de desenvolvimento e teste do modelo proposto. Esse <strong><em>MBD-mini dataset</em></strong> têm dados baseados em 10% de clientes únicos listados no <strong>MBD</strong>. Como apresentado por <span class="citation" data-cites="mollaev2025">Mollaev <em>et al.</em> (<a href="#ref-mollaev2025" role="doc-biblioref">2025</a>)</span> no <a href="#tbl-overview" class="quarto-xref">Quadro&nbsp;1</a>, têm-se:</p>
+<p>O <a href="https://huggingface.co/datasets/ai-lab/MBD"><strong>MBD</strong></a> contém registros de mais de 2 milhões de clientes corporativos. Nesse projeto optou-se por trabalhar com <a href="https://huggingface.co/datasets/ai-lab/MBD-mini"><strong><em>MBD-mini dataset</em></strong></a>, que contém um subconjunto reduzido dos dados, essa estratégia facilitará os trabalhos de desenvolvimento e teste do modelo proposto. Esse <strong><em>MBD-mini dataset</em></strong> têm dados baseados em 10% de clientes únicos listados no <strong>MBD</strong>. Como apresentado por <span class="citation" data-cites="mollaev2025">Mollaev <em>et al.</em> (<a href="#ref-mollaev2025" role="doc-biblioref">2025</a>)</span> no <a href="#tbl-overview" class="quarto-xref">Quadro&nbsp;1</a>, têm-se:</p>
 <div id="tbl-overview" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-overview-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -276,7 +276,7 @@ Quadro&nbsp;1— Visão geral de conjuntos de dados de transações existentes
 <td>Transações</td>
 </tr>
 <tr class="even">
-<td>MBD-small (nosso)</td>
+<td>MBD-mini</td>
 <td style="text-align: right;">70 mil</td>
 <td>Classificação binária multirrótulo; <em>matching</em> multimodal</td>
 <td style="text-align: right;">80 milhões</td>
@@ -297,24 +297,35 @@ Quadro&nbsp;1— Visão geral de conjuntos de dados de transações existentes
 </figure>
 </div>
 <p><strong>Fonte:</strong> <span class="citation" data-cites="mollaev2025">Mollaev <em>et al.</em> (<a href="#ref-mollaev2025" role="doc-biblioref">2025</a>)</span>. DOI: 10.48550/arXiv.2409.17587. <em>Tradução nossa.</em></p>
+<p>Como a base é muito desbalanceada, a métrica-alvo será AUPRC; baseline aleatório ≈ prevalência da classe.</p>
 </section>
 <section id="repositório" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="repositório"><span class="header-section-number">2.3</span> Repositório</h2>
-<p>Os artefatos gerados durante o desenvolvimento deste projeto, incluindo notebooks, scripts e relatórios, estão organizados da seguinte forma e podem ser encontrados no seguinte repositório: <a href="https://github.com/osvaldojeronymo/machine-learning-project" class="uri">https://github.com/osvaldojeronymo/machine-learning-project</a>.</p>
-<pre><code>/notebooks
-  01_explore_mbd_mini.ipynb
-  02_features_tabular.ipynb
-  03_train_compare_tabular.ipynb
-  04_ptls_sequence_embeddings.ipynb
-/src
-  data_loading.py
-  features_trx.py / features_geo.py / features_dialog.py
-  train_tabular.py (Optuna + GroupKFold)
-  train_ptls.py
-/reports
-  metrics_by_fold.csv
-  feature_importance_{model}.csv
-  calibration_plots/</code></pre>
+<p>Os artefatos gerados durante o desenvolvimento estão organizados assim (com objetivo curto ao lado). Repositório: <a href="https://github.com/osvaldojeronymo/machine-learning-project" class="uri">https://github.com/osvaldojeronymo/machine-learning-project</a>.</p>
+<ul>
+<li><code>/notebooks</code>
+<ul>
+<li><code>01_explore_mbd_mini.ipynb</code> — EDA inicial: esquema/volumetria de <code>targets</code> e <code>client_split</code>, prevalência por mês e por fold, artefatos em <code>reports/</code>.</li>
+<li><code>02_features_tabular.ipynb</code> — Engenharia de atributos (trx/geo/dialog) com janelas temporais, <em>pooling</em> de embeddings e junção mensal <code>mon</code>.</li>
+<li><code>03_train_compare_tabular.ipynb</code> — Treino/validação (GroupKFold por cliente), métricas (AUPRC, ROC-AUC, Precision@k), calibração, <em>feature importance</em>.</li>
+<li><code>04_ptls_sequence_embeddings.ipynb</code> — Representações sequenciais (pytorch-lifestream) + cabeçote leve (MLP/GBM) para <em>late fusion</em>.</li>
+</ul></li>
+<li><code>/src</code>
+<ul>
+<li><code>data_loading.py</code> — Leitura do HF Hub (snapshot/cache), carregamento seguro sem vazamento temporal.</li>
+<li><code>features_trx.py</code> — RFM, sazonalidade, entropias e contagens (transações).</li>
+<li><code>features_geo.py</code> — Mobilidade/geohash, diversidade e recência (geo).</li>
+<li><code>features_dialog.py</code> — <em>Pooling</em> + redução de dimensionalidade para embeddings de diálogo.</li>
+<li><code>train_tabular.py</code> — Pipeline de treino (LR, LGBM/CatBoost), Optuna (TPE), <em>early stopping</em>, salvando métricas.</li>
+<li><code>train_ptls.py</code> — Treino de representações/seqs (ptls) e integração no fluxo.</li>
+</ul></li>
+<li><code>/reports</code>
+<ul>
+<li><code>metrics_by_fold.csv</code> — Métricas por dobra.</li>
+<li><code>feature_importance_{model}.csv</code> — Importâncias por estimador.</li>
+<li><code>calibration_plots/</code> — Curvas de calibração e confiabilidade.</li>
+</ul></li>
+</ul>
 </section>
 <section id="pré-processamento" class="level2" data-number="2.4">
 <h2 data-number="2.4" class="anchored" data-anchor-id="pré-processamento"><span class="header-section-number">2.4</span> Pré-processamento</h2>
@@ -601,102 +612,102 @@ Quadro&nbsp;2— Organização dos dados do MBD (resumo)
 <p>Use <strong>MBD-mini</strong> (≈10% dos clientes, mesma estrutura) para prototipar e depois migre ao completo. (<a href="https://huggingface.co/datasets/ai-lab/MBD-mini?utm_source=chatgpt.com" title="ai-lab/MBD-mini · Datasets at Hugging Face">Hugging Face</a>)</p>
 </blockquote>
 <p><strong>1) Carregar dados e preparar snapshots</strong></p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datasets <span class="im">import</span> load_dataset</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> load_dataset(<span class="st">"ai-lab/MBD-mini"</span>)  <span class="co"># depois: "ai-lab/MBD"</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Tabelas: ds['client_split'], ds['detail.trx'], ds['detail.geo'], ds['detail.dialog'], ds['targets']</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>client_split <span class="op">=</span> pd.DataFrame(ds[<span class="st">'client_split'</span>])</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>targets <span class="op">=</span> pd.DataFrame(ds[<span class="st">'targets'</span>])</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Exemplo: manter apenas amostra balanceada para POC</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>clients_ok <span class="op">=</span> client_split.query(<span class="st">"is_balanced == 1"</span>)[[<span class="st">"client_id"</span>,<span class="st">"fold"</span>]]</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>targets <span class="op">=</span> targets.merge(clients_ok, on<span class="op">=</span><span class="st">"client_id"</span>, how<span class="op">=</span><span class="st">"inner"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datasets <span class="im">import</span> load_dataset</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> load_dataset(<span class="st">"ai-lab/MBD-mini"</span>)  <span class="co"># depois: "ai-lab/MBD"</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Tabelas: ds['client_split'], ds['detail.trx'], ds['detail.geo'], ds['detail.dialog'], ds['targets']</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>client_split <span class="op">=</span> pd.DataFrame(ds[<span class="st">'client_split'</span>])</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>targets <span class="op">=</span> pd.DataFrame(ds[<span class="st">'targets'</span>])</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Exemplo: manter apenas amostra balanceada para POC</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>clients_ok <span class="op">=</span> client_split.query(<span class="st">"is_balanced == 1"</span>)[[<span class="st">"client_id"</span>,<span class="st">"fold"</span>]]</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>targets <span class="op">=</span> targets.merge(clients_ok, on<span class="op">=</span><span class="st">"client_id"</span>, how<span class="op">=</span><span class="st">"inner"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><strong>2) Agregar TRX até o mês de referência</strong></p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>trx <span class="op">=</span> pd.DataFrame(ds[<span class="st">'detail.trx'</span>])</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>trx <span class="op">=</span> trx.merge(clients_ok, on<span class="op">=</span><span class="st">"client_id"</span>)  <span class="co"># traz fold</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>trx[<span class="st">"event_time"</span>] <span class="op">=</span> pd.to_datetime(trx[<span class="st">"event_time"</span>])</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> make_trx_agg(df, until_month):</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    m_end <span class="op">=</span> pd.to_datetime(until_month) <span class="op">+</span> pd.offsets.MonthEnd(<span class="dv">0</span>)</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    dfm <span class="op">=</span> df[df[<span class="st">"event_time"</span>] <span class="op">&lt;=</span> m_end]</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    g <span class="op">=</span> dfm.groupby(<span class="st">"client_id"</span>)</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    out <span class="op">=</span> pd.DataFrame({</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">"client_id"</span>: g.size().index,</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">"trx_cnt_1m"</span>: g.size().values,</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">"amt_sum"</span>: g[<span class="st">"amount"</span>].<span class="bu">sum</span>().values,</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">"amt_med"</span>: g[<span class="st">"amount"</span>].median().values,</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">"amt_std"</span>: g[<span class="st">"amount"</span>].std().fillna(<span class="dv">0</span>).values,</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">"days_since_last_trx"</span>: (m_end <span class="op">-</span> g[<span class="st">"event_time"</span>].<span class="bu">max</span>()).dt.days.values</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    })</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> out</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Exemplo para um mês (faça loop por mon em targets)</span></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>mon <span class="op">=</span> targets[<span class="st">"mon"</span>].iloc[<span class="dv">0</span>]</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>trx_agg <span class="op">=</span> make_trx_agg(trx, mon)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>trx <span class="op">=</span> pd.DataFrame(ds[<span class="st">'detail.trx'</span>])</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>trx <span class="op">=</span> trx.merge(clients_ok, on<span class="op">=</span><span class="st">"client_id"</span>)  <span class="co"># traz fold</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>trx[<span class="st">"event_time"</span>] <span class="op">=</span> pd.to_datetime(trx[<span class="st">"event_time"</span>])</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> make_trx_agg(df, until_month):</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    m_end <span class="op">=</span> pd.to_datetime(until_month) <span class="op">+</span> pd.offsets.MonthEnd(<span class="dv">0</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    dfm <span class="op">=</span> df[df[<span class="st">"event_time"</span>] <span class="op">&lt;=</span> m_end]</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    g <span class="op">=</span> dfm.groupby(<span class="st">"client_id"</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    out <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">"client_id"</span>: g.size().index,</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">"trx_cnt_1m"</span>: g.size().values,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">"amt_sum"</span>: g[<span class="st">"amount"</span>].<span class="bu">sum</span>().values,</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">"amt_med"</span>: g[<span class="st">"amount"</span>].median().values,</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">"amt_std"</span>: g[<span class="st">"amount"</span>].std().fillna(<span class="dv">0</span>).values,</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">"days_since_last_trx"</span>: (m_end <span class="op">-</span> g[<span class="st">"event_time"</span>].<span class="bu">max</span>()).dt.days.values</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> out</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Exemplo para um mês (faça loop por mon em targets)</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>mon <span class="op">=</span> targets[<span class="st">"mon"</span>].iloc[<span class="dv">0</span>]</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>trx_agg <span class="op">=</span> make_trx_agg(trx, mon)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><strong>3) Features de GEO e DIALOG (sketch similar)</strong></p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>geo <span class="op">=</span> pd.DataFrame(ds[<span class="st">'detail.geo'</span>])</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>geo[<span class="st">"event_time"</span>] <span class="op">=</span> pd.to_datetime(geo[<span class="st">"event_time"</span>])</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> make_geo_agg(df, until_month):</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    m_end <span class="op">=</span> pd.to_datetime(until_month) <span class="op">+</span> pd.offsets.MonthEnd(<span class="dv">0</span>)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    dfx <span class="op">=</span> df[df[<span class="st">"event_time"</span>] <span class="op">&lt;=</span> m_end]</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    g <span class="op">=</span> dfx.groupby(<span class="st">"client_id"</span>)</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pd.DataFrame({</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"client_id"</span>: g.size().index,</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"geo_events"</span>: g.size().values,</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">"geo_cells6_unique"</span>: g[<span class="st">"geohash_6"</span>].nunique().values</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    })</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>geo_agg <span class="op">=</span> make_geo_agg(geo, mon)</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>dlg <span class="op">=</span> pd.DataFrame(ds[<span class="st">'detail.dialog'</span>])</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>dlg[<span class="st">"event_time"</span>] <span class="op">=</span> pd.to_datetime(dlg[<span class="st">"event_time"</span>])</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Cada linha tem um vetor "embedding" → faça um pooling simples (mean) por cliente</span></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> mean_pool(vecs):</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.mean(np.vstack(vecs), axis<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>emb_dim <span class="op">=</span> <span class="bu">len</span>(dlg[<span class="st">"embedding"</span>].iloc[<span class="dv">0</span>])</span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>pool <span class="op">=</span> dlg[dlg[<span class="st">"event_time"</span>] <span class="op">&lt;=</span> pd.to_datetime(mon) <span class="op">+</span> pd.offsets.MonthEnd(<span class="dv">0</span>)] <span class="op">\</span></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>        .groupby(<span class="st">"client_id"</span>)[<span class="st">"embedding"</span>].<span class="bu">apply</span>(mean_pool).reset_index()</span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>emb_cols <span class="op">=</span> [<span class="ss">f"dlg_mean_</span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(emb_dim)]</span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>dlg_agg <span class="op">=</span> pd.DataFrame(pool[<span class="st">"embedding"</span>].to_list(), columns<span class="op">=</span>emb_cols)</span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>dlg_agg.insert(<span class="dv">0</span>, <span class="st">"client_id"</span>, pool[<span class="st">"client_id"</span>])</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>geo <span class="op">=</span> pd.DataFrame(ds[<span class="st">'detail.geo'</span>])</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>geo[<span class="st">"event_time"</span>] <span class="op">=</span> pd.to_datetime(geo[<span class="st">"event_time"</span>])</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> make_geo_agg(df, until_month):</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    m_end <span class="op">=</span> pd.to_datetime(until_month) <span class="op">+</span> pd.offsets.MonthEnd(<span class="dv">0</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    dfx <span class="op">=</span> df[df[<span class="st">"event_time"</span>] <span class="op">&lt;=</span> m_end]</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    g <span class="op">=</span> dfx.groupby(<span class="st">"client_id"</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pd.DataFrame({</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"client_id"</span>: g.size().index,</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"geo_events"</span>: g.size().values,</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">"geo_cells6_unique"</span>: g[<span class="st">"geohash_6"</span>].nunique().values</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>geo_agg <span class="op">=</span> make_geo_agg(geo, mon)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>dlg <span class="op">=</span> pd.DataFrame(ds[<span class="st">'detail.dialog'</span>])</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>dlg[<span class="st">"event_time"</span>] <span class="op">=</span> pd.to_datetime(dlg[<span class="st">"event_time"</span>])</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Cada linha tem um vetor "embedding" → faça um pooling simples (mean) por cliente</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> mean_pool(vecs):</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.mean(np.vstack(vecs), axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>emb_dim <span class="op">=</span> <span class="bu">len</span>(dlg[<span class="st">"embedding"</span>].iloc[<span class="dv">0</span>])</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>pool <span class="op">=</span> dlg[dlg[<span class="st">"event_time"</span>] <span class="op">&lt;=</span> pd.to_datetime(mon) <span class="op">+</span> pd.offsets.MonthEnd(<span class="dv">0</span>)] <span class="op">\</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>        .groupby(<span class="st">"client_id"</span>)[<span class="st">"embedding"</span>].<span class="bu">apply</span>(mean_pool).reset_index()</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>emb_cols <span class="op">=</span> [<span class="ss">f"dlg_mean_</span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(emb_dim)]</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>dlg_agg <span class="op">=</span> pd.DataFrame(pool[<span class="st">"embedding"</span>].to_list(), columns<span class="op">=</span>emb_cols)</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>dlg_agg.insert(<span class="dv">0</span>, <span class="st">"client_id"</span>, pool[<span class="st">"client_id"</span>])</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><strong>4) Montar dataset final + alvo e split por fold</strong></p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> targets.query(<span class="st">"mon == @mon"</span>)[[<span class="st">"client_id"</span>,<span class="st">"target_1"</span>,<span class="st">"fold"</span>]] <span class="op">\</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    .merge(trx_agg, on<span class="op">=</span><span class="st">"client_id"</span>, how<span class="op">=</span><span class="st">"left"</span>) <span class="op">\</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    .merge(geo_agg, on<span class="op">=</span><span class="st">"client_id"</span>, how<span class="op">=</span><span class="st">"left"</span>) <span class="op">\</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    .merge(dlg_agg, on<span class="op">=</span><span class="st">"client_id"</span>, how<span class="op">=</span><span class="st">"left"</span>) <span class="op">\</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    .fillna(<span class="dv">0</span>)</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> X.pop(<span class="st">"target_1"</span>).astype(<span class="bu">int</span>)</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>fold <span class="op">=</span> X.pop(<span class="st">"fold"</span>)</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>client_ids <span class="op">=</span> X.pop(<span class="st">"client_id"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> targets.query(<span class="st">"mon == @mon"</span>)[[<span class="st">"client_id"</span>,<span class="st">"target_1"</span>,<span class="st">"fold"</span>]] <span class="op">\</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    .merge(trx_agg, on<span class="op">=</span><span class="st">"client_id"</span>, how<span class="op">=</span><span class="st">"left"</span>) <span class="op">\</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    .merge(geo_agg, on<span class="op">=</span><span class="st">"client_id"</span>, how<span class="op">=</span><span class="st">"left"</span>) <span class="op">\</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    .merge(dlg_agg, on<span class="op">=</span><span class="st">"client_id"</span>, how<span class="op">=</span><span class="st">"left"</span>) <span class="op">\</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    .fillna(<span class="dv">0</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> X.pop(<span class="st">"target_1"</span>).astype(<span class="bu">int</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>fold <span class="op">=</span> X.pop(<span class="st">"fold"</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>client_ids <span class="op">=</span> X.pop(<span class="st">"client_id"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><strong>5) Treinar 3 estimadores + HPO (ex.: Optuna + GroupKFold)</strong></p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> optuna</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> GroupKFold</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> average_precision_score</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> lightgbm <span class="im">import</span> LGBMClassifier</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> catboost <span class="im">import</span> CatBoostClassifier</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cv_ap(X, y, groups, clf):</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    gkf <span class="op">=</span> GroupKFold(n_splits<span class="op">=</span><span class="dv">5</span>)</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    scores<span class="op">=</span>[]</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> tr, va <span class="kw">in</span> gkf.split(X, y, groups):</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>        clf_ <span class="op">=</span> clf</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>        clf_.fit(X.iloc[tr], y.iloc[tr])</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>        p <span class="op">=</span> clf_.predict_proba(X.iloc[va])[:,<span class="dv">1</span>]</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>        scores.append(average_precision_score(y.iloc[va], p))</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">float</span>(np.mean(scores))</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Baselines rápidos</span></span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>ap_lr  <span class="op">=</span> cv_ap(X, y, client_ids, LogisticRegression(max_iter<span class="op">=</span><span class="dv">200</span>, class_weight<span class="op">=</span><span class="st">"balanced"</span>))</span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>ap_lgb <span class="op">=</span> cv_ap(X, y, client_ids, LGBMClassifier(n_estimators<span class="op">=</span><span class="dv">400</span>, learning_rate<span class="op">=</span><span class="fl">0.05</span>))</span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>ap_cat <span class="op">=</span> cv_ap(X, y, client_ids, CatBoostClassifier(iterations<span class="op">=</span><span class="dv">400</span>, learning_rate<span class="op">=</span><span class="fl">0.05</span>, verbose<span class="op">=</span><span class="dv">0</span>))</span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ap_lr, ap_lgb, ap_cat)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> optuna</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> GroupKFold</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> average_precision_score</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> lightgbm <span class="im">import</span> LGBMClassifier</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> catboost <span class="im">import</span> CatBoostClassifier</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cv_ap(X, y, groups, clf):</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    gkf <span class="op">=</span> GroupKFold(n_splits<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    scores<span class="op">=</span>[]</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> tr, va <span class="kw">in</span> gkf.split(X, y, groups):</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>        clf_ <span class="op">=</span> clf</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>        clf_.fit(X.iloc[tr], y.iloc[tr])</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>        p <span class="op">=</span> clf_.predict_proba(X.iloc[va])[:,<span class="dv">1</span>]</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>        scores.append(average_precision_score(y.iloc[va], p))</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">float</span>(np.mean(scores))</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Baselines rápidos</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>ap_lr  <span class="op">=</span> cv_ap(X, y, client_ids, LogisticRegression(max_iter<span class="op">=</span><span class="dv">200</span>, class_weight<span class="op">=</span><span class="st">"balanced"</span>))</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>ap_lgb <span class="op">=</span> cv_ap(X, y, client_ids, LGBMClassifier(n_estimators<span class="op">=</span><span class="dv">400</span>, learning_rate<span class="op">=</span><span class="fl">0.05</span>))</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>ap_cat <span class="op">=</span> cv_ap(X, y, client_ids, CatBoostClassifier(iterations<span class="op">=</span><span class="dv">400</span>, learning_rate<span class="op">=</span><span class="fl">0.05</span>, verbose<span class="op">=</span><span class="dv">0</span>))</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ap_lr, ap_lgb, ap_cat)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <blockquote class="blockquote">
 <p>Para <strong>sequencial/ptls</strong>, use o formato <code>ptls.*</code> e treine um encoder (p.ex., <strong>CoLES</strong>) para <code>trx</code> e/ou <code>geo</code>, salve os <strong>embeddings por cliente</strong> e <strong>alimente um GBM/MLP</strong> — exatamente como no benchmark (há scripts/notebooks oficiais). (<a href="https://github.com/dzhambo/mbd" title="GitHub - Dzhambo/MBD">GitHub</a>)</p>
 </blockquote>
