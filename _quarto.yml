@@ -1,0 +1,10 @@
+project:
+  type: website
+  output-dir: docs
+website:
+  title: "Machine Learning Project"
+  page-navigation: true
+format:
+  html:
+    theme: cosmo
+    toc: true
