@@ -1,0 +1,567 @@
+---
+title: "Projeto de Machine Learning I"
+author: "Bruno Lenz, Danilo Santos, Diogo de Araujo, Jonathan e Osvaldo Jeronymo Neto"
+date: today
+date-format: long
+lang: pt-BR
+number-sections: true
+
+# Rotular tabelas como "Quadro" e personalizar Apêndice
+crossref:
+  tbl-title: "Quadro"      # muda o rótulo na legenda
+  tbl-prefix: "Quadro"     # muda o texto nos @tbl-...
+  title-delim: " — "
+  appendix-title: "Apêndice"
+  appendix-delim: " — "
+
+format:
+  html:
+    toc: true
+    theme: cosmo
+    tbl-cap-location: top
+
+bibliography: referencias.bib
+csl: abnt.csl
+---
+# Introdução
+
+Este projeto explora a aplicação de técnicas de ***Machine Learning (ML)*** para a análise de dados bancários multimodais, com o objetivo de desenvolver um modelo preditivo para otimizar campanhas de ***cross-sell*** (venda-cruzada). A análise se baseia no ***Multimodal Banking Dataset (MBD)***, um conjunto de dados em larga escala que reflete interações reais de clientes corporativos. 
+
+A metodologia adotada para alcançar esse objetivo abrange um ciclo completo de desenvolvimento de um modelo de *ML*. O processo inicia com a **definição do problema de negócio** e avança para as etapas de **tratamento e transformação dos dados**, que são cruciais dado o caráter multimodal do *dataset*. Subsequentemente, define-se a **métrica de avaliação** mais adequada para o problema de *cross-sell*, seguida pelo desenvolvimento e treinamento de uma solução de *ML* que emprega, no mínimo, três estimadores distintos. Para maximizar a performance, realiza-se a **otimização de hiperparâmetros** desses algoritmos, visando a melhoria da métrica de interesse. O projeto culmina com uma **análise comparativa dos modelos**, resultando na seleção do estimador de melhor desempenho.
+
+A relevância estratégica deste projeto é reforçada por evidências que apontam a maior propensão de clientes existentes em adquirir novos produtos da mesma instituição, uma prática conhecida como cross-selling (@basten2023). Portanto, o trabalho culmina não apenas na entrega de um modelo preditivo validado, mas também em uma análise sobre sua eficácia para a resolução do problema de negócio e um delineamento das etapas essenciais para sua futura implementação em um ambiente de produção.
+
+# Contexto
+
+A primeira etapa do projeto consistiu na seleção de um *dataset* apropiado. A comunidade [***Hugging Face***](https://huggingface.co) foi a fonte escolhida, e dentro da diversidade de *dataset* contidos nessa comunidade optou-se pelo  [Multimodal Banking Dataset - MBD](https://huggingface.co/papers/2409.17587).
+
+Conforme descrito por @mollaev2025, o **MBD** é o primeiro conjunto de dados bancário multimodal, de larga escala e publicamente disponível. Esse *dataset* contém sequências de dados anonimizados de mais de 2 milhões de clientes corporativos de um grande banco. Este dataset inclui **transações financeiras, dados de geolocalização, diálogos de suporte técnico e registros de compras de produtos**. O obetivo da sua criação foi preencher a lacuna de dados abertos no setor financeiro, viabilizando o desenvolvimento de técnicas avançadas de aprendizado profundo. Adicionalmente, os autores propõem um novo **benchmark multimodal** com tarefas práticas como a previsão de futuras compras, que se alinha diretamente com os objetivos desse projeto.
+
+## Problema de negócio
+
+O problema de negócio selecionado é a **predição de propensão à compra em campanhas de *cross-sell* (venda-cruzada)**. Uma campanha de *cross-sell* é uma iniciativa de marketing direcionada a clientes existentes, com o intuito de oferecer produtos complementares aos que já possuem. Por exemplo, oferecer seguro de vida a um cliente que recentemente contratou um financeiro imobiliário. 
+
+O objetivo deste projeto é, portanto, treinar um modelo com o **MBD** para gerar um *score* de propensão para cada cliente. Esse *score* permitirá priorizar os clientes com maior probabilidade de aceitar uma oferta, otimizando os recursos da campanha e aumentando a sua taxa de conversão.
+
+**Delimitação do escopo: cross-sell *vs.* up-sell**
+
+Para garantir a clareza do objetivo, é necessária uma distinção: o escopo deste projeto é estritamente o ***cross-sell***. É importante não confundi-lo com ***up-sell***, que consiste em incentivar o cliente a adquirir uma versão mais avançada ou mais cara de um mesmo produto que ele já possui (ex: migrar de um cartão de crédito "Gold" para um "Platinum"). O modelo aqui desenvolvido focará exclusivamente na oferta de novos e diferentes produtos.
+
+## Repositório
+
+Os artefatos gerados durante o desenvolvimento deste projeto, incluindo notebooks, scripts e relatórios, estão organizados da seguinte forma e podem ser encontrados no seguinte repositório: <https://github.com/osvaldojeronymo/machine-learning-project>.
+
+```
+/notebooks
+  01_explore_mbd_mini.ipynb
+  02_features_tabular.ipynb
+  03_train_compare_tabular.ipynb
+  04_ptls_sequence_embeddings.ipynb
+/src
+  data_loading.py
+  features_trx.py / features_geo.py / features_dialog.py
+  train_tabular.py (Optuna + GroupKFold)
+  train_ptls.py
+/reports
+  metrics_by_fold.csv
+  feature_importance_{model}.csv
+  calibration_plots/
+```
+
+## Dados
+
+O [**MBD**](https://huggingface.co/datasets/ai-lab/MBD) contém mais de 2 milhões de dados de clientes corporativos. Nesse projeto optou-se por trabalhar com [***MBD-mini dataset***](https://huggingface.co/datasets/ai-lab/MBD-mini), que contém um subconjunto reduzido dos dados, essa estratégia facilitará os trabalhos de desenvolvimento e teste do modelo proposto. Esse ***MBD-mini dataset*** têm dados baseados em 10% de clientes únicos listados no **MBD**. Como apresentado por @mollaev2025 no @tbl-overview, têm-se:
+
+: Visão geral de conjuntos de dados de transações existentes {#tbl-overview}
+
+| Conjunto de dados         | Nº de clientes | Tarefas-alvo (*downstream*)                             | Nº de eventos | Balanço de classes       | Modalidades                                 |
+|---------------------------|---------------:|---------------------------------------------------------|--------------:|--------------------------|---------------------------------------------|
+| DataFusion                |        22 mil  | Classificação binária; *matching* multimodal            |   146 milhões | Desbalanceado            | Transações; Clickstream                     |
+| Alphabattle               |     1,5 milhão | Classificação binária                                   |   443 milhões | Desbalanceado            | Transações                                  |
+| Age                       |        50 mil  | Classificação multiclasse                               |    44 milhões | Balanceado               | Transações                                  |
+| Rosbank                   |        10 mil  | Classificação binária                                   |     1 milhão  | Desbalanceado            | Transações                                  |
+| Credit Card Transaction   |         2 mil  | Classificação binária; Regressão                        |     2 milhões | Altamente desbalanceado  | Transações                                  |
+| MBD-small (nosso)         |        70 mil  | Classificação binária multirrótulo; *matching* multimodal |    80 milhões | Desbalanceado            | Transações; Geostream (eventos geográficos); Diálogos |
+| MBD (nosso)               |      2 milhões | Classificação binária multirrótulo; *matching* multimodal |     2 bilhões | Altamente desbalanceado  | Transações; Geostream (eventos geográficos); Diálogos |
+
+**Fonte:** @mollaev2025. DOI: 10.48550/arXiv.2409.17587. *Tradução nossa.*
+
+## Pré-processamento
+
+**feature engineering**
+
+## Métricas
+
+**Primária: AUPRC (PR-AUC). Complementares: ROC-AUC, Precision@k, Recall@k, Brier, calibração.**
+
+## Estimadores
+
+**Tabular: Regressão Logística; LightGBM/XGBoost; CatBoost.**
+**Sequencial (opcional): ptls (pytorch-lifestream) + cabeçote leve.**
+
+## Otimização
+
+**Optuna (TPE) com early stopping quando aplicável; seleção pelo AUPRC médio nas dobras.**
+
+## Seleção
+
+**Comparar AUPRC/ROC-AUC, Top-k, calibração, estabilidade (±dp) e custo/latência.**
+
+# Metodologia
+
+Esta seção descreve o delineamento metodológico adotado, estruturado como um **pipeline de ciência de dados** para predição em bases **temporais e multimodais**. Parte-se da definição do **alvo** e do **horizonte** de previsão e adota-se o paradigma de **minimização do risco empírico**, com controle de **viés–variância** por meio de **validação em grupos** (nível cliente) e **bloqueio temporal** (*no-lookahead*). 
+
+A representação dos dados combina princípios de **aprendizado multivisual** (*multi-view*), com **agregações em janelas** (intensidade, recência, valor), **medidas de mobilidade espacial** e **pooling de embeddings**, além de **redução de dimensionalidade** para mitigar sobreajuste. Consideram-se dois trilhos de modelagem — **tabular** (regressão e *gradient boosting*) e **sequencial** (aprendizado de representações) — avaliados por métricas robustas a **desbalanceamento** (**AUPRC**, *Precision*@k) e **calibração**. 
+
+A **otimização de hiperparâmetros** segue abordagem **bayesiana** com **parada antecipada**; **ablações** e **fusão de modalidades** quantificam contribuições e sinergias. O processo é conduzido com **reprodutibilidade** (versões, sementes, *pin* de dados) e **governança** (privacidade e uso responsável), visando não apenas desempenho preditivo, mas **viabilidade operacional** para priorização de campanhas.
+
+## Problema e hipótese
+
+Em ciência de dados, a formulação do problema define o alvo preditivo, o horizonte temporal e as unidades de decisão. No nosso caso, trata-se de aprendizado supervisionado para classificação binária em dados temporais e multimodais, no qual buscamos um estimador 
+𝑓
+(
+𝑥
+)
+f(x) que minimize o risco empírico (função de perda) sob restrições de desbalanceamento (baixa prevalência) e dependência temporal. A hipótese central decorre de aprendizado multivisual (multi-view learning): modalidades heterogêneas e complementares (transações, geolocalização e diálogos) capturam aspectos distintos do comportamento do cliente; portanto, sua fusão informacional tende a aumentar o poder discriminativo e a estabilidade do modelo frente a abordagens unimodais.
+
+Amarração ao seu texto: essa teoria sustenta: “Tarefa de campanha… estimar target_1. Hipótese: fusão multimodal supera unimodal em AUPRC e Precision@k.”
+
+Tarefa de campanha (purchase prediction): estimar target_1 (mês +1) — extensão opcional a target_2..4. Hipótese: fusão multimodal supera unimodal em AUPRC e Precision@k (@mollaev2025).
+
+## Dados e partições
+
+Usa-se MBD (e MBD-mini para POC). Validação por cliente (GroupKFold por client_id ou fold nativo). Em cada mon, apenas eventos com event_time ≤ mon entram nas features (no-lookahead).
+
+## Engenharia de atributos
+
+### Transações (trx)
+
+Janelas 1/3/6 meses: RFM, ticket/mediana/desvio, mix por event_type/subtype, diversidade (entropias src*/dst*), sazonalidade (dia/hora, seno/cosseno).
+
+### Geolocalização (geo)
+
+Contagem; nº de geohash_5/6 únicos; entropia espacial; mobilidade (trocas de célula; radius of gyration aproximado); recência.
+
+### Diálogos (dialog)
+
+Pooling temporal dos embeddings (média, máx, média ponderada por recência, último vetor) + PCA (16–64) para reduzir dimensionalidade.
+
+### Junção e alvo
+
+Chaves (client_id, mon); alvo primário target_1 (binário). Imputação de ausentes (0/estatística).
+
+## Modelagem
+
+Tabular: LR; LightGBM/XGBoost; CatBoost.
+Sequencial (opcional): ptls (aprendizado auto-supervisionado, p.ex., CoLES) + MLP/GBM.
+
+## Métricas e avaliação
+
+AUPRC como alvo; ROC-AUC, Precision@k/Recall@k, Brier e curva de calibração. Reporte média ± dp em 5 dobras.
+
+## Otimização (HPO) e protocolo
+
+HPO com Optuna (TPE). Espaços:
+LR (C, L1/L2, class_weight);
+LGBM (num_leaves, max_depth, min_data_in_leaf, feature_fraction, bagging_fraction, lambda_l1/l2, learning_rate, n_estimators);
+CatBoost (depth, l2_leaf_reg, learning_rate, iterations, scale_pos_weight);
+ptls (hidden_size, n_layers, dropout, lr, seq_len, pooling).
+Seleção final pelo AUPRC médio; tie-breakers: estabilidade, Top-5%, calibração, custo.
+
+## Ablação e fusão
+
+Ablação por modalidade (trx | geo | dialog | full) e late-fusion (concat/blending).
+
+## Organização dos dados
+
+O @tbl-mbd-schema apresenta a organização do MBD (@mollaev2025).
+
+: Organização dos dados do MBD (resumo) {#tbl-mbd-schema}
+
+Camada/Tabela	Campo (tipo)	Descrição
+client_split	client_id (str); fold (int)	ID anonimizado e dobra oficial
+detail.dialog	client_id; event_time; embedding (float[])	Vetores semânticos de diálogos
+detail.geo	client_id; event_time; geohash_4/5/6	Eventos espaciais hierárquicos
+detail.trx	client_id; event_time; amount; tipos…	Transações e códigos de tipo/origem/destino
+ptls.*	arrays por campo (por cliente)	Sequências para modelagem com ptls
+targets	mon; target_1..4; trans_count; diff_trans_date; client_id; fold	Rótulos por mês e estatísticas de recência/volume
+
+Fonte: Adaptado de @mollaev2025. DOI: 10.48550/arXiv.2409.17587. Tradução nossa.
+
+Veja o Apêndice A — Dicionário de dados.
+
+::: {.callout-tip}
+Boas práticas anti-vazamento: sempre respeite event_time ≤ mon; valide por cliente; normalize pipelines com fit no treino e transform no teste/validação.
+:::
+
+**Campanha de cross-sell:** dada a historização de **transações (trx)**, **atividade geográfica (geo)** e **embeddings de diálogo (dialog)** até um mês de referência `mon`, **prever a probabilidade de emissão de um produto** no(s) próximo(s) mês(es). O MBD já vem com rótulos mensais `target_1`…`target_4` (emissão no +1, +2, +3, +4) e split por cliente/folds — é exatamente o cenário de “campaigning” proposto pelos autores. ([Hugging Face][2], [arXiv][3])
+
+> * **Tarefa principal:** classificação binária para **`target_1`** (emissão no mês seguinte).
+> * **Extensão opcional:** modelo **multi-tarefa** para os 4 horizontes (`target_1..4`) com uma única base de features.
+
+**Tratamentos**
+
+**Premissas anti-vazamento (essenciais):**
+
+* Para cada snapshot mensal `mon`, **use apenas eventos com `event_time` ≤ fim de `mon`**.
+* Respeite o split por **cliente** (use `fold`/`client_id`) para validação, evitando overlap. O dataset já fornece dobras e até versão “mini” para prototipagem. ([Hugging Face][2])
+
+***Transações (`detail.trx` ou `ptls.trx`)***
+
+Agregue janelas **1, 3 e 6 meses** (rolling/expanding) até `mon`:
+
+* **RFM**: número de transações; dias desde a última; soma e mediana de `amount`; ticket médio; % crédito vs débito (se aplicável).
+* **Mix de tipos**: contagens/percentuais por `event_type` e `event_subtype`.
+* **Diversidade**: entropia de `dst_type*`/`src_type*`; número de contrapartes únicas.
+* **Volatilidade**: std de `amount`; coef. de variação; sazonalidade por dia da semana/hora (one-hot + sen/cos).
+
+***Geo (`detail.geo` ou `ptls.geo`)***
+
+* **Frequência e diversidade**: nº de `geohash_5/6` únicos; entropia; “home geohash” (moda) e % de tempo nele.
+* **Mobilidade**: “radius of gyration” aproximado (decodifique geohash para lat/lon de célula); nº de trocas de célula; razão dia/noite; fins de semana vs semana.
+* **Recência**: tempo desde o último evento geo.
+
+***Diálogos (`detail.dialog` / embeddings)***
+
+* **Pooling temporal**: média, máx, **recency-weighted mean** e **último embedding**.
+* **Intensidade**: nº de diálogos no mês; dias com diálogo; tempo desde o último.
+* **Redução**: PCA/UMAP dos embeddings agregados para 16–64 dims (evita overfit).
+
+> Observação: o MBD também disponibiliza os dados no **formato ptls (pytorch-lifestream)** para modelagem sequencial em larga escala. ([GitHub][4])
+
+***Junção + alvo***
+
+* **Chave:** (`client_id`, `mon`).
+* **Alvos:** `target_1` (principal) e, opcional, `target_2..4`.
+* **Controles:** `is_balanced` pode filtrar um subconjunto balanceado para experimentos rápidos (ou pesar classes). ([Hugging Face][2])
+
+**Métricas**
+
+Como campanhas têm **baixa prevalência**, priorize métricas robustas a desbalanceamento:
+
+* **AUPRC (Average Precision/PR-AUC)** – métrica principal.
+* **ROC-AUC** – complementar.
+* **Top-k Precision / Recall\@k** – alinhada a orçamento de campanha (ex.: top 5% clientes).
+* **Calibração** (Brier/plot) – importante para seleção por score.
+
+**Estimadores**
+
+***Track 1 — Tabular (features agregadas)***
+
+1. **Regressão Logística (baseline forte)**
+2. **Gradient Boosting**: **LightGBM** *ou* **XGBoost**
+3. **CatBoost** (bom para misto categórico/numérico; lida bem com inteiros de códigos)
+
+***Track 2 — Sequencial (opcional, eleva teto de performance)***
+
+4. **`ptls` (pytorch-lifestream)** para aprender embeddings de sequência (trx/geo) via auto-supervisão (p.ex., **CoLES**), seguidos de um **cabeçote MLP** para previsão. Esse é o caminho alinhado ao benchmark oficial do MBD. ([GitHub][5])
+
+**Otimização**
+
+* **Validação:** GroupKFold por `client_id` **ou** usar o `fold` nativo do dataset; estratificar por alvo dentro das dobras, se possível.
+* **Estratégia:** **Optuna** (Bayes/Tree-Parzen) com *early stopping* e **objetivo = AUPRC (validação)**.
+* **Espaços (exemplos):**
+
+  * **LogReg:** C (1e-4…1e2), penalty (l1/l2), class\_weight (balanced/None).
+  * **LightGBM:** num\_leaves, max\_depth, min\_data\_in\_leaf, feature\_fraction, bagging\_fraction, lambda\_l1/l2, learning\_rate.
+  * **CatBoost:** depth, l2\_leaf\_reg, learning\_rate, border\_count; `scale_pos_weight`.
+  * **ptls (seq):** hidden\_size, n\_layers, dropout, lr, seq\_len (subsequências), embedding pooling.
+
+**Comparação**
+
+* Treine todos os modelos nas mesmas dobras.
+* Relate **AUPRC/ROC-AUC**, **Top-k** (5%, 10%, 20%), **calibração** e **curvas de ganho/lift**.
+* Faça **ablação por modalidade** (trx/geo/dialog) e **late-fusion** (concat/blending) — também alinhado ao repositório dos autores. ([GitHub][5])
+* Escolha o **melhor compromisso** entre **AUPRC**, **estabilidade nas dobras**, **custo/latência** e **calibração**.
+
+**Formulação do problema**
+
+Este estudo aborda a tarefa de **campanha (purchase prediction)**: dados históricos multimodais de cada cliente até um mês de referência `mon`, estima-se a **probabilidade de emissão de produto no mês subsequente** (`target_1`). A formulação segue o delineamento do **Multimodal Banking Dataset (MBD)**, que provê rótulos mensais (`target_1`…`target_4`) e dados temporais de **transações (trx)**, **atividade geográfica (geo)** e **embeddings de diálogos (dialog)**. (MOLLAEV et al., 2025). ([arXiv][1])
+
+**Organização dos dados**
+
+O @tbl-mbd-schema apresenta a organização do **MBD** realizada por @mollaev2025:
+
+: Organização dos dados do MBD (resumo) {#tbl-mbd-schema}
+
+| Camada/Tabela | Campo (tipo) | Descrição |
+|---|---|---|
+| client_split      | client_id (str); fold (int)              | ID anonimizado e dobra oficial                                | Split reprodutível; validação por cliente (evita vazamento)           |
+| detail.dialog     | client_id; event_time; embedding (float[])| Interações de suporte como vetores (tempo + semântica)        | Sinal de intenção; agregações temporais; entrada para modelos         |
+| detail.geo        | client_id; event_time; geohash_4/5/6     | Eventos espaciais hierárquicos no tempo                       | Mobilidade/mudança de rotina; resolução multi-escala                   |
+| detail.trx        | client_id; event_time; amount; tipos...  | Transações com valores e códigos de tipo/origem/destino       | Núcleo preditivo (RFM, mix, entropia, sazonalidade, co-ocorrências)   |
+| ptls.*            | arrays por campo (por cliente)           | Sequências agregadas por cliente (formato pytorch-lifestream) | Treino sequencial/auto-supervisionado sem *joins*                      |
+| targets           | mon; target_1..4; trans_count; diff_trans_date; client_id; fold | Rótulos por mês e estatísticas de recência/volume | Define tarefa multirrótulo; facilita baselines e análise               |
+
+Fonte: Adaptado de MOLLAEV, D. et al. (2025). DOI: 10.48550/arXiv.2409.17587. Tradução nossa.
+
+Veja o [Apêndice A — Dicionário de dados](#apx-dados).
+
+**Dados, versões e partições**
+
+Utiliza-se o **MBD** hospedado na Hugging Face, com dados anonimizados por cliente ao longo de \~12 meses, concebido para prever propensão de compra após a data de referência. Para prototipagem e *tuning* inicial, emprega-se o **MBD-mini**, que preserva a estrutura e acelera ciclos de experimento, com posterior migração ao conjunto completo. Para reprodutibilidade, o carregamento é fixado (*pinado*) a uma revisão específica do dataset. (AI-LAB, 2025; MOLLAEV et al., 2025). ([Hugging Face][2], [arXiv][1])
+A validação respeita a unidade natural de generalização (**cliente**). Adota-se **GroupKFold** com **`client_id`** como agrupador ou, alternativamente, as **dobras (`fold`)** fornecidas pelo próprio dataset, evitando vazamento por sobreposição de clientes entre treino e validação. Em todas as montagens por mês de referência, **somente eventos com `event_time` ≤ fim de `mon`** são elegíveis para *features* (“no-lookahead”). (MOLLAEV et al., 2025). ([arXiv][1])
+
+**Pré-processamento e engenharia de atributos**
+
+### Transações (trx)
+
+Para cada par (`client_id`, `mon`), agregam-se janelas **1, 3 e 6 meses** até o fim de `mon`: (i) **volume/frequência**: contagem de transações; recência (dias desde a última); (ii) **valor**: soma, mediana, desvio-padrão e ticket médio de `amount`; (iii) **mix de tipos**: contagens/percentuais por `event_type` e `event_subtype`; (iv) **diversidade/rede**: número de contrapartes únicas e entropias em `dst_type*`/`src_type*`; (v) **sazonalidade**: indicadores de dia da semana/hora (one-hot e codificação seno/cosseno). (MOLLAEV et al., 2025). ([arXiv][1])
+
+### Geolocalização (geo)
+
+A partir da sequência de geohashes: (i) **intensidade/diversidade**: número de eventos; células únicas em `geohash_5/6`; entropia espacial; (ii) **mobilidade**: *radius of gyration* aproximado, trocas de célula, razões dia/noite e semana/fim-de-semana; (iii) **recência**: dias desde o último evento geo. (MOLLAEV et al., 2025). ([arXiv][1])
+
+### Diálogos (dialog)
+
+Os **embeddings** de diálogo são agregados temporalmente por cliente via **média**, **máximo**, **média ponderada pela recência** e **vetor do último diálogo**; aplica-se **PCA (16–64 dimensões)** sobre vetores agregados para reduzir dimensionalidade e mitigar *overfitting*. (MOLLAEV et al., 2025). ([arXiv][1])
+
+### Junção e alvo
+
+As *features* de cada modalidade são unidas por (`client_id`, `mon`) e associadas ao rótulo **binário** `target_1`. **Valores ausentes** pós-agregação são imputados com zero (ou estatísticas de janela, quando aplicável). Para experimentos com foco em tempo de execução, pode-se filtrar `is_balanced == 1`, preservando a comparação final no conjunto completo. (AI-LAB, 2025). ([Hugging Face][2])
+
+## Modelagem
+
+### Trilho tabular (baseline de baixo custo)
+
+Modelos sobre *features* agregadas: **Regressão Logística** (penalizações L1/L2 e `class_weight`), **Gradient Boosting** (LightGBM/XGBoost) e **CatBoost**. Este trilho oferece treinamento rápido, interpretabilidade (importâncias/SHAP) e **baixa latência de inferência** para uso em campanhas.
+
+### Trilho sequencial (aprendizado de representações)
+
+Explora-se o caráter **sequencial** por meio do ecossistema **pytorch-lifestream (ptls)**, que aprende **embeddings auto-supervisionados** de sequências discretas em grande escala (por exemplo, **CoLES**). Treinam-se *encoders* para **trx** e/ou **geo** e, em seguida, aplica-se um **cabeçote leve** (MLP ou GBM) para prever `target_1`. (SBERBANK AI LAB, 2025; BABAEV et al., 2020). ([GitHub][3], [arXiv][4])
+
+## Validação, ajuste de hiperparâmetros e métrica-alvo
+
+O protocolo de validação usa **GroupKFold (5 dobras)** por **`client_id`** (ou *folds* nativos do MBD). A **métrica-alvo** de *tuning* é **AUPRC (PR-AUC)**, apropriada a cenários desbalanceados; **ROC-AUC** é métrica complementar. O ajuste utiliza **Optuna** (Tree-Parzen) com *early stopping* quando suportado:
+a) **LR**: `C` (log-space), `penalty` (L1/L2), `class_weight`;
+b) **LightGBM**: `num_leaves`, `max_depth`, `min_data_in_leaf`, `feature_fraction`, `bagging_fraction`, `lambda_l1/l2`, `learning_rate`, `n_estimators`;
+c) **CatBoost**: `depth`, `l2_leaf_reg`, `learning_rate`, `iterations`, `scale_pos_weight`;
+d) **ptls**: `hidden_size`, `n_layers`, `dropout`, `lr`, `seq_len` e estratégia de *pooling* dos *embeddings*. (SBERBANK AI LAB, 2025). ([GitHub][3])
+
+**Ablação, fusão e seleção de limiar
+
+Conduz-se **ablação por modalidade** (somente trx; somente geo; somente dialog; multimodal) e **fusão tardia** por concatenação de *features* ou *blending* de escores. A seleção de limiar (τ) é orientada por **calibração** (Brier/curva de confiabilidade) e **restrições de orçamento** (p. ex., *precision\@k* no topo de 5–10% dos clientes). (MOLLAEV et al., 2025). ([arXiv][1])
+
+**Controles de risco e vieses
+
+Mitigam-se riscos com: (i) **bloqueio temporal** nas agregações (`event_time ≤ mon`); (ii) tratamento do **desbalanceamento** com AUPRC, `class_weight/scale_pos_weight` e avaliação em **top-k**; (iii) **monitoramento de *drift*** (distribuições de *features* e fração de positivos); (iv) análise por **segmentos** para identificar vieses e impactos desiguais. (MOLLAEV et al., 2025). ([arXiv][1])
+
+**Reprodutibilidade e implantação
+
+Para reprodutibilidade, fixam-se **sementes**, **versionamento** de código/artefatos, **pin** da revisão do dataset e registro de ambiente (versões). Para implantação, *features* agregadas permitem *scoring* **batch** mensal com baixa latência; no trilho sequencial, **embeddings ptls** podem ser pré-computados e servidos a um **classificador leve** (GBM/MLP), equilibrando desempenho e custo operacional. (AI-LAB, 2025; SBERBANK AI LAB, 2025). ([Hugging Face][2], [GitHub][3])
+
+# Resultados
+
+**Código base (funciona com MBD-mini para iterar rápido)**
+
+> Use **MBD-mini** (≈10% dos clientes, mesma estrutura) para prototipar e depois migre ao completo. ([Hugging Face][8])
+
+**1) Carregar dados e preparar snapshots**
+
+```python
+from datasets import load_dataset
+import pandas as pd
+import numpy as np
+
+ds = load_dataset("ai-lab/MBD-mini")  # depois: "ai-lab/MBD"
+# Tabelas: ds['client_split'], ds['detail.trx'], ds['detail.geo'], ds['detail.dialog'], ds['targets']
+
+client_split = pd.DataFrame(ds['client_split'])
+targets = pd.DataFrame(ds['targets'])
+
+# Exemplo: manter apenas amostra balanceada para POC
+clients_ok = client_split.query("is_balanced == 1")[["client_id","fold"]]
+
+targets = targets.merge(clients_ok, on="client_id", how="inner")
+```
+
+**2) Agregar TRX até o mês de referência**
+
+```python
+trx = pd.DataFrame(ds['detail.trx'])
+trx = trx.merge(clients_ok, on="client_id")  # traz fold
+trx["event_time"] = pd.to_datetime(trx["event_time"])
+
+def make_trx_agg(df, until_month):
+    m_end = pd.to_datetime(until_month) + pd.offsets.MonthEnd(0)
+    dfm = df[df["event_time"] <= m_end]
+    g = dfm.groupby("client_id")
+    out = pd.DataFrame({
+        "client_id": g.size().index,
+        "trx_cnt_1m": g.size().values,
+        "amt_sum": g["amount"].sum().values,
+        "amt_med": g["amount"].median().values,
+        "amt_std": g["amount"].std().fillna(0).values,
+        "days_since_last_trx": (m_end - g["event_time"].max()).dt.days.values
+    })
+    return out
+
+# Exemplo para um mês (faça loop por mon em targets)
+mon = targets["mon"].iloc[0]
+trx_agg = make_trx_agg(trx, mon)
+```
+
+**3) Features de GEO e DIALOG (sketch similar)**
+
+```python
+geo = pd.DataFrame(ds['detail.geo'])
+geo["event_time"] = pd.to_datetime(geo["event_time"])
+def make_geo_agg(df, until_month):
+    m_end = pd.to_datetime(until_month) + pd.offsets.MonthEnd(0)
+    dfx = df[df["event_time"] <= m_end]
+    g = dfx.groupby("client_id")
+    return pd.DataFrame({
+        "client_id": g.size().index,
+        "geo_events": g.size().values,
+        "geo_cells6_unique": g["geohash_6"].nunique().values
+    })
+geo_agg = make_geo_agg(geo, mon)
+
+dlg = pd.DataFrame(ds['detail.dialog'])
+dlg["event_time"] = pd.to_datetime(dlg["event_time"])
+# Cada linha tem um vetor "embedding" → faça um pooling simples (mean) por cliente
+def mean_pool(vecs):
+    return np.mean(np.vstack(vecs), axis=0)
+
+emb_dim = len(dlg["embedding"].iloc[0])
+pool = dlg[dlg["event_time"] <= pd.to_datetime(mon) + pd.offsets.MonthEnd(0)] \
+        .groupby("client_id")["embedding"].apply(mean_pool).reset_index()
+emb_cols = [f"dlg_mean_{i}" for i in range(emb_dim)]
+dlg_agg = pd.DataFrame(pool["embedding"].to_list(), columns=emb_cols)
+dlg_agg.insert(0, "client_id", pool["client_id"])
+```
+
+**4) Montar dataset final + alvo e split por fold**
+
+```python
+X = targets.query("mon == @mon")[["client_id","target_1","fold"]] \
+    .merge(trx_agg, on="client_id", how="left") \
+    .merge(geo_agg, on="client_id", how="left") \
+    .merge(dlg_agg, on="client_id", how="left") \
+    .fillna(0)
+
+y = X.pop("target_1").astype(int)
+fold = X.pop("fold")
+client_ids = X.pop("client_id")
+```
+
+**5) Treinar 3 estimadores + HPO (ex.: Optuna + GroupKFold)**
+
+```python
+import optuna
+from sklearn.model_selection import GroupKFold
+from sklearn.metrics import average_precision_score
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LogisticRegression
+from lightgbm import LGBMClassifier
+from catboost import CatBoostClassifier
+
+def cv_ap(X, y, groups, clf):
+    gkf = GroupKFold(n_splits=5)
+    scores=[]
+    for tr, va in gkf.split(X, y, groups):
+        clf_ = clf
+        clf_.fit(X.iloc[tr], y.iloc[tr])
+        p = clf_.predict_proba(X.iloc[va])[:,1]
+        scores.append(average_precision_score(y.iloc[va], p))
+    return float(np.mean(scores))
+
+# Baselines rápidos
+ap_lr  = cv_ap(X, y, client_ids, LogisticRegression(max_iter=200, class_weight="balanced"))
+ap_lgb = cv_ap(X, y, client_ids, LGBMClassifier(n_estimators=400, learning_rate=0.05))
+ap_cat = cv_ap(X, y, client_ids, CatBoostClassifier(iterations=400, learning_rate=0.05, verbose=0))
+print(ap_lr, ap_lgb, ap_cat)
+```
+
+> Para **sequencial/ptls**, use o formato `ptls.*` e treine um encoder (p.ex., **CoLES**) para `trx` e/ou `geo`, salve os **embeddings por cliente** e **alimente um GBM/MLP** — exatamente como no benchmark (há scripts/notebooks oficiais). ([GitHub][5])
+
+---
+
+# Conclusões
+## Perguntas-chave
+
+**i. Resolve o problema?**
+Se o **AUPRC** do melhor modelo superar com folga baselines simples (ex.: RegLog e rules-based) e entregar **lift** alto no top-k, sim — o MBD foi criado justamente para **predição de compra futura (campaigning)** e mostrou vantagem do multimodal sobre unimodal. ([arXiv][1], [ar5iv][6])
+
+**ii. Vai para produção? (checklist)**
+
+(dados, latência, monitoramento, ética/LGPD)
+
+* **Dados online:** consegue materializar as features (ou sequências) **diariamente/mensalmente** sem usar informação futura?
+* **Latency/custo:** Tabular (LightGBM/CatBoost) é leve; sequencial (ptls) pede GPU em treino, mas **inferencia** pode ser só MLP/GBM sobre embeddings pré-computados. Repositório traz requisitos de HW/stack para o benchmark. ([GitHub][5])
+* **Calibração & Orçamento:** defina um **threshold** para respeitar o budget (ex.: disparar para top 8% com prob ≥ τ calibrado).
+* **Monitoramento:** AUPRC em amostras de controle, **drift** de features, **fração de positivos** por segmento, e re-treino mensal/trimestral.
+* **Ética & privacidade:** MBD é **anonimizado**; ainda assim avalie bias por **segmentos de cliente** (porte/região/setor). ([arXiv][7])
+
+## Trabalhos futuros
+
+* **Vazamento temporal** ao agregar além de `mon`.
+* **Desbalanceamento**: preferir **AUPRC**, `class_weight`/`scale_pos_weight` e **Top-k**.
+* **Latência & custo** para sequencial: usar embeddings pré-computados + GBM em produção. ([GitHub][5])
+
+- **Download e conversão:**
+  - Utilização do script `baixa_arquivos_login.py` para baixar arquivos.
+  - Conversão de arquivos `.xls`, `.xlsx`, `.xlsm` para SQLite.
+- **Validação e Limpeza:**
+  - Identificação de arquivos corrompidos e protegidos por senha.
+- **Classificação das Devoluções:**
+  - Categorias definidas a partir das não conformidades nos checklists.
+
+* AI-LAB. **MBD – Multimodal Banking Dataset**. Dataset. Hugging Face, 2025. Disponível em: `https://huggingface.co/datasets/ai-lab/MBD`. Acesso em: 16 ago. 2025. ([Hugging Face][2])
+* AI-LAB. **MBD-mini – Multimodal Banking Dataset (versão reduzida)**. Dataset. Hugging Face, 2025. Disponível em: `https://huggingface.co/datasets/ai-lab/MBD-mini`. Acesso em: 16 ago. 2025. ([Hugging Face][5])
+* BABAEV, D. **et al.** **CoLES: Contrastive Learning for Event Sequences with Self-Supervision**. *arXiv preprint* arXiv:2002.08232, 2020. Disponível em: `https://arxiv.org/abs/2002.08232`. Acesso em: 16 ago. 2025. ([arXiv][4])
+* MOLLAEV, D. **et al.** **Multimodal Banking Dataset: Understanding Client Needs through Event Sequences**. *arXiv preprint* arXiv:2409.17587, v2, 2025. DOI: 10.48550/arXiv.2409.17587. Disponível em: `https://arxiv.org/abs/2409.17587`. Acesso em: 16 ago. 2025. ([arXiv][1])
+* SBERBANK AI LAB. **pytorch-lifestream: a library for embeddings on discrete event sequences**. Software. GitHub, 2025. Disponível em: `https://github.com/sberbank-ai-lab/pytorch-lifestream`. Acesso em: 16 ago. 2025. ([GitHub][3])
+
+[1]: https://arxiv.org/pdf/2409.17587?utm_source=chatgpt.com "multimodal banking dataset: understanding client needs ..."
+[2]: https://huggingface.co/datasets/ai-lab/MBD?utm_source=chatgpt.com "ai-lab/MBD · Datasets at Hugging Face"
+[3]: https://github.com/sberbank-ai-lab/pytorch-lifestream?utm_source=chatgpt.com "sberbank-ai-lab/pytorch-lifestream: A library built upon ..."
+[4]: https://arxiv.org/abs/2002.08232?utm_source=chatgpt.com "CoLES: Contrastive Learning for Event Sequences with Self-Supervision"
+[5]: https://huggingface.co/datasets/ai-lab/MBD-mini?utm_source=chatgpt.com "ai-lab/MBD-mini · Datasets at Hugging Face"
+
+* **Paper MBD (arXiv)** – define tarefas **campaigning** e **matching** e descreve as modalidades/escala. ([arXiv][1])
+* **Hugging Face – MBD e MBD-mini** – descrição, estrutura, flag `is_balanced`, uso para prototipagem. ([Hugging Face][2])
+* **pytorch-lifestream (ptls)** – biblioteca para sequências de eventos em larga escala. ([GitHub][4])
+* **Repo do benchmark (GitHub)** – notebooks, scripts, late-fusion, requisitos. ([GitHub][5])
+
+[1]: https://arxiv.org/abs/2409.17587?utm_source=chatgpt.com "Multimodal Banking Dataset: Understanding Client Needs through Event Sequences"
+[2]: https://huggingface.co/datasets/ai-lab/MBD?utm_source=chatgpt.com "ai-lab/MBD · Datasets at Hugging Face"
+[3]: https://arxiv.org/html/2409.17587v2?utm_source=chatgpt.com "Multimodal Banking Dataset: Understanding Client Needs ..."
+[4]: https://github.com/dllllb/pytorch-lifestream?utm_source=chatgpt.com "pytorch-lifestream/pytorch-lifestream: A library built upon ..."
+[5]: https://github.com/dzhambo/mbd "GitHub - Dzhambo/MBD"
+[6]: https://ar5iv.labs.arxiv.org/html/2409.17587?utm_source=chatgpt.com "[2409.17587] Multimodal Banking Dataset ... - ar5iv - arXiv"
+[7]: https://arxiv.org/pdf/2409.17587?utm_source=chatgpt.com "multimodal banking dataset: understanding client needs ..."
+[8]: https://huggingface.co/datasets/ai-lab/MBD-mini?utm_source=chatgpt.com "ai-lab/MBD-mini · Datasets at Hugging Face"
+
+# Apêndices {.unnumbered}
+## Dicionário de dados {.appendix .unnumbered #apx-dados}
+
+**client_split**  
+: `client_id` (str) — identificador anonimizado do cliente.  
+  `fold` (int) — número da dobra oficial do dataset.
+
+**detail.dialog**  
+: `client_id` (str); `event_time` (timestamp); `embedding` (float[]) — vetor semântico do diálogo; `fold` (int).
+
+**detail.geo**  
+: `client_id` (str); `event_time` (timestamp); `fold` (int);  
+  `geohash_4`/`geohash_5`/`geohash_6` (int) — células espaciais hierárquicas.
+
+**detail.trx**  
+: `client_id` (str); `event_time` (timestamp); `amount` (float); `fold` (int);  
+  `event_type`, `event_subtype` (int) — códigos do tipo de transação;  
+  `currency` (int) — moeda codificada;  
+  `src_type11`, `src_type12`, `src_type21`, `src_type22`, `src_type31`, `src_type32` (int) — atributos do remetente;  
+  `dst_type11`, `dst_type12` (int) — atributos do destinatário/contratante.
+
+**ptls.dialog / ptls.geo / ptls.trx**  
+: Mesmos campos, porém como **arrays** por cliente (sequências temporais), no formato **pytorch-lifestream**.
+
+**targets**  
+: `mon` (str) — mês de referência;  
+  `target_1`…`target_4` (int) — emissão nos meses +1…+4 (multirrótulo);  
+  `trans_count` (int) — nº de transações no mês de referência;  
+  `diff_trans_date` (int) — tempo entre transações;  
+  `client_id` (str); `fold` (int).
+
+*Fonte: Adaptado de MOLLAEV, D. et al. (2025). DOI: 10.48550/arXiv.2409.17587. Tradução nossa.*

@@ -21,6 +21,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 /* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
@@ -44,17 +79,17 @@ div.csl-indent {
 }</style>
 
 
-<script src="machine_learning_project_files/libs/clipboard/clipboard.min.js"></script>
-<script src="machine_learning_project_files/libs/quarto-html/quarto.js" type="module"></script>
-<script src="machine_learning_project_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="machine_learning_project_files/libs/quarto-html/popper.min.js"></script>
-<script src="machine_learning_project_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="machine_learning_project_files/libs/quarto-html/anchor.min.js"></script>
-<link href="machine_learning_project_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="machine_learning_project_files/libs/quarto-html/quarto-syntax-highlighting-0815c480559380816a4d1ea211a47e91.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="machine_learning_project_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="machine_learning_project_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="machine_learning_project_files/libs/bootstrap/bootstrap-7bfc445d5145ff0366b23f01516eeac7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="index_files/libs/clipboard/clipboard.min.js"></script>
+<script src="index_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="index_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="index_files/libs/quarto-html/popper.min.js"></script>
+<script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="index_files/libs/quarto-html/anchor.min.js"></script>
+<link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-0815c480559380816a4d1ea211a47e91.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="index_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="index_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="index_files/libs/bootstrap/bootstrap-7bfc445d5145ff0366b23f01516eeac7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
 
 </head>
@@ -73,6 +108,50 @@ div.csl-indent {
   <li><a href="#problema-de-negócio" id="toc-problema-de-negócio" class="nav-link" data-scroll-target="#problema-de-negócio"><span class="header-section-number">2.1</span> Problema de negócio</a></li>
   <li><a href="#repositório" id="toc-repositório" class="nav-link" data-scroll-target="#repositório"><span class="header-section-number">2.2</span> Repositório</a></li>
   <li><a href="#dados" id="toc-dados" class="nav-link" data-scroll-target="#dados"><span class="header-section-number">2.3</span> Dados</a></li>
+  <li><a href="#pré-processamento" id="toc-pré-processamento" class="nav-link" data-scroll-target="#pré-processamento"><span class="header-section-number">2.4</span> Pré-processamento</a></li>
+  <li><a href="#métricas" id="toc-métricas" class="nav-link" data-scroll-target="#métricas"><span class="header-section-number">2.5</span> Métricas</a></li>
+  <li><a href="#estimadores" id="toc-estimadores" class="nav-link" data-scroll-target="#estimadores"><span class="header-section-number">2.6</span> Estimadores</a></li>
+  <li><a href="#otimização" id="toc-otimização" class="nav-link" data-scroll-target="#otimização"><span class="header-section-number">2.7</span> Otimização</a></li>
+  <li><a href="#seleção" id="toc-seleção" class="nav-link" data-scroll-target="#seleção"><span class="header-section-number">2.8</span> Seleção</a></li>
+  </ul></li>
+  <li><a href="#metodologia" id="toc-metodologia" class="nav-link" data-scroll-target="#metodologia"><span class="header-section-number">3</span> Metodologia</a>
+  <ul class="collapse">
+  <li><a href="#problema-e-hipótese" id="toc-problema-e-hipótese" class="nav-link" data-scroll-target="#problema-e-hipótese"><span class="header-section-number">3.1</span> Problema e hipótese</a></li>
+  <li><a href="#dados-e-partições" id="toc-dados-e-partições" class="nav-link" data-scroll-target="#dados-e-partições"><span class="header-section-number">3.2</span> Dados e partições</a></li>
+  <li><a href="#engenharia-de-atributos" id="toc-engenharia-de-atributos" class="nav-link" data-scroll-target="#engenharia-de-atributos"><span class="header-section-number">3.3</span> Engenharia de atributos</a>
+  <ul class="collapse">
+  <li><a href="#transações-trx" id="toc-transações-trx" class="nav-link" data-scroll-target="#transações-trx"><span class="header-section-number">3.3.1</span> Transações (trx)</a></li>
+  <li><a href="#geolocalização-geo" id="toc-geolocalização-geo" class="nav-link" data-scroll-target="#geolocalização-geo"><span class="header-section-number">3.3.2</span> Geolocalização (geo)</a></li>
+  <li><a href="#diálogos-dialog" id="toc-diálogos-dialog" class="nav-link" data-scroll-target="#diálogos-dialog"><span class="header-section-number">3.3.3</span> Diálogos (dialog)</a></li>
+  <li><a href="#junção-e-alvo" id="toc-junção-e-alvo" class="nav-link" data-scroll-target="#junção-e-alvo"><span class="header-section-number">3.3.4</span> Junção e alvo</a></li>
+  </ul></li>
+  <li><a href="#modelagem" id="toc-modelagem" class="nav-link" data-scroll-target="#modelagem"><span class="header-section-number">3.4</span> Modelagem</a></li>
+  <li><a href="#métricas-e-avaliação" id="toc-métricas-e-avaliação" class="nav-link" data-scroll-target="#métricas-e-avaliação"><span class="header-section-number">3.5</span> Métricas e avaliação</a></li>
+  <li><a href="#otimização-hpo-e-protocolo" id="toc-otimização-hpo-e-protocolo" class="nav-link" data-scroll-target="#otimização-hpo-e-protocolo"><span class="header-section-number">3.6</span> Otimização (HPO) e protocolo</a></li>
+  <li><a href="#ablação-e-fusão" id="toc-ablação-e-fusão" class="nav-link" data-scroll-target="#ablação-e-fusão"><span class="header-section-number">3.7</span> Ablação e fusão</a></li>
+  <li><a href="#organização-dos-dados" id="toc-organização-dos-dados" class="nav-link" data-scroll-target="#organização-dos-dados"><span class="header-section-number">3.8</span> Organização dos dados</a>
+  <ul class="collapse">
+  <li><a href="#transações-trx-1" id="toc-transações-trx-1" class="nav-link" data-scroll-target="#transações-trx-1"><span class="header-section-number">3.8.1</span> Transações (trx)</a></li>
+  <li><a href="#geolocalização-geo-1" id="toc-geolocalização-geo-1" class="nav-link" data-scroll-target="#geolocalização-geo-1"><span class="header-section-number">3.8.2</span> Geolocalização (geo)</a></li>
+  <li><a href="#diálogos-dialog-1" id="toc-diálogos-dialog-1" class="nav-link" data-scroll-target="#diálogos-dialog-1"><span class="header-section-number">3.8.3</span> Diálogos (dialog)</a></li>
+  <li><a href="#junção-e-alvo-1" id="toc-junção-e-alvo-1" class="nav-link" data-scroll-target="#junção-e-alvo-1"><span class="header-section-number">3.8.4</span> Junção e alvo</a></li>
+  </ul></li>
+  <li><a href="#modelagem-1" id="toc-modelagem-1" class="nav-link" data-scroll-target="#modelagem-1"><span class="header-section-number">3.9</span> Modelagem</a>
+  <ul class="collapse">
+  <li><a href="#trilho-tabular-baseline-de-baixo-custo" id="toc-trilho-tabular-baseline-de-baixo-custo" class="nav-link" data-scroll-target="#trilho-tabular-baseline-de-baixo-custo"><span class="header-section-number">3.9.1</span> Trilho tabular (baseline de baixo custo)</a></li>
+  <li><a href="#trilho-sequencial-aprendizado-de-representações" id="toc-trilho-sequencial-aprendizado-de-representações" class="nav-link" data-scroll-target="#trilho-sequencial-aprendizado-de-representações"><span class="header-section-number">3.9.2</span> Trilho sequencial (aprendizado de representações)</a></li>
+  </ul></li>
+  <li><a href="#validação-ajuste-de-hiperparâmetros-e-métrica-alvo" id="toc-validação-ajuste-de-hiperparâmetros-e-métrica-alvo" class="nav-link" data-scroll-target="#validação-ajuste-de-hiperparâmetros-e-métrica-alvo"><span class="header-section-number">3.10</span> Validação, ajuste de hiperparâmetros e métrica-alvo</a></li>
+  </ul></li>
+  <li><a href="#resultados" id="toc-resultados" class="nav-link" data-scroll-target="#resultados"><span class="header-section-number">4</span> Resultados</a></li>
+  <li><a href="#conclusões" id="toc-conclusões" class="nav-link" data-scroll-target="#conclusões"><span class="header-section-number">5</span> Conclusões</a>
+  <ul class="collapse">
+  <li><a href="#perguntas-chave" id="toc-perguntas-chave" class="nav-link" data-scroll-target="#perguntas-chave"><span class="header-section-number">5.1</span> Perguntas-chave</a></li>
+  <li><a href="#trabalhos-futuros" id="toc-trabalhos-futuros" class="nav-link" data-scroll-target="#trabalhos-futuros"><span class="header-section-number">5.2</span> Trabalhos futuros</a></li>
+  </ul></li>
+  <li><a href="#apêndices" id="toc-apêndices" class="nav-link" data-scroll-target="#apêndices">Apêndices</a>
+  <ul class="collapse">
+  
   </ul></li>
   </ul>
 </nav>
@@ -98,7 +177,7 @@ div.csl-indent {
     <div>
     <div class="quarto-title-meta-heading">Data de Publicação</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">22 de agosto de 2025</p>
+      <p class="date">24 de agosto de 2025</p>
     </div>
   </div>
   
@@ -130,6 +209,20 @@ div.csl-indent {
 <section id="repositório" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="repositório"><span class="header-section-number">2.2</span> Repositório</h2>
 <p>Os artefatos gerados durante o desenvolvimento deste projeto, incluindo notebooks, scripts e relatórios, estão organizados da seguinte forma e podem ser encontrados no seguinte repositório: <a href="https://github.com/osvaldojeronymo/machine-learning-project" class="uri">https://github.com/osvaldojeronymo/machine-learning-project</a>.</p>
+<pre><code>/notebooks
+  01_explore_mbd_mini.ipynb
+  02_features_tabular.ipynb
+  03_train_compare_tabular.ipynb
+  04_ptls_sequence_embeddings.ipynb
+/src
+  data_loading.py
+  features_trx.py / features_geo.py / features_dialog.py
+  train_tabular.py (Optuna + GroupKFold)
+  train_ptls.py
+/reports
+  metrics_by_fold.csv
+  feature_importance_{model}.csv
+  calibration_plots/</code></pre>
 </section>
 <section id="dados" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="dados"><span class="header-section-number">2.3</span> Dados</h2>
@@ -222,11 +315,487 @@ Quadro&nbsp;1— Visão geral de conjuntos de dados de transações existentes
 </figure>
 </div>
 <p><strong>Fonte:</strong> <span class="citation" data-cites="mollaev2025">Mollaev <em>et al.</em> (<a href="#ref-mollaev2025" role="doc-biblioref">2025</a>)</span>. DOI: 10.48550/arXiv.2409.17587. <em>Tradução nossa.</em></p>
-
+</section>
+<section id="pré-processamento" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="pré-processamento"><span class="header-section-number">2.4</span> Pré-processamento</h2>
+<p><strong>feature engineering</strong></p>
+</section>
+<section id="métricas" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="métricas"><span class="header-section-number">2.5</span> Métricas</h2>
+<p><strong>Primária: AUPRC (PR-AUC). Complementares: ROC-AUC, Precision@k, Recall@k, Brier, calibração.</strong></p>
+</section>
+<section id="estimadores" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="estimadores"><span class="header-section-number">2.6</span> Estimadores</h2>
+<p><strong>Tabular: Regressão Logística; LightGBM/XGBoost; CatBoost.</strong> <strong>Sequencial (opcional): ptls (pytorch-lifestream) + cabeçote leve.</strong></p>
+</section>
+<section id="otimização" class="level2" data-number="2.7">
+<h2 data-number="2.7" class="anchored" data-anchor-id="otimização"><span class="header-section-number">2.7</span> Otimização</h2>
+<p><strong>Optuna (TPE) com early stopping quando aplicável; seleção pelo AUPRC médio nas dobras.</strong></p>
+</section>
+<section id="seleção" class="level2" data-number="2.8">
+<h2 data-number="2.8" class="anchored" data-anchor-id="seleção"><span class="header-section-number">2.8</span> Seleção</h2>
+<p><strong>Comparar AUPRC/ROC-AUC, Top-k, calibração, estabilidade (±dp) e custo/latência.</strong></p>
 </section>
 </section>
+<section id="metodologia" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Metodologia</h1>
+<p>Esta seção descreve o delineamento metodológico adotado, estruturado como um <strong>pipeline de ciência de dados</strong> para predição em bases <strong>temporais e multimodais</strong>. Parte-se da definição do <strong>alvo</strong> e do <strong>horizonte</strong> de previsão e adota-se o paradigma de <strong>minimização do risco empírico</strong>, com controle de <strong>viés–variância</strong> por meio de <strong>validação em grupos</strong> (nível cliente) e <strong>bloqueio temporal</strong> (<em>no-lookahead</em>).</p>
+<p>A representação dos dados combina princípios de <strong>aprendizado multivisual</strong> (<em>multi-view</em>), com <strong>agregações em janelas</strong> (intensidade, recência, valor), <strong>medidas de mobilidade espacial</strong> e <strong>pooling de embeddings</strong>, além de <strong>redução de dimensionalidade</strong> para mitigar sobreajuste. Consideram-se dois trilhos de modelagem — <strong>tabular</strong> (regressão e <em>gradient boosting</em>) e <strong>sequencial</strong> (aprendizado de representações) — avaliados por métricas robustas a <strong>desbalanceamento</strong> (<strong>AUPRC</strong>, <em>Precision</em>@k) e <strong>calibração</strong>.</p>
+<p>A <strong>otimização de hiperparâmetros</strong> segue abordagem <strong>bayesiana</strong> com <strong>parada antecipada</strong>; <strong>ablações</strong> e <strong>fusão de modalidades</strong> quantificam contribuições e sinergias. O processo é conduzido com <strong>reprodutibilidade</strong> (versões, sementes, <em>pin</em> de dados) e <strong>governança</strong> (privacidade e uso responsável), visando não apenas desempenho preditivo, mas <strong>viabilidade operacional</strong> para priorização de campanhas.</p>
+<section id="problema-e-hipótese" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="problema-e-hipótese"><span class="header-section-number">3.1</span> Problema e hipótese</h2>
+<p>Em ciência de dados, a formulação do problema define o alvo preditivo, o horizonte temporal e as unidades de decisão. No nosso caso, trata-se de aprendizado supervisionado para classificação binária em dados temporais e multimodais, no qual buscamos um estimador 𝑓 ( 𝑥 ) f(x) que minimize o risco empírico (função de perda) sob restrições de desbalanceamento (baixa prevalência) e dependência temporal. A hipótese central decorre de aprendizado multivisual (multi-view learning): modalidades heterogêneas e complementares (transações, geolocalização e diálogos) capturam aspectos distintos do comportamento do cliente; portanto, sua fusão informacional tende a aumentar o poder discriminativo e a estabilidade do modelo frente a abordagens unimodais.</p>
+<p>Amarração ao seu texto: essa teoria sustenta: “Tarefa de campanha… estimar target_1. Hipótese: fusão multimodal supera unimodal em AUPRC e Precision@k.”</p>
+<p>Tarefa de campanha (purchase prediction): estimar target_1 (mês +1) — extensão opcional a target_2..4. Hipótese: fusão multimodal supera unimodal em AUPRC e Precision@k (<span class="citation" data-cites="mollaev2025">Mollaev <em>et al.</em> (<a href="#ref-mollaev2025" role="doc-biblioref">2025</a>)</span>).</p>
+</section>
+<section id="dados-e-partições" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="dados-e-partições"><span class="header-section-number">3.2</span> Dados e partições</h2>
+<p>Usa-se MBD (e MBD-mini para POC). Validação por cliente (GroupKFold por client_id ou fold nativo). Em cada mon, apenas eventos com event_time ≤ mon entram nas features (no-lookahead).</p>
+</section>
+<section id="engenharia-de-atributos" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="engenharia-de-atributos"><span class="header-section-number">3.3</span> Engenharia de atributos</h2>
+<section id="transações-trx" class="level3" data-number="3.3.1">
+<h3 data-number="3.3.1" class="anchored" data-anchor-id="transações-trx"><span class="header-section-number">3.3.1</span> Transações (trx)</h3>
+<p>Janelas 1/3/6 meses: RFM, ticket/mediana/desvio, mix por event_type/subtype, diversidade (entropias src<em>/dst</em>), sazonalidade (dia/hora, seno/cosseno).</p>
+</section>
+<section id="geolocalização-geo" class="level3" data-number="3.3.2">
+<h3 data-number="3.3.2" class="anchored" data-anchor-id="geolocalização-geo"><span class="header-section-number">3.3.2</span> Geolocalização (geo)</h3>
+<p>Contagem; nº de geohash_5/6 únicos; entropia espacial; mobilidade (trocas de célula; radius of gyration aproximado); recência.</p>
+</section>
+<section id="diálogos-dialog" class="level3" data-number="3.3.3">
+<h3 data-number="3.3.3" class="anchored" data-anchor-id="diálogos-dialog"><span class="header-section-number">3.3.3</span> Diálogos (dialog)</h3>
+<p>Pooling temporal dos embeddings (média, máx, média ponderada por recência, último vetor) + PCA (16–64) para reduzir dimensionalidade.</p>
+</section>
+<section id="junção-e-alvo" class="level3" data-number="3.3.4">
+<h3 data-number="3.3.4" class="anchored" data-anchor-id="junção-e-alvo"><span class="header-section-number">3.3.4</span> Junção e alvo</h3>
+<p>Chaves (client_id, mon); alvo primário target_1 (binário). Imputação de ausentes (0/estatística).</p>
+</section>
+</section>
+<section id="modelagem" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="modelagem"><span class="header-section-number">3.4</span> Modelagem</h2>
+<p>Tabular: LR; LightGBM/XGBoost; CatBoost. Sequencial (opcional): ptls (aprendizado auto-supervisionado, p.ex., CoLES) + MLP/GBM.</p>
+</section>
+<section id="métricas-e-avaliação" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="métricas-e-avaliação"><span class="header-section-number">3.5</span> Métricas e avaliação</h2>
+<p>AUPRC como alvo; ROC-AUC, Precision@k/Recall@k, Brier e curva de calibração. Reporte média ± dp em 5 dobras.</p>
+</section>
+<section id="otimização-hpo-e-protocolo" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="otimização-hpo-e-protocolo"><span class="header-section-number">3.6</span> Otimização (HPO) e protocolo</h2>
+<p>HPO com Optuna (TPE). Espaços: LR (C, L1/L2, class_weight); LGBM (num_leaves, max_depth, min_data_in_leaf, feature_fraction, bagging_fraction, lambda_l1/l2, learning_rate, n_estimators); CatBoost (depth, l2_leaf_reg, learning_rate, iterations, scale_pos_weight); ptls (hidden_size, n_layers, dropout, lr, seq_len, pooling). Seleção final pelo AUPRC médio; tie-breakers: estabilidade, Top-5%, calibração, custo.</p>
+</section>
+<section id="ablação-e-fusão" class="level2" data-number="3.7">
+<h2 data-number="3.7" class="anchored" data-anchor-id="ablação-e-fusão"><span class="header-section-number">3.7</span> Ablação e fusão</h2>
+<p>Ablação por modalidade (trx | geo | dialog | full) e late-fusion (concat/blending).</p>
+</section>
+<section id="organização-dos-dados" class="level2" data-number="3.8">
+<h2 data-number="3.8" class="anchored" data-anchor-id="organização-dos-dados"><span class="header-section-number">3.8</span> Organização dos dados</h2>
+<dl>
+<dt>O <a href="#tbl-mbd-schema" class="quarto-xref">Quadro&nbsp;2</a> apresenta a organização do MBD (<span class="citation" data-cites="mollaev2025">Mollaev <em>et al.</em> (<a href="#ref-mollaev2025" role="doc-biblioref">2025</a>)</span>).</dt>
+<dd>
+<p>Organização dos dados do MBD (resumo) {#tbl-mbd-schema}</p>
+</dd>
+</dl>
+<p>Camada/Tabela Campo (tipo) Descrição client_split client_id (str); fold (int) ID anonimizado e dobra oficial detail.dialog client_id; event_time; embedding (float[]) Vetores semânticos de diálogos detail.geo client_id; event_time; geohash_4/5/6 Eventos espaciais hierárquicos detail.trx client_id; event_time; amount; tipos… Transações e códigos de tipo/origem/destino ptls.* arrays por campo (por cliente) Sequências para modelagem com ptls targets mon; target_1..4; trans_count; diff_trans_date; client_id; fold Rótulos por mês e estatísticas de recência/volume</p>
+<p>Fonte: Adaptado de <span class="citation" data-cites="mollaev2025">Mollaev <em>et al.</em> (<a href="#ref-mollaev2025" role="doc-biblioref">2025</a>)</span>. DOI: 10.48550/arXiv.2409.17587. Tradução nossa.</p>
+<p>Veja o Apêndice A — Dicionário de dados.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Dica
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Boas práticas anti-vazamento: sempre respeite event_time ≤ mon; valide por cliente; normalize pipelines com fit no treino e transform no teste/validação.</p>
+</div>
+</div>
+<p><strong>Campanha de cross-sell:</strong> dada a historização de <strong>transações (trx)</strong>, <strong>atividade geográfica (geo)</strong> e <strong>embeddings de diálogo (dialog)</strong> até um mês de referência <code>mon</code>, <strong>prever a probabilidade de emissão de um produto</strong> no(s) próximo(s) mês(es). O MBD já vem com rótulos mensais <code>target_1</code>…<code>target_4</code> (emissão no +1, +2, +3, +4) e split por cliente/folds — é exatamente o cenário de “campaigning” proposto pelos autores. (<a href="https://huggingface.co/datasets/ai-lab/MBD?utm_source=chatgpt.com" title="ai-lab/MBD · Datasets at Hugging Face">Hugging Face</a>, <a href="https://arxiv.org/html/2409.17587v2?utm_source=chatgpt.com" title="Multimodal Banking Dataset: Understanding Client Needs ...">arXiv</a>)</p>
+<blockquote class="blockquote">
+<ul>
+<li><strong>Tarefa principal:</strong> classificação binária para <strong><code>target_1</code></strong> (emissão no mês seguinte).</li>
+<li><strong>Extensão opcional:</strong> modelo <strong>multi-tarefa</strong> para os 4 horizontes (<code>target_1..4</code>) com uma única base de features.</li>
+</ul>
+</blockquote>
+<p><strong>Tratamentos</strong></p>
+<p><strong>Premissas anti-vazamento (essenciais):</strong></p>
+<ul>
+<li>Para cada snapshot mensal <code>mon</code>, <strong>use apenas eventos com <code>event_time</code> ≤ fim de <code>mon</code></strong>.</li>
+<li>Respeite o split por <strong>cliente</strong> (use <code>fold</code>/<code>client_id</code>) para validação, evitando overlap. O dataset já fornece dobras e até versão “mini” para prototipagem. (<a href="https://huggingface.co/datasets/ai-lab/MBD?utm_source=chatgpt.com" title="ai-lab/MBD · Datasets at Hugging Face">Hugging Face</a>)</li>
+</ul>
+<p><strong><em>Transações (<code>detail.trx</code> ou <code>ptls.trx</code>)</em></strong></p>
+<p>Agregue janelas <strong>1, 3 e 6 meses</strong> (rolling/expanding) até <code>mon</code>:</p>
+<ul>
+<li><strong>RFM</strong>: número de transações; dias desde a última; soma e mediana de <code>amount</code>; ticket médio; % crédito vs débito (se aplicável).</li>
+<li><strong>Mix de tipos</strong>: contagens/percentuais por <code>event_type</code> e <code>event_subtype</code>.</li>
+<li><strong>Diversidade</strong>: entropia de <code>dst_type*</code>/<code>src_type*</code>; número de contrapartes únicas.</li>
+<li><strong>Volatilidade</strong>: std de <code>amount</code>; coef. de variação; sazonalidade por dia da semana/hora (one-hot + sen/cos).</li>
+</ul>
+<p><strong><em>Geo (<code>detail.geo</code> ou <code>ptls.geo</code>)</em></strong></p>
+<ul>
+<li><strong>Frequência e diversidade</strong>: nº de <code>geohash_5/6</code> únicos; entropia; “home geohash” (moda) e % de tempo nele.</li>
+<li><strong>Mobilidade</strong>: “radius of gyration” aproximado (decodifique geohash para lat/lon de célula); nº de trocas de célula; razão dia/noite; fins de semana vs semana.</li>
+<li><strong>Recência</strong>: tempo desde o último evento geo.</li>
+</ul>
+<p><strong><em>Diálogos (<code>detail.dialog</code> / embeddings)</em></strong></p>
+<ul>
+<li><strong>Pooling temporal</strong>: média, máx, <strong>recency-weighted mean</strong> e <strong>último embedding</strong>.</li>
+<li><strong>Intensidade</strong>: nº de diálogos no mês; dias com diálogo; tempo desde o último.</li>
+<li><strong>Redução</strong>: PCA/UMAP dos embeddings agregados para 16–64 dims (evita overfit).</li>
+</ul>
+<blockquote class="blockquote">
+<p>Observação: o MBD também disponibiliza os dados no <strong>formato ptls (pytorch-lifestream)</strong> para modelagem sequencial em larga escala. (<a href="https://github.com/dllllb/pytorch-lifestream?utm_source=chatgpt.com" title="pytorch-lifestream/pytorch-lifestream: A library built upon ...">GitHub</a>)</p>
+</blockquote>
+<p><strong><em>Junção + alvo</em></strong></p>
+<ul>
+<li><strong>Chave:</strong> (<code>client_id</code>, <code>mon</code>).</li>
+<li><strong>Alvos:</strong> <code>target_1</code> (principal) e, opcional, <code>target_2..4</code>.</li>
+<li><strong>Controles:</strong> <code>is_balanced</code> pode filtrar um subconjunto balanceado para experimentos rápidos (ou pesar classes). (<a href="https://huggingface.co/datasets/ai-lab/MBD?utm_source=chatgpt.com" title="ai-lab/MBD · Datasets at Hugging Face">Hugging Face</a>)</li>
+</ul>
+<p><strong>Métricas</strong></p>
+<p>Como campanhas têm <strong>baixa prevalência</strong>, priorize métricas robustas a desbalanceamento:</p>
+<ul>
+<li><strong>AUPRC (Average Precision/PR-AUC)</strong> – métrica principal.</li>
+<li><strong>ROC-AUC</strong> – complementar.</li>
+<li><strong>Top-k Precision / Recall@k</strong> – alinhada a orçamento de campanha (ex.: top 5% clientes).</li>
+<li><strong>Calibração</strong> (Brier/plot) – importante para seleção por score.</li>
+</ul>
+<p><strong>Estimadores</strong></p>
+<p><strong><em>Track 1 — Tabular (features agregadas)</em></strong></p>
+<ol type="1">
+<li><strong>Regressão Logística (baseline forte)</strong></li>
+<li><strong>Gradient Boosting</strong>: <strong>LightGBM</strong> <em>ou</em> <strong>XGBoost</strong></li>
+<li><strong>CatBoost</strong> (bom para misto categórico/numérico; lida bem com inteiros de códigos)</li>
+</ol>
+<p><strong><em>Track 2 — Sequencial (opcional, eleva teto de performance)</em></strong></p>
+<ol start="4" type="1">
+<li><strong><code>ptls</code> (pytorch-lifestream)</strong> para aprender embeddings de sequência (trx/geo) via auto-supervisão (p.ex., <strong>CoLES</strong>), seguidos de um <strong>cabeçote MLP</strong> para previsão. Esse é o caminho alinhado ao benchmark oficial do MBD. (<a href="https://github.com/dzhambo/mbd" title="GitHub - Dzhambo/MBD">GitHub</a>)</li>
+</ol>
+<p><strong>Otimização</strong></p>
+<ul>
+<li><p><strong>Validação:</strong> GroupKFold por <code>client_id</code> <strong>ou</strong> usar o <code>fold</code> nativo do dataset; estratificar por alvo dentro das dobras, se possível.</p></li>
+<li><p><strong>Estratégia:</strong> <strong>Optuna</strong> (Bayes/Tree-Parzen) com <em>early stopping</em> e <strong>objetivo = AUPRC (validação)</strong>.</p></li>
+<li><p><strong>Espaços (exemplos):</strong></p>
+<ul>
+<li><strong>LogReg:</strong> C (1e-4…1e2), penalty (l1/l2), class_weight (balanced/None).</li>
+<li><strong>LightGBM:</strong> num_leaves, max_depth, min_data_in_leaf, feature_fraction, bagging_fraction, lambda_l1/l2, learning_rate.</li>
+<li><strong>CatBoost:</strong> depth, l2_leaf_reg, learning_rate, border_count; <code>scale_pos_weight</code>.</li>
+<li><strong>ptls (seq):</strong> hidden_size, n_layers, dropout, lr, seq_len (subsequências), embedding pooling.</li>
+</ul></li>
+</ul>
+<p><strong>Comparação</strong></p>
+<ul>
+<li>Treine todos os modelos nas mesmas dobras.</li>
+<li>Relate <strong>AUPRC/ROC-AUC</strong>, <strong>Top-k</strong> (5%, 10%, 20%), <strong>calibração</strong> e <strong>curvas de ganho/lift</strong>.</li>
+<li>Faça <strong>ablação por modalidade</strong> (trx/geo/dialog) e <strong>late-fusion</strong> (concat/blending) — também alinhado ao repositório dos autores. (<a href="https://github.com/dzhambo/mbd" title="GitHub - Dzhambo/MBD">GitHub</a>)</li>
+<li>Escolha o <strong>melhor compromisso</strong> entre <strong>AUPRC</strong>, <strong>estabilidade nas dobras</strong>, <strong>custo/latência</strong> e <strong>calibração</strong>.</li>
+</ul>
+<p><strong>Formulação do problema</strong></p>
+<p>Este estudo aborda a tarefa de <strong>campanha (purchase prediction)</strong>: dados históricos multimodais de cada cliente até um mês de referência <code>mon</code>, estima-se a <strong>probabilidade de emissão de produto no mês subsequente</strong> (<code>target_1</code>). A formulação segue o delineamento do <strong>Multimodal Banking Dataset (MBD)</strong>, que provê rótulos mensais (<code>target_1</code>…<code>target_4</code>) e dados temporais de <strong>transações (trx)</strong>, <strong>atividade geográfica (geo)</strong> e <strong>embeddings de diálogos (dialog)</strong>. (MOLLAEV et al., 2025). (<a href="https://arxiv.org/abs/2409.17587?utm_source=chatgpt.com" title="Multimodal Banking Dataset: Understanding Client Needs through Event Sequences">arXiv</a>)</p>
+<p><strong>Organização dos dados</strong></p>
+<p>O <a href="#tbl-mbd-schema" class="quarto-xref">Quadro&nbsp;2</a> apresenta a organização do <strong>MBD</strong> realizada por <span class="citation" data-cites="mollaev2025">Mollaev <em>et al.</em> (<a href="#ref-mollaev2025" role="doc-biblioref">2025</a>)</span>:</p>
+<div id="tbl-mbd-schema" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-mbd-schema-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Quadro&nbsp;2— Organização dos dados do MBD (resumo)
+</figcaption>
+<div aria-describedby="tbl-mbd-schema-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Camada/Tabela</th>
+<th>Campo (tipo)</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>client_split</td>
+<td>client_id (str); fold (int)</td>
+<td>ID anonimizado e dobra oficial</td>
+</tr>
+<tr class="even">
+<td>detail.dialog</td>
+<td>client_id; event_time; embedding (float[])</td>
+<td>Interações de suporte como vetores (tempo + semântica)</td>
+</tr>
+<tr class="odd">
+<td>detail.geo</td>
+<td>client_id; event_time; geohash_4/5/6</td>
+<td>Eventos espaciais hierárquicos no tempo</td>
+</tr>
+<tr class="even">
+<td>detail.trx</td>
+<td>client_id; event_time; amount; tipos…</td>
+<td>Transações com valores e códigos de tipo/origem/destino</td>
+</tr>
+<tr class="odd">
+<td>ptls.*</td>
+<td>arrays por campo (por cliente)</td>
+<td>Sequências agregadas por cliente (formato pytorch-lifestream)</td>
+</tr>
+<tr class="even">
+<td>targets</td>
+<td>mon; target_1..4; trans_count; diff_trans_date; client_id; fold</td>
+<td>Rótulos por mês e estatísticas de recência/volume</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>Fonte: Adaptado de MOLLAEV, D. et al.&nbsp;(2025). DOI: 10.48550/arXiv.2409.17587. Tradução nossa.</p>
+<p>Veja o <a href="#apx-dados">Apêndice A — Dicionário de dados</a>.</p>
+<p><strong>Dados, versões e partições</strong></p>
+<p>Utiliza-se o <strong>MBD</strong> hospedado na Hugging Face, com dados anonimizados por cliente ao longo de ~12 meses, concebido para prever propensão de compra após a data de referência. Para prototipagem e <em>tuning</em> inicial, emprega-se o <strong>MBD-mini</strong>, que preserva a estrutura e acelera ciclos de experimento, com posterior migração ao conjunto completo. Para reprodutibilidade, o carregamento é fixado (<em>pinado</em>) a uma revisão específica do dataset. (AI-LAB, 2025; MOLLAEV et al., 2025). (<a href="https://huggingface.co/datasets/ai-lab/MBD?utm_source=chatgpt.com" title="ai-lab/MBD · Datasets at Hugging Face">Hugging Face</a>, <a href="https://arxiv.org/abs/2409.17587?utm_source=chatgpt.com" title="Multimodal Banking Dataset: Understanding Client Needs through Event Sequences">arXiv</a>) A validação respeita a unidade natural de generalização (<strong>cliente</strong>). Adota-se <strong>GroupKFold</strong> com <strong><code>client_id</code></strong> como agrupador ou, alternativamente, as <strong>dobras (<code>fold</code>)</strong> fornecidas pelo próprio dataset, evitando vazamento por sobreposição de clientes entre treino e validação. Em todas as montagens por mês de referência, <strong>somente eventos com <code>event_time</code> ≤ fim de <code>mon</code></strong> são elegíveis para <em>features</em> (“no-lookahead”). (MOLLAEV et al., 2025). (<a href="https://arxiv.org/abs/2409.17587?utm_source=chatgpt.com" title="Multimodal Banking Dataset: Understanding Client Needs through Event Sequences">arXiv</a>)</p>
+<p><strong>Pré-processamento e engenharia de atributos</strong></p>
+<section id="transações-trx-1" class="level3" data-number="3.8.1">
+<h3 data-number="3.8.1" class="anchored" data-anchor-id="transações-trx-1"><span class="header-section-number">3.8.1</span> Transações (trx)</h3>
+<p>Para cada par (<code>client_id</code>, <code>mon</code>), agregam-se janelas <strong>1, 3 e 6 meses</strong> até o fim de <code>mon</code>: (i) <strong>volume/frequência</strong>: contagem de transações; recência (dias desde a última); (ii) <strong>valor</strong>: soma, mediana, desvio-padrão e ticket médio de <code>amount</code>; (iii) <strong>mix de tipos</strong>: contagens/percentuais por <code>event_type</code> e <code>event_subtype</code>; (iv) <strong>diversidade/rede</strong>: número de contrapartes únicas e entropias em <code>dst_type*</code>/<code>src_type*</code>; (v) <strong>sazonalidade</strong>: indicadores de dia da semana/hora (one-hot e codificação seno/cosseno). (MOLLAEV et al., 2025). (<a href="https://arxiv.org/abs/2409.17587?utm_source=chatgpt.com" title="Multimodal Banking Dataset: Understanding Client Needs through Event Sequences">arXiv</a>)</p>
+</section>
+<section id="geolocalização-geo-1" class="level3" data-number="3.8.2">
+<h3 data-number="3.8.2" class="anchored" data-anchor-id="geolocalização-geo-1"><span class="header-section-number">3.8.2</span> Geolocalização (geo)</h3>
+<p>A partir da sequência de geohashes: (i) <strong>intensidade/diversidade</strong>: número de eventos; células únicas em <code>geohash_5/6</code>; entropia espacial; (ii) <strong>mobilidade</strong>: <em>radius of gyration</em> aproximado, trocas de célula, razões dia/noite e semana/fim-de-semana; (iii) <strong>recência</strong>: dias desde o último evento geo. (MOLLAEV et al., 2025). (<a href="https://arxiv.org/abs/2409.17587?utm_source=chatgpt.com" title="Multimodal Banking Dataset: Understanding Client Needs through Event Sequences">arXiv</a>)</p>
+</section>
+<section id="diálogos-dialog-1" class="level3" data-number="3.8.3">
+<h3 data-number="3.8.3" class="anchored" data-anchor-id="diálogos-dialog-1"><span class="header-section-number">3.8.3</span> Diálogos (dialog)</h3>
+<p>Os <strong>embeddings</strong> de diálogo são agregados temporalmente por cliente via <strong>média</strong>, <strong>máximo</strong>, <strong>média ponderada pela recência</strong> e <strong>vetor do último diálogo</strong>; aplica-se <strong>PCA (16–64 dimensões)</strong> sobre vetores agregados para reduzir dimensionalidade e mitigar <em>overfitting</em>. (MOLLAEV et al., 2025). (<a href="https://arxiv.org/abs/2409.17587?utm_source=chatgpt.com" title="Multimodal Banking Dataset: Understanding Client Needs through Event Sequences">arXiv</a>)</p>
+</section>
+<section id="junção-e-alvo-1" class="level3" data-number="3.8.4">
+<h3 data-number="3.8.4" class="anchored" data-anchor-id="junção-e-alvo-1"><span class="header-section-number">3.8.4</span> Junção e alvo</h3>
+<p>As <em>features</em> de cada modalidade são unidas por (<code>client_id</code>, <code>mon</code>) e associadas ao rótulo <strong>binário</strong> <code>target_1</code>. <strong>Valores ausentes</strong> pós-agregação são imputados com zero (ou estatísticas de janela, quando aplicável). Para experimentos com foco em tempo de execução, pode-se filtrar <code>is_balanced == 1</code>, preservando a comparação final no conjunto completo. (AI-LAB, 2025). (<a href="https://huggingface.co/datasets/ai-lab/MBD?utm_source=chatgpt.com" title="ai-lab/MBD · Datasets at Hugging Face">Hugging Face</a>)</p>
+</section>
+</section>
+<section id="modelagem-1" class="level2" data-number="3.9">
+<h2 data-number="3.9" class="anchored" data-anchor-id="modelagem-1"><span class="header-section-number">3.9</span> Modelagem</h2>
+<section id="trilho-tabular-baseline-de-baixo-custo" class="level3" data-number="3.9.1">
+<h3 data-number="3.9.1" class="anchored" data-anchor-id="trilho-tabular-baseline-de-baixo-custo"><span class="header-section-number">3.9.1</span> Trilho tabular (baseline de baixo custo)</h3>
+<p>Modelos sobre <em>features</em> agregadas: <strong>Regressão Logística</strong> (penalizações L1/L2 e <code>class_weight</code>), <strong>Gradient Boosting</strong> (LightGBM/XGBoost) e <strong>CatBoost</strong>. Este trilho oferece treinamento rápido, interpretabilidade (importâncias/SHAP) e <strong>baixa latência de inferência</strong> para uso em campanhas.</p>
+</section>
+<section id="trilho-sequencial-aprendizado-de-representações" class="level3" data-number="3.9.2">
+<h3 data-number="3.9.2" class="anchored" data-anchor-id="trilho-sequencial-aprendizado-de-representações"><span class="header-section-number">3.9.2</span> Trilho sequencial (aprendizado de representações)</h3>
+<p>Explora-se o caráter <strong>sequencial</strong> por meio do ecossistema <strong>pytorch-lifestream (ptls)</strong>, que aprende <strong>embeddings auto-supervisionados</strong> de sequências discretas em grande escala (por exemplo, <strong>CoLES</strong>). Treinam-se <em>encoders</em> para <strong>trx</strong> e/ou <strong>geo</strong> e, em seguida, aplica-se um <strong>cabeçote leve</strong> (MLP ou GBM) para prever <code>target_1</code>. (SBERBANK AI LAB, 2025; BABAEV et al., 2020). (<a href="https://arxiv.org/html/2409.17587v2?utm_source=chatgpt.com" title="Multimodal Banking Dataset: Understanding Client Needs ...">GitHub</a>, <a href="https://github.com/dllllb/pytorch-lifestream?utm_source=chatgpt.com" title="pytorch-lifestream/pytorch-lifestream: A library built upon ...">arXiv</a>)</p>
+</section>
+</section>
+<section id="validação-ajuste-de-hiperparâmetros-e-métrica-alvo" class="level2" data-number="3.10">
+<h2 data-number="3.10" class="anchored" data-anchor-id="validação-ajuste-de-hiperparâmetros-e-métrica-alvo"><span class="header-section-number">3.10</span> Validação, ajuste de hiperparâmetros e métrica-alvo</h2>
+<p>O protocolo de validação usa <strong>GroupKFold (5 dobras)</strong> por <strong><code>client_id</code></strong> (ou <em>folds</em> nativos do MBD). A <strong>métrica-alvo</strong> de <em>tuning</em> é <strong>AUPRC (PR-AUC)</strong>, apropriada a cenários desbalanceados; <strong>ROC-AUC</strong> é métrica complementar. O ajuste utiliza <strong>Optuna</strong> (Tree-Parzen) com <em>early stopping</em> quando suportado: a) <strong>LR</strong>: <code>C</code> (log-space), <code>penalty</code> (L1/L2), <code>class_weight</code>; b) <strong>LightGBM</strong>: <code>num_leaves</code>, <code>max_depth</code>, <code>min_data_in_leaf</code>, <code>feature_fraction</code>, <code>bagging_fraction</code>, <code>lambda_l1/l2</code>, <code>learning_rate</code>, <code>n_estimators</code>; c) <strong>CatBoost</strong>: <code>depth</code>, <code>l2_leaf_reg</code>, <code>learning_rate</code>, <code>iterations</code>, <code>scale_pos_weight</code>; d) <strong>ptls</strong>: <code>hidden_size</code>, <code>n_layers</code>, <code>dropout</code>, <code>lr</code>, <code>seq_len</code> e estratégia de <em>pooling</em> dos <em>embeddings</em>. (SBERBANK AI LAB, 2025). (<a href="https://arxiv.org/html/2409.17587v2?utm_source=chatgpt.com" title="Multimodal Banking Dataset: Understanding Client Needs ...">GitHub</a>)</p>
+<p>**Ablação, fusão e seleção de limiar</p>
+<p>Conduz-se <strong>ablação por modalidade</strong> (somente trx; somente geo; somente dialog; multimodal) e <strong>fusão tardia</strong> por concatenação de <em>features</em> ou <em>blending</em> de escores. A seleção de limiar (τ) é orientada por <strong>calibração</strong> (Brier/curva de confiabilidade) e <strong>restrições de orçamento</strong> (p.&nbsp;ex., <em>precision@k</em> no topo de 5–10% dos clientes). (MOLLAEV et al., 2025). (<a href="https://arxiv.org/abs/2409.17587?utm_source=chatgpt.com" title="Multimodal Banking Dataset: Understanding Client Needs through Event Sequences">arXiv</a>)</p>
+<p>**Controles de risco e vieses</p>
+<p>Mitigam-se riscos com: (i) <strong>bloqueio temporal</strong> nas agregações (<code>event_time ≤ mon</code>); (ii) tratamento do <strong>desbalanceamento</strong> com AUPRC, <code>class_weight/scale_pos_weight</code> e avaliação em <strong>top-k</strong>; (iii) <strong>monitoramento de <em>drift</em></strong> (distribuições de <em>features</em> e fração de positivos); (iv) análise por <strong>segmentos</strong> para identificar vieses e impactos desiguais. (MOLLAEV et al., 2025). (<a href="https://arxiv.org/abs/2409.17587?utm_source=chatgpt.com" title="Multimodal Banking Dataset: Understanding Client Needs through Event Sequences">arXiv</a>)</p>
+<p>**Reprodutibilidade e implantação</p>
+<p>Para reprodutibilidade, fixam-se <strong>sementes</strong>, <strong>versionamento</strong> de código/artefatos, <strong>pin</strong> da revisão do dataset e registro de ambiente (versões). Para implantação, <em>features</em> agregadas permitem <em>scoring</em> <strong>batch</strong> mensal com baixa latência; no trilho sequencial, <strong>embeddings ptls</strong> podem ser pré-computados e servidos a um <strong>classificador leve</strong> (GBM/MLP), equilibrando desempenho e custo operacional. (AI-LAB, 2025; SBERBANK AI LAB, 2025). (<a href="https://huggingface.co/datasets/ai-lab/MBD?utm_source=chatgpt.com" title="ai-lab/MBD · Datasets at Hugging Face">Hugging Face</a>, <a href="https://arxiv.org/html/2409.17587v2?utm_source=chatgpt.com" title="Multimodal Banking Dataset: Understanding Client Needs ...">GitHub</a>)</p>
+</section>
+</section>
+<section id="resultados" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Resultados</h1>
+<p><strong>Código base (funciona com MBD-mini para iterar rápido)</strong></p>
+<blockquote class="blockquote">
+<p>Use <strong>MBD-mini</strong> (≈10% dos clientes, mesma estrutura) para prototipar e depois migre ao completo. (<a href="https://huggingface.co/datasets/ai-lab/MBD-mini?utm_source=chatgpt.com" title="ai-lab/MBD-mini · Datasets at Hugging Face">Hugging Face</a>)</p>
+</blockquote>
+<p><strong>1) Carregar dados e preparar snapshots</strong></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datasets <span class="im">import</span> load_dataset</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> load_dataset(<span class="st">"ai-lab/MBD-mini"</span>)  <span class="co"># depois: "ai-lab/MBD"</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Tabelas: ds['client_split'], ds['detail.trx'], ds['detail.geo'], ds['detail.dialog'], ds['targets']</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>client_split <span class="op">=</span> pd.DataFrame(ds[<span class="st">'client_split'</span>])</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>targets <span class="op">=</span> pd.DataFrame(ds[<span class="st">'targets'</span>])</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Exemplo: manter apenas amostra balanceada para POC</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>clients_ok <span class="op">=</span> client_split.query(<span class="st">"is_balanced == 1"</span>)[[<span class="st">"client_id"</span>,<span class="st">"fold"</span>]]</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>targets <span class="op">=</span> targets.merge(clients_ok, on<span class="op">=</span><span class="st">"client_id"</span>, how<span class="op">=</span><span class="st">"inner"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>2) Agregar TRX até o mês de referência</strong></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>trx <span class="op">=</span> pd.DataFrame(ds[<span class="st">'detail.trx'</span>])</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>trx <span class="op">=</span> trx.merge(clients_ok, on<span class="op">=</span><span class="st">"client_id"</span>)  <span class="co"># traz fold</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>trx[<span class="st">"event_time"</span>] <span class="op">=</span> pd.to_datetime(trx[<span class="st">"event_time"</span>])</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> make_trx_agg(df, until_month):</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    m_end <span class="op">=</span> pd.to_datetime(until_month) <span class="op">+</span> pd.offsets.MonthEnd(<span class="dv">0</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    dfm <span class="op">=</span> df[df[<span class="st">"event_time"</span>] <span class="op">&lt;=</span> m_end]</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    g <span class="op">=</span> dfm.groupby(<span class="st">"client_id"</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    out <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">"client_id"</span>: g.size().index,</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">"trx_cnt_1m"</span>: g.size().values,</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">"amt_sum"</span>: g[<span class="st">"amount"</span>].<span class="bu">sum</span>().values,</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">"amt_med"</span>: g[<span class="st">"amount"</span>].median().values,</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">"amt_std"</span>: g[<span class="st">"amount"</span>].std().fillna(<span class="dv">0</span>).values,</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">"days_since_last_trx"</span>: (m_end <span class="op">-</span> g[<span class="st">"event_time"</span>].<span class="bu">max</span>()).dt.days.values</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> out</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Exemplo para um mês (faça loop por mon em targets)</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>mon <span class="op">=</span> targets[<span class="st">"mon"</span>].iloc[<span class="dv">0</span>]</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>trx_agg <span class="op">=</span> make_trx_agg(trx, mon)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>3) Features de GEO e DIALOG (sketch similar)</strong></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>geo <span class="op">=</span> pd.DataFrame(ds[<span class="st">'detail.geo'</span>])</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>geo[<span class="st">"event_time"</span>] <span class="op">=</span> pd.to_datetime(geo[<span class="st">"event_time"</span>])</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> make_geo_agg(df, until_month):</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    m_end <span class="op">=</span> pd.to_datetime(until_month) <span class="op">+</span> pd.offsets.MonthEnd(<span class="dv">0</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    dfx <span class="op">=</span> df[df[<span class="st">"event_time"</span>] <span class="op">&lt;=</span> m_end]</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    g <span class="op">=</span> dfx.groupby(<span class="st">"client_id"</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pd.DataFrame({</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"client_id"</span>: g.size().index,</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"geo_events"</span>: g.size().values,</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">"geo_cells6_unique"</span>: g[<span class="st">"geohash_6"</span>].nunique().values</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>geo_agg <span class="op">=</span> make_geo_agg(geo, mon)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>dlg <span class="op">=</span> pd.DataFrame(ds[<span class="st">'detail.dialog'</span>])</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>dlg[<span class="st">"event_time"</span>] <span class="op">=</span> pd.to_datetime(dlg[<span class="st">"event_time"</span>])</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Cada linha tem um vetor "embedding" → faça um pooling simples (mean) por cliente</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> mean_pool(vecs):</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.mean(np.vstack(vecs), axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>emb_dim <span class="op">=</span> <span class="bu">len</span>(dlg[<span class="st">"embedding"</span>].iloc[<span class="dv">0</span>])</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>pool <span class="op">=</span> dlg[dlg[<span class="st">"event_time"</span>] <span class="op">&lt;=</span> pd.to_datetime(mon) <span class="op">+</span> pd.offsets.MonthEnd(<span class="dv">0</span>)] <span class="op">\</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>        .groupby(<span class="st">"client_id"</span>)[<span class="st">"embedding"</span>].<span class="bu">apply</span>(mean_pool).reset_index()</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>emb_cols <span class="op">=</span> [<span class="ss">f"dlg_mean_</span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(emb_dim)]</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>dlg_agg <span class="op">=</span> pd.DataFrame(pool[<span class="st">"embedding"</span>].to_list(), columns<span class="op">=</span>emb_cols)</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>dlg_agg.insert(<span class="dv">0</span>, <span class="st">"client_id"</span>, pool[<span class="st">"client_id"</span>])</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>4) Montar dataset final + alvo e split por fold</strong></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> targets.query(<span class="st">"mon == @mon"</span>)[[<span class="st">"client_id"</span>,<span class="st">"target_1"</span>,<span class="st">"fold"</span>]] <span class="op">\</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    .merge(trx_agg, on<span class="op">=</span><span class="st">"client_id"</span>, how<span class="op">=</span><span class="st">"left"</span>) <span class="op">\</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    .merge(geo_agg, on<span class="op">=</span><span class="st">"client_id"</span>, how<span class="op">=</span><span class="st">"left"</span>) <span class="op">\</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    .merge(dlg_agg, on<span class="op">=</span><span class="st">"client_id"</span>, how<span class="op">=</span><span class="st">"left"</span>) <span class="op">\</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    .fillna(<span class="dv">0</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> X.pop(<span class="st">"target_1"</span>).astype(<span class="bu">int</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>fold <span class="op">=</span> X.pop(<span class="st">"fold"</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>client_ids <span class="op">=</span> X.pop(<span class="st">"client_id"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>5) Treinar 3 estimadores + HPO (ex.: Optuna + GroupKFold)</strong></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> optuna</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> GroupKFold</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> average_precision_score</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> lightgbm <span class="im">import</span> LGBMClassifier</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> catboost <span class="im">import</span> CatBoostClassifier</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cv_ap(X, y, groups, clf):</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    gkf <span class="op">=</span> GroupKFold(n_splits<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    scores<span class="op">=</span>[]</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> tr, va <span class="kw">in</span> gkf.split(X, y, groups):</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>        clf_ <span class="op">=</span> clf</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>        clf_.fit(X.iloc[tr], y.iloc[tr])</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>        p <span class="op">=</span> clf_.predict_proba(X.iloc[va])[:,<span class="dv">1</span>]</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>        scores.append(average_precision_score(y.iloc[va], p))</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">float</span>(np.mean(scores))</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Baselines rápidos</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>ap_lr  <span class="op">=</span> cv_ap(X, y, client_ids, LogisticRegression(max_iter<span class="op">=</span><span class="dv">200</span>, class_weight<span class="op">=</span><span class="st">"balanced"</span>))</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>ap_lgb <span class="op">=</span> cv_ap(X, y, client_ids, LGBMClassifier(n_estimators<span class="op">=</span><span class="dv">400</span>, learning_rate<span class="op">=</span><span class="fl">0.05</span>))</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>ap_cat <span class="op">=</span> cv_ap(X, y, client_ids, CatBoostClassifier(iterations<span class="op">=</span><span class="dv">400</span>, learning_rate<span class="op">=</span><span class="fl">0.05</span>, verbose<span class="op">=</span><span class="dv">0</span>))</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ap_lr, ap_lgb, ap_cat)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<p>Para <strong>sequencial/ptls</strong>, use o formato <code>ptls.*</code> e treine um encoder (p.ex., <strong>CoLES</strong>) para <code>trx</code> e/ou <code>geo</code>, salve os <strong>embeddings por cliente</strong> e <strong>alimente um GBM/MLP</strong> — exatamente como no benchmark (há scripts/notebooks oficiais). (<a href="https://github.com/dzhambo/mbd" title="GitHub - Dzhambo/MBD">GitHub</a>)</p>
+</blockquote>
+<hr>
+</section>
+<section id="conclusões" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Conclusões</h1>
+<section id="perguntas-chave" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="perguntas-chave"><span class="header-section-number">5.1</span> Perguntas-chave</h2>
+<p><strong>i. Resolve o problema?</strong> Se o <strong>AUPRC</strong> do melhor modelo superar com folga baselines simples (ex.: RegLog e rules-based) e entregar <strong>lift</strong> alto no top-k, sim — o MBD foi criado justamente para <strong>predição de compra futura (campaigning)</strong> e mostrou vantagem do multimodal sobre unimodal. (<a href="https://arxiv.org/abs/2409.17587?utm_source=chatgpt.com" title="Multimodal Banking Dataset: Understanding Client Needs through Event Sequences">arXiv</a>, <a href="https://ar5iv.labs.arxiv.org/html/2409.17587?utm_source=chatgpt.com" title="[2409.17587] Multimodal Banking Dataset ... - ar5iv - arXiv">ar5iv</a>)</p>
+<p><strong>ii. Vai para produção? (checklist)</strong></p>
+<p>(dados, latência, monitoramento, ética/LGPD)</p>
+<ul>
+<li><strong>Dados online:</strong> consegue materializar as features (ou sequências) <strong>diariamente/mensalmente</strong> sem usar informação futura?</li>
+<li><strong>Latency/custo:</strong> Tabular (LightGBM/CatBoost) é leve; sequencial (ptls) pede GPU em treino, mas <strong>inferencia</strong> pode ser só MLP/GBM sobre embeddings pré-computados. Repositório traz requisitos de HW/stack para o benchmark. (<a href="https://github.com/dzhambo/mbd" title="GitHub - Dzhambo/MBD">GitHub</a>)</li>
+<li><strong>Calibração &amp; Orçamento:</strong> defina um <strong>threshold</strong> para respeitar o budget (ex.: disparar para top 8% com prob ≥ τ calibrado).</li>
+<li><strong>Monitoramento:</strong> AUPRC em amostras de controle, <strong>drift</strong> de features, <strong>fração de positivos</strong> por segmento, e re-treino mensal/trimestral.</li>
+<li><strong>Ética &amp; privacidade:</strong> MBD é <strong>anonimizado</strong>; ainda assim avalie bias por <strong>segmentos de cliente</strong> (porte/região/setor). (<a href="https://arxiv.org/pdf/2409.17587?utm_source=chatgpt.com" title="multimodal banking dataset: understanding client needs ...">arXiv</a>)</li>
+</ul>
+</section>
+<section id="trabalhos-futuros" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="trabalhos-futuros"><span class="header-section-number">5.2</span> Trabalhos futuros</h2>
+<ul>
+<li><p><strong>Vazamento temporal</strong> ao agregar além de <code>mon</code>.</p></li>
+<li><p><strong>Desbalanceamento</strong>: preferir <strong>AUPRC</strong>, <code>class_weight</code>/<code>scale_pos_weight</code> e <strong>Top-k</strong>.</p></li>
+<li><p><strong>Latência &amp; custo</strong> para sequencial: usar embeddings pré-computados + GBM em produção. (<a href="https://github.com/dzhambo/mbd" title="GitHub - Dzhambo/MBD">GitHub</a>)</p></li>
+<li><p><strong>Download e conversão:</strong></p>
+<ul>
+<li>Utilização do script <code>baixa_arquivos_login.py</code> para baixar arquivos.</li>
+<li>Conversão de arquivos <code>.xls</code>, <code>.xlsx</code>, <code>.xlsm</code> para SQLite.</li>
+</ul></li>
+<li><p><strong>Validação e Limpeza:</strong></p>
+<ul>
+<li>Identificação de arquivos corrompidos e protegidos por senha.</li>
+</ul></li>
+<li><p><strong>Classificação das Devoluções:</strong></p>
+<ul>
+<li>Categorias definidas a partir das não conformidades nos checklists.</li>
+</ul></li>
+<li><p>AI-LAB. <strong>MBD – Multimodal Banking Dataset</strong>. Dataset. Hugging Face, 2025. Disponível em: <code>https://huggingface.co/datasets/ai-lab/MBD</code>. Acesso em: 16 ago. 2025. (<a href="https://huggingface.co/datasets/ai-lab/MBD?utm_source=chatgpt.com" title="ai-lab/MBD · Datasets at Hugging Face">Hugging Face</a>)</p></li>
+<li><p>AI-LAB. <strong>MBD-mini – Multimodal Banking Dataset (versão reduzida)</strong>. Dataset. Hugging Face, 2025. Disponível em: <code>https://huggingface.co/datasets/ai-lab/MBD-mini</code>. Acesso em: 16 ago. 2025. (<a href="https://github.com/dzhambo/mbd" title="GitHub - Dzhambo/MBD">Hugging Face</a>)</p></li>
+<li><p>BABAEV, D. <strong>et al.</strong> <strong>CoLES: Contrastive Learning for Event Sequences with Self-Supervision</strong>. <em>arXiv preprint</em> arXiv:2002.08232, 2020. Disponível em: <code>https://arxiv.org/abs/2002.08232</code>. Acesso em: 16 ago. 2025. (<a href="https://github.com/dllllb/pytorch-lifestream?utm_source=chatgpt.com" title="pytorch-lifestream/pytorch-lifestream: A library built upon ...">arXiv</a>)</p></li>
+<li><p>MOLLAEV, D. <strong>et al.</strong> <strong>Multimodal Banking Dataset: Understanding Client Needs through Event Sequences</strong>. <em>arXiv preprint</em> arXiv:2409.17587, v2, 2025. DOI: 10.48550/arXiv.2409.17587. Disponível em: <code>https://arxiv.org/abs/2409.17587</code>. Acesso em: 16 ago. 2025. (<a href="https://arxiv.org/abs/2409.17587?utm_source=chatgpt.com" title="Multimodal Banking Dataset: Understanding Client Needs through Event Sequences">arXiv</a>)</p></li>
+<li><p>SBERBANK AI LAB. <strong>pytorch-lifestream: a library for embeddings on discrete event sequences</strong>. Software. GitHub, 2025. Disponível em: <code>https://github.com/sberbank-ai-lab/pytorch-lifestream</code>. Acesso em: 16 ago. 2025. (<a href="https://arxiv.org/html/2409.17587v2?utm_source=chatgpt.com" title="Multimodal Banking Dataset: Understanding Client Needs ...">GitHub</a>)</p></li>
+</ul>
+<ul>
+<li><strong>Paper MBD (arXiv)</strong> – define tarefas <strong>campaigning</strong> e <strong>matching</strong> e descreve as modalidades/escala. (<a href="https://arxiv.org/abs/2409.17587?utm_source=chatgpt.com" title="Multimodal Banking Dataset: Understanding Client Needs through Event Sequences">arXiv</a>)</li>
+<li><strong>Hugging Face – MBD e MBD-mini</strong> – descrição, estrutura, flag <code>is_balanced</code>, uso para prototipagem. (<a href="https://huggingface.co/datasets/ai-lab/MBD?utm_source=chatgpt.com" title="ai-lab/MBD · Datasets at Hugging Face">Hugging Face</a>)</li>
+<li><strong>pytorch-lifestream (ptls)</strong> – biblioteca para sequências de eventos em larga escala. (<a href="https://github.com/dllllb/pytorch-lifestream?utm_source=chatgpt.com" title="pytorch-lifestream/pytorch-lifestream: A library built upon ...">GitHub</a>)</li>
+<li><strong>Repo do benchmark (GitHub)</strong> – notebooks, scripts, late-fusion, requisitos. (<a href="https://github.com/dzhambo/mbd" title="GitHub - Dzhambo/MBD">GitHub</a>)</li>
+</ul>
+</section>
+</section>
+<section id="apêndices" class="level1 unnumbered">
+<h1 class="unnumbered">Apêndices</h1>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">Referências</h2><div id="refs" class="references csl-bib-body" data-entry-spacing="1" role="list">
+</section>
+
+<div id="quarto-appendix" class="default"><section id="apx-dados" class="level2 appendix unnumbered"><h2 class="anchored quarto-appendix-heading">Dicionário de dados</h2><div class="quarto-appendix-contents">
+
+<dl>
+<dt><strong>client_split</strong></dt>
+<dd>
+<code>client_id</code> (str) — identificador anonimizado do cliente.<br>
+<code>fold</code> (int) — número da dobra oficial do dataset.
+</dd>
+<dt><strong>detail.dialog</strong></dt>
+<dd>
+<code>client_id</code> (str); <code>event_time</code> (timestamp); <code>embedding</code> (float[]) — vetor semântico do diálogo; <code>fold</code> (int).
+</dd>
+<dt><strong>detail.geo</strong></dt>
+<dd>
+<code>client_id</code> (str); <code>event_time</code> (timestamp); <code>fold</code> (int);<br>
+<code>geohash_4</code>/<code>geohash_5</code>/<code>geohash_6</code> (int) — células espaciais hierárquicas.
+</dd>
+<dt><strong>detail.trx</strong></dt>
+<dd>
+<code>client_id</code> (str); <code>event_time</code> (timestamp); <code>amount</code> (float); <code>fold</code> (int);<br>
+<code>event_type</code>, <code>event_subtype</code> (int) — códigos do tipo de transação;<br>
+<code>currency</code> (int) — moeda codificada;<br>
+<code>src_type11</code>, <code>src_type12</code>, <code>src_type21</code>, <code>src_type22</code>, <code>src_type31</code>, <code>src_type32</code> (int) — atributos do remetente;<br>
+<code>dst_type11</code>, <code>dst_type12</code> (int) — atributos do destinatário/contratante.
+</dd>
+<dt><strong>ptls.dialog / ptls.geo / ptls.trx</strong></dt>
+<dd>
+Mesmos campos, porém como <strong>arrays</strong> por cliente (sequências temporais), no formato <strong>pytorch-lifestream</strong>.
+</dd>
+<dt><strong>targets</strong></dt>
+<dd>
+<code>mon</code> (str) — mês de referência;<br>
+<code>target_1</code>…<code>target_4</code> (int) — emissão nos meses +1…+4 (multirrótulo);<br>
+<code>trans_count</code> (int) — nº de transações no mês de referência;<br>
+<code>diff_trans_date</code> (int) — tempo entre transações;<br>
+<code>client_id</code> (str); <code>fold</code> (int).
+</dd>
+</dl>
+<p><em>Fonte: Adaptado de MOLLAEV, D. et al.&nbsp;(2025). DOI: 10.48550/arXiv.2409.17587. Tradução nossa.</em></p>
+
+</div></section><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">Referências</h2><div id="refs" class="references csl-bib-body" data-entry-spacing="1" role="list">
 <div id="ref-basten2023" class="csl-entry" role="listitem">
 BASTEN, R., Christoph; Juelsrud. Cross-Selling in Bank–Household Relationships: Mechanisms and Implications for Pricing. <strong>The Review of Financial Studies</strong>, [<em>s. l.</em>], 2023. Disponível em: <a href="https://doi.org/10.1093/rfs/hhad062">https://doi.org/10.1093/rfs/hhad062. </a>
 </div>

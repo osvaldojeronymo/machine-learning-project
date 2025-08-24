@@ -33,3 +33,4 @@ rstudio-export/
 .DS_Store
 Thumbs.db
 .vscode/
+.Rproj.user
