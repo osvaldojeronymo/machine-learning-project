@@ -29,13 +29,13 @@ Este projeto explora a aplicação de técnicas de ***Machine Learning (ML)*** p
 
 A metodologia adotada para alcançar esse objetivo abrange um ciclo completo de desenvolvimento de um modelo de *ML*. O processo inicia com a **definição do problema de negócio** e avança para as etapas de **tratamento e transformação dos dados**, que são cruciais dado o caráter multimodal do *dataset*. Subsequentemente, define-se a **métrica de avaliação** mais adequada para o problema de *cross-sell*, seguida pelo desenvolvimento e treinamento de uma solução de *ML* que emprega, no mínimo, três estimadores distintos. Para maximizar a performance, realiza-se a **otimização de hiperparâmetros** desses algoritmos, visando a melhoria da métrica de interesse. O projeto culmina com uma **análise comparativa dos modelos**, resultando na seleção do estimador de melhor desempenho.
 
-A relevância estratégica deste projeto é reforçada por evidências que apontam a maior propensão de clientes existentes em adquirir novos produtos da mesma instituição, uma prática conhecida como cross-selling (@basten2023). Portanto, o trabalho culmina não apenas na entrega de um modelo preditivo validado, mas também em uma análise sobre sua eficácia para a resolução do problema de negócio e um delineamento das etapas essenciais para sua futura implementação em um ambiente de produção.
+A relevância estratégica deste projeto é reforçada por evidências que apontam a maior propensão de clientes existentes em adquirir novos produtos da mesma instituição, uma prática conhecida como ***cross-selling*** [@basten2023]. Portanto, o trabalho culmina não apenas na entrega de um modelo preditivo validado, mas também em uma análise sobre sua eficácia para a resolução do problema de negócio e um delineamento das etapas essenciais para sua futura implementação em um ambiente de produção.
 
 # Contexto
 
 A primeira etapa do projeto consistiu na seleção de um *dataset* apropiado. A comunidade [***Hugging Face***](https://huggingface.co) foi a fonte escolhida, e dentro da diversidade de *dataset* contidos nessa comunidade optou-se pelo  [Multimodal Banking Dataset - MBD](https://huggingface.co/papers/2409.17587).
 
-Conforme descrito por @mollaev2025, o **MBD** é o primeiro conjunto de dados bancário multimodal, de larga escala e publicamente disponível. Esse *dataset* contém sequências de dados anonimizados de mais de 2 milhões de clientes corporativos de um grande banco. Este dataset inclui **transações financeiras, dados de geolocalização, diálogos de suporte técnico e registros de compras de produtos**. O obetivo da sua criação foi preencher a lacuna de dados abertos no setor financeiro, viabilizando o desenvolvimento de técnicas avançadas de aprendizado profundo. Adicionalmente, os autores propõem um novo **benchmark multimodal** com tarefas práticas como a previsão de futuras compras, que se alinha diretamente com os objetivos desse projeto.
+Conforme descrito por @mollaev2025, o **MBD** é o primeiro conjunto de dados bancário multimodal, de larga escala e publicamente disponível. Esse *dataset* contém sequências de dados anonimizados de mais de 2 milhões de clientes corporativos de um grande banco. Este dataset inclui **transações financeiras, dados de geolocalização, diálogos de suporte técnico e registros de compras de produtos**. O objetivo da sua criação foi preencher a lacuna de dados abertos no setor financeiro, viabilizando o desenvolvimento de técnicas avançadas de aprendizado profundo. Adicionalmente, os autores propõem um novo **benchmark multimodal** com tarefas práticas como a previsão de futuras compras, que se alinha diretamente com os objetivos desse projeto.
 
 ## Problema de negócio
 
@@ -46,6 +46,24 @@ O objetivo deste projeto é, portanto, treinar um modelo com o **MBD** para gera
 **Delimitação do escopo: cross-sell *vs.* up-sell**
 
 Para garantir a clareza do objetivo, é necessária uma distinção: o escopo deste projeto é estritamente o ***cross-sell***. É importante não confundi-lo com ***up-sell***, que consiste em incentivar o cliente a adquirir uma versão mais avançada ou mais cara de um mesmo produto que ele já possui (ex: migrar de um cartão de crédito "Gold" para um "Platinum"). O modelo aqui desenvolvido focará exclusivamente na oferta de novos e diferentes produtos.
+
+## Dados
+
+O [**MBD**](https://huggingface.co/datasets/ai-lab/MBD) contém mais de 2 milhões de dados de clientes corporativos. Nesse projeto optou-se por trabalhar com [***MBD-mini dataset***](https://huggingface.co/datasets/ai-lab/MBD-mini), que contém um subconjunto reduzido dos dados, essa estratégia facilitará os trabalhos de desenvolvimento e teste do modelo proposto. Esse ***MBD-mini dataset*** têm dados baseados em 10% de clientes únicos listados no **MBD**. Como apresentado por @mollaev2025 no @tbl-overview, têm-se:
+
+: Visão geral de conjuntos de dados de transações existentes {#tbl-overview}
+
+| Conjunto de dados         | Nº de clientes | Tarefas-alvo (*downstream*)                             | Nº de eventos | Balanço de classes       | Modalidades                                 |
+|---------------------------|---------------:|---------------------------------------------------------|--------------:|--------------------------|---------------------------------------------|
+| DataFusion                |        22 mil  | Classificação binária; *matching* multimodal            |   146 milhões | Desbalanceado            | Transações; Clickstream                     |
+| Alphabattle               |     1,5 milhão | Classificação binária                                   |   443 milhões | Desbalanceado            | Transações                                  |
+| Age                       |        50 mil  | Classificação multiclasse                               |    44 milhões | Balanceado               | Transações                                  |
+| Rosbank                   |        10 mil  | Classificação binária                                   |     1 milhão  | Desbalanceado            | Transações                                  |
+| Credit Card Transaction   |         2 mil  | Classificação binária; Regressão                        |     2 milhões | Altamente desbalanceado  | Transações                                  |
+| MBD-small (nosso)         |        70 mil  | Classificação binária multirrótulo; *matching* multimodal |    80 milhões | Desbalanceado            | Transações; Geostream (eventos geográficos); Diálogos |
+| MBD (nosso)               |      2 milhões | Classificação binária multirrótulo; *matching* multimodal |     2 bilhões | Altamente desbalanceado  | Transações; Geostream (eventos geográficos); Diálogos |
+
+**Fonte:** @mollaev2025. DOI: 10.48550/arXiv.2409.17587. *Tradução nossa.*
 
 ## Repositório
 
@@ -67,24 +85,6 @@ Os artefatos gerados durante o desenvolvimento deste projeto, incluindo notebook
   feature_importance_{model}.csv
   calibration_plots/
 ```
-
-## Dados
-
-O [**MBD**](https://huggingface.co/datasets/ai-lab/MBD) contém mais de 2 milhões de dados de clientes corporativos. Nesse projeto optou-se por trabalhar com [***MBD-mini dataset***](https://huggingface.co/datasets/ai-lab/MBD-mini), que contém um subconjunto reduzido dos dados, essa estratégia facilitará os trabalhos de desenvolvimento e teste do modelo proposto. Esse ***MBD-mini dataset*** têm dados baseados em 10% de clientes únicos listados no **MBD**. Como apresentado por @mollaev2025 no @tbl-overview, têm-se:
-
-: Visão geral de conjuntos de dados de transações existentes {#tbl-overview}
-
-| Conjunto de dados         | Nº de clientes | Tarefas-alvo (*downstream*)                             | Nº de eventos | Balanço de classes       | Modalidades                                 |
-|---------------------------|---------------:|---------------------------------------------------------|--------------:|--------------------------|---------------------------------------------|
-| DataFusion                |        22 mil  | Classificação binária; *matching* multimodal            |   146 milhões | Desbalanceado            | Transações; Clickstream                     |
-| Alphabattle               |     1,5 milhão | Classificação binária                                   |   443 milhões | Desbalanceado            | Transações                                  |
-| Age                       |        50 mil  | Classificação multiclasse                               |    44 milhões | Balanceado               | Transações                                  |
-| Rosbank                   |        10 mil  | Classificação binária                                   |     1 milhão  | Desbalanceado            | Transações                                  |
-| Credit Card Transaction   |         2 mil  | Classificação binária; Regressão                        |     2 milhões | Altamente desbalanceado  | Transações                                  |
-| MBD-small (nosso)         |        70 mil  | Classificação binária multirrótulo; *matching* multimodal |    80 milhões | Desbalanceado            | Transações; Geostream (eventos geográficos); Diálogos |
-| MBD (nosso)               |      2 milhões | Classificação binária multirrótulo; *matching* multimodal |     2 bilhões | Altamente desbalanceado  | Transações; Geostream (eventos geográficos); Diálogos |
-
-**Fonte:** @mollaev2025. DOI: 10.48550/arXiv.2409.17587. *Tradução nossa.*
 
 ## Pré-processamento
 
