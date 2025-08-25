@@ -1,0 +1,36 @@
+{
+  "created_at": "2025-08-24T21:41:19",
+  "inputs": {
+    "targets_tar": {
+      "path": "/mnt/wsl/PHYSICALDRIVE1p1/datasets/mini-DSB/targets.tar.gz",
+      "size_bytes": 7931957,
+      "md5": "b8163668273f0f144556b14f576fcd99",
+      "sha256": "6e9130a14ea0adeb4924f76a77430f0d57a376030410166679eb9f31864ccb0b"
+    },
+    "client_split_tar": {
+      "path": "/mnt/wsl/PHYSICALDRIVE1p1/datasets/mini-DSB/client_split.tar.gz",
+      "size_bytes": 4182641,
+      "md5": "40c4973062e7bc57d7bc95973257f14b",
+      "sha256": "79b5127764f00cf2db755709b89ad93c3dcd9192d6dcce8bd7d792ea92787f3e"
+    }
+  },
+  "reports": {
+    "schema_targets": "reports/schema_targets.json",
+    "schema_client_split": "reports/schema_client_split.json",
+    "volumetria": "reports/volumetria.json",
+    "prevalencia": "reports/prevalencia.csv",
+    "baseline_auprc": "reports/baseline_auprc.csv",
+    "fold_leakage": null
+  },
+  "notes": {
+    "mon_dtype": "period[M]",
+    "target_cols": [
+      "target_1",
+      "target_2",
+      "target_3",
+      "target_4"
+    ],
+    "n_rows_targets": 1202688,
+    "n_rows_client_split": 100224
+  }
+}

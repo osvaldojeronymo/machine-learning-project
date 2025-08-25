@@ -1,0 +1,13 @@
+{
+  "paths": {
+    "targets": "/mnt/wsl/PHYSICALDRIVE1p1/datasets/mini-DSB/targets.tar.gz",
+    "client_split": "/mnt/wsl/PHYSICALDRIVE1p1/datasets/mini-DSB/client_split.tar.gz"
+  },
+  "schema_files": [
+    "reports/schema_client_split.json",
+    "reports/schema_targets.json"
+  ],
+  "volumetria_file": "reports/volumetria.json",
+  "prev_file": "reports/prevalencia.csv",
+  "leak_file": null
+}

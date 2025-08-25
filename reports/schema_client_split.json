@@ -1,0 +1,17 @@
+{
+  "n_rows": 100224,
+  "n_cols": 2,
+  "dtypes": {
+    "client_id": "object",
+    "fold": "int64"
+  },
+  "nulls": {
+    "client_id": 0,
+    "fold": 0
+  },
+  "nunique": {
+    "client_id": 100224,
+    "fold": 5
+  },
+  "mem_mb": 11.565433502197266
+}

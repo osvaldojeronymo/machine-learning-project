@@ -1,0 +1,35 @@
+{
+  "n_rows": 2376,
+  "n_cols": 8,
+  "dtypes": {
+    "client_id": "object",
+    "mon": "period[M]",
+    "target_1": "int32",
+    "target_2": "int32",
+    "target_3": "int32",
+    "target_4": "int32",
+    "trans_count": "int32",
+    "diff_trans_date": "float64"
+  },
+  "nulls": {
+    "client_id": 0,
+    "mon": 0,
+    "target_1": 0,
+    "target_2": 0,
+    "target_3": 0,
+    "target_4": 0,
+    "trans_count": 0,
+    "diff_trans_date": 300
+  },
+  "nunique": {
+    "client_id": 198,
+    "mon": 12,
+    "target_1": 2,
+    "target_2": 2,
+    "target_3": 2,
+    "target_4": 2,
+    "trans_count": 447,
+    "diff_trans_date": 181
+  },
+  "mem_mb": 0.3377494812011719
+}

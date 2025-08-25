@@ -1,0 +1,14 @@
+{
+  "n_rows": 83,
+  "n_cols": 1,
+  "dtypes": {
+    "client_id": "object"
+  },
+  "nulls": {
+    "client_id": 0
+  },
+  "nunique": {
+    "client_id": 83
+  },
+  "mem_mb": 0.009070396423339844
+}
