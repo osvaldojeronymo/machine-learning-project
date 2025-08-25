@@ -1,0 +1,93 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Projeto de Machine Learning I",
+    "section": "",
+    "text": "Este projeto explora a aplicação de técnicas de Machine Learning (ML) para a análise de dados bancários multimodais, com o objetivo de desenvolver um modelo preditivo para otimizar campanhas de cross-sell (venda-cruzada). A análise se baseia no Multimodal Banking Dataset (MBD), um conjunto de dados em larga escala que reflete interações reais de clientes corporativos.\nO ciclo do projeto cobre: definição do problema de negócio; tratamento e transformação dos dados; escolha de métricas adequadas a desbalanceamento (AUPRC); desenvolvimento de pelo menos três estimadores; tuning de hiperparâmetros; comparação e seleção do melhor modelo; e registro reprodutível dos resultados."
+  },
+  {
+    "objectID": "index.html#visão-geral-resumo",
+    "href": "index.html#visão-geral-resumo",
+    "title": "Projeto de Machine Learning I",
+    "section": "3.1 Visão geral (resumo)",
+    "text": "3.1 Visão geral (resumo)\n\n\n\n\n\n\n\n\n\n\n\nConjunto de dados\nNº de clientes\nTarefas\nNº de eventos\nBalanço\nModalidades\n\n\n\n\nMBD-mini\n~70 mil\nClassificação binária multirrótulo; matching\n~80 milhões\nDesbalanceado\nTransações; Geo; Diálogos\n\n\nMBD (completo)\n~2 milhões\nIdem\n~2 bilhões\nAltamente desbalanceado\nTransações; Geo; Diálogos"
+  },
+  {
+    "objectID": "index.html#leitura-e-normalização",
+    "href": "index.html#leitura-e-normalização",
+    "title": "Projeto de Machine Learning I",
+    "section": "5.1 1) Leitura e normalização",
+    "text": "5.1 1) Leitura e normalização\n\nAbrir targets.tar.gz e client_split.tar.gz; varrer part-*.parquet sob targets/ e client_split/.\nExtrair fold do caminho (fold=K) e inserir como coluna; converter mon para Period[M]."
+  },
+  {
+    "objectID": "index.html#objetivo-esquema-volumetria",
+    "href": "index.html#objetivo-esquema-volumetria",
+    "title": "Projeto de Machine Learning I",
+    "section": "5.2 2) Objetivo: Esquema & Volumetria",
+    "text": "5.2 2) Objetivo: Esquema & Volumetria\n\nEsquema: dtypes, nulos, nunique, memória, domínios (target_* ∈ {0,1}).\n\nVolumetria: nº de linhas/clientes; distribuição por mon e por fold.\n\nVazamento: garantir que cada client_id apareça em um único fold.\n\nSaídas: reports/schema_*.json, reports/volumetria.json, reports/fold_leakage.csv (se houver)."
+  },
+  {
+    "objectID": "index.html#objetivo-prevalência-por-mês-e-por-fold",
+    "href": "index.html#objetivo-prevalência-por-mês-e-por-fold",
+    "title": "Projeto de Machine Learning I",
+    "section": "5.3 3) Objetivo: Prevalência por mês e por fold",
+    "text": "5.3 3) Objetivo: Prevalência por mês e por fold\n\nTabela com linhas ALL, mon=YYYY-MM, fold=K × colunas target_1..4.\n\nSaída: reports/prevalencia.csv."
+  },
+  {
+    "objectID": "index.html#objetivo-baseline-auprc",
+    "href": "index.html#objetivo-baseline-auprc",
+    "title": "Projeto de Machine Learning I",
+    "section": "5.4 4) Objetivo: Baseline AUPRC",
+    "text": "5.4 4) Objetivo: Baseline AUPRC\n\nAUPRC (aleatório) ≈ prevalência → copiar a tabela de prevalência.\n\nSaída: reports/baseline_auprc.csv."
+  },
+  {
+    "objectID": "index.html#objetivo-artefatos-manifest",
+    "href": "index.html#objetivo-artefatos-manifest",
+    "title": "Projeto de Machine Learning I",
+    "section": "5.5 5) Objetivo: Artefatos & Manifest",
+    "text": "5.5 5) Objetivo: Artefatos & Manifest\n\nManifesto: reports/manifest.json com caminhos dos insumos, hashes (md5/sha256) dos .tar.gz, tamanhos e notas (dtype de mon, nº de linhas etc.)."
+  },
+  {
+    "objectID": "notebooks/03_train_compare_tabular.html",
+    "href": "notebooks/03_train_compare_tabular.html",
+    "title": "03 Train Compare Tabular",
+    "section": "",
+    "text": "Este notebook é um esqueleto temporário. Ele foi criado apenas para permitir a renderização do projeto no Quarto.\n\nprint('Esqueleto do notebook 03 Train Compare Tabular carregado com sucesso.')"
+  },
+  {
+    "objectID": "notebooks/02_features_tabular.html",
+    "href": "notebooks/02_features_tabular.html",
+    "title": "02 - Features Tabulares",
+    "section": "",
+    "text": "Este notebook é um esqueleto temporário. Ele servirá apenas para permitir a renderização do projeto no Quarto."
+  },
+  {
+    "objectID": "notebooks/02_features_tabular.html#estrutura-planejada",
+    "href": "notebooks/02_features_tabular.html#estrutura-planejada",
+    "title": "02 - Features Tabulares",
+    "section": "Estrutura planejada",
+    "text": "Estrutura planejada\n\nLeitura do dataset MBD-mini\nSeleção/criação de features tabulares\nTratamento de valores faltantes\nExportação para CSV/Parquet\n\n\n# Importações iniciais (placeholder)\nimport pandas as pd\nimport numpy as np\n\nprint('Esqueleto do notebook carregado com sucesso.')"
+  },
+  {
+    "objectID": "notebooks/04_ptls_sequence_embeddings.html",
+    "href": "notebooks/04_ptls_sequence_embeddings.html",
+    "title": "04 - PTLS Sequence Embeddings",
+    "section": "",
+    "text": "Este notebook é um esqueleto temporário. Ele foi criado apenas para permitir a renderização do projeto no Quarto."
+  },
+  {
+    "objectID": "notebooks/04_ptls_sequence_embeddings.html#estrutura-planejada",
+    "href": "notebooks/04_ptls_sequence_embeddings.html#estrutura-planejada",
+    "title": "04 - PTLS Sequence Embeddings",
+    "section": "Estrutura planejada",
+    "text": "Estrutura planejada\n\nLeitura de sequências do dataset MBD-mini\nAplicação de técnicas de sequence embeddings com PTLS\nExportação de representações para modelos posteriores\n\n\n# Importações iniciais (placeholder)\nimport numpy as np\nimport pandas as pd\n\nprint('Esqueleto do notebook PTLS Sequence Embeddings carregado com sucesso.')"
+  },
+  {
+    "objectID": "notebooks/01_explore_mbd_mini.html",
+    "href": "notebooks/01_explore_mbd_mini.html",
+    "title": "",
+    "section": "",
+    "text": "# --- Runner: executa todos os objetivos da EDA (end-to-end) ---\n\nfrom pathlib import Path\nimport sys, json, pandas as pd\n\n# (1) Garantir que o Python enxergue os módulos em src/eda\nfor _candidate in [Path.cwd()/\"src\", Path.cwd().parent/\"src\"]:\n    if _candidate.exists() and str(_candidate) not in sys.path:\n        sys.path.append(str(_candidate))\n\nfrom eda.io_tar import read_parquet_partitions_from_tar, normalize_mon_period_m\nfrom eda.check_schema_vol import schema_report, leakage_report, volumetria_report\nfrom eda.prevalence import prevalence_table\nfrom eda.baseline import baseline_from_prevalence\nfrom eda.artifacts import write_manifest\n\n# (2) Config (ajuste os caminhos ROOT/PATH_* se necessário)\nROOT = Path(\"/mnt/wsl/PHYSICALDRIVE1p1/datasets/mini-DSB\")  # &lt;- ajuste para o seu ambiente\nPATH_TARGETS = ROOT / \"targets.tar.gz\"\nPATH_SPLIT   = ROOT / \"client_split.tar.gz\"\nREPORTS = Path(\"../reports\") if (Path.cwd().name == \"notebooks\") else Path(\"./reports\")\nREPORTS.mkdir(parents=True, exist_ok=True)\n\n# modos de execução (rápido vs completo)\nFAST_MODE = False\nLIMIT_FOLDS = None            # ex.: {0,1} para amostrar folds\nMAX_PARTS_PER_PREFIX = 40 if FAST_MODE else None\n\ndef _print_summary(prev, vol, leaks):\n    print(\"\\n===== RESUMO =====\")\n    if isinstance(vol, dict):\n        print(f\"targets total rows: {vol.get('rows_targets_total')}\")\n        ncli = vol.get('n_clients_total')\n        if ncli is not None:\n            print(f\"nº de clientes (client_split): {ncli}\")\n    if prev is not None and not prev.empty and \"ALL\" in prev.index:\n        print(\"\\nPrevalência global (linha 'ALL'):\")\n        display(prev.loc[[\"ALL\"]])\n    if leaks is not None and not leaks.empty:\n        print(f\"\\n[ALERTA] Clientes em &gt;1 fold: {len(leaks)} (ver reports/fold_leakage.csv)\")\n    print(\"==================\\n\")\n\ndef run_all():\n    print(\"[INFO] Executando pipeline EDA...\")\n\n    # 1) Carregar dados dos TARs (reconstrói 'fold' a partir do caminho) + normalizar 'mon'\n    allowed = {\"fold\": LIMIT_FOLDS} if LIMIT_FOLDS is not None else None\n    t = read_parquet_partitions_from_tar(\n        PATH_TARGETS, prefix=\"targets/\", expected_keys=(\"fold\",),\n        allowed_partitions=allowed, max_parts=MAX_PARTS_PER_PREFIX\n    )\n    cs = read_parquet_partitions_from_tar(\n        PATH_SPLIT, prefix=\"client_split/\", expected_keys=(\"fold\",),\n        allowed_partitions=allowed, max_parts=MAX_PARTS_PER_PREFIX\n    )\n    t = normalize_mon_period_m(t, \"mon\")\n\n    # 2) Esquema & volumetria (+ vazamento)\n    sch_t = schema_report(t, \"targets\", reports_dir=REPORTS)\n    sch_cs = schema_report(cs, \"client_split\", reports_dir=REPORTS)\n    leaks = leakage_report(cs)\n    if len(leaks):\n        leaks.to_csv(REPORTS / \"fold_leakage.csv\", index=False)\n        print(\"[ALERTA] fold_leakage.csv salvo em reports/\")\n    vol = volumetria_report(t, cs)\n    with (REPORTS / \"volumetria.json\").open(\"w\") as f:\n        json.dump(vol, f, indent=2, ensure_ascii=False)\n    print(\"[OK] volumetria.json salvo.\")\n\n    # 3) Prevalência\n    prev = prevalence_table(t)\n    if not prev.empty:\n        prev.to_csv(REPORTS / \"prevalencia.csv\")\n        print(\"[OK] prevalencia.csv salvo.\")\n    else:\n        print(\"[INFO] Prevalência não calculada (colunas target_* ausentes).\")\n\n    # 4) Baseline AUPRC (≈ prevalência)\n    baseline = baseline_from_prevalence(prev) if not prev.empty else pd.DataFrame()\n    if not baseline.empty:\n        baseline.to_csv(REPORTS / \"baseline_auprc.csv\")\n        print(\"[OK] baseline_auprc.csv salvo (≈ prevalência).\")\n\n    # 5) Manifest\n    _ = write_manifest(PATH_TARGETS, PATH_SPLIT, REPORTS, t, cs)\n    print(\"[OK] manifest.json salvo.\")\n\n    # 6) Resumo\n    _print_summary(prev, vol, leaks)\n\n    print(\"[OK] EDA concluída.\")\n    return {\"targets\": t, \"client_split\": cs, \"prev\": prev, \"vol\": vol, \"baseline\": baseline}\n\n# Execute tudo agora (comente esta linha se quiser rodar manualmente depois)\nresults = run_all()\n\n[INFO] Executando pipeline EDA...\n[OK] Lidos 435 arquivos parquet de 'targets/' em targets.tar.gz. Partições recuperadas: ['fold']\n[OK] Lidos 1000 arquivos parquet de 'client_split/' em client_split.tar.gz. Partições recuperadas: ['fold']\n[OK] volumetria.json salvo.\n[OK] prevalencia.csv salvo.\n[OK] baseline_auprc.csv salvo (≈ prevalência).\n[OK] manifest.json salvo.\n\n===== RESUMO =====\ntargets total rows: 1202688\nnº de clientes (client_split): 100224\n\nPrevalência global (linha 'ALL'):\n\n\n\n\n\n\n\n\n\ntarget_1\ntarget_2\ntarget_3\ntarget_4\n\n\n\n\nALL\n0.004458\n0.00048\n0.003767\n0.002544\n\n\n\n\n\n\n\n==================\n\n[OK] EDA concluída."
+  }
+]

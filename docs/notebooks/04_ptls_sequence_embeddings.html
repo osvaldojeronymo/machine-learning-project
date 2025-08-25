@@ -1,14 +1,13 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR" xml:lang="pt-BR"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.7.33">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Bruno Lenz, Danilo Santos, Diogo de Araujo, Jonathan e Osvaldo Jeronymo Neto">
 
-<title>Projeto de Machine Learning I</title>
+<title>04 - PTLS Sequence Embeddings</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,25 +20,60 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-7c2094aa1e85645a207c97160cc23d72.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-7c2094aa1e85645a207c97160cc23d72.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -54,17 +88,17 @@ ul.task-list li input[type="checkbox"] {
   ],
   "show-item-context": false,
   "language": {
-    "search-no-results-text": "Nenhum resultado",
-    "search-matching-documents-text": "documentos correspondentes",
-    "search-copy-link-title": "Copiar link para a busca",
-    "search-hide-matches-text": "Esconder correspondências adicionais",
-    "search-more-match-text": "mais correspondência neste documento",
-    "search-more-matches-text": "mais correspondências neste documento",
-    "search-clear-button-title": "Limpar",
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
     "search-text-placeholder": "",
-    "search-detached-cancel-button-title": "Cancelar",
-    "search-submit-button-title": "Enviar",
-    "search-label": "Procurar"
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
@@ -80,27 +114,10 @@ ul.task-list li input[type="checkbox"] {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Nesta página</h2>
+    <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#introdução" id="toc-introdução" class="nav-link active" data-scroll-target="#introdução"><span class="header-section-number">1</span> Introdução</a></li>
-  <li><a href="#contexto-e-problema-de-negócio" id="toc-contexto-e-problema-de-negócio" class="nav-link" data-scroll-target="#contexto-e-problema-de-negócio"><span class="header-section-number">2</span> Contexto e problema de negócio</a></li>
-  <li><a href="#dados" id="toc-dados" class="nav-link" data-scroll-target="#dados"><span class="header-section-number">3</span> Dados</a>
-  <ul class="collapse">
-  <li><a href="#visão-geral-resumo" id="toc-visão-geral-resumo" class="nav-link" data-scroll-target="#visão-geral-resumo"><span class="header-section-number">3.1</span> Visão geral (resumo)</a></li>
-  </ul></li>
-  <li><a href="#repositório-organização" id="toc-repositório-organização" class="nav-link" data-scroll-target="#repositório-organização"><span class="header-section-number">4</span> Repositório (organização)</a></li>
-  <li><a href="#notebook-01_explore_mbd_mini.ipynb-passos" id="toc-notebook-01_explore_mbd_mini.ipynb-passos" class="nav-link" data-scroll-target="#notebook-01_explore_mbd_mini.ipynb-passos"><span class="header-section-number">5</span> Notebook <code>01_explore_mbd_mini.ipynb</code> — passos</a>
-  <ul class="collapse">
-  <li><a href="#leitura-e-normalização" id="toc-leitura-e-normalização" class="nav-link" data-scroll-target="#leitura-e-normalização"><span class="header-section-number">5.1</span> 1) Leitura e normalização</a></li>
-  <li><a href="#objetivo-esquema-volumetria" id="toc-objetivo-esquema-volumetria" class="nav-link" data-scroll-target="#objetivo-esquema-volumetria"><span class="header-section-number">5.2</span> 2) Objetivo: Esquema &amp; Volumetria</a></li>
-  <li><a href="#objetivo-prevalência-por-mês-e-por-fold" id="toc-objetivo-prevalência-por-mês-e-por-fold" class="nav-link" data-scroll-target="#objetivo-prevalência-por-mês-e-por-fold"><span class="header-section-number">5.3</span> 3) Objetivo: Prevalência por mês e por fold</a></li>
-  <li><a href="#objetivo-baseline-auprc" id="toc-objetivo-baseline-auprc" class="nav-link" data-scroll-target="#objetivo-baseline-auprc"><span class="header-section-number">5.4</span> 4) Objetivo: Baseline AUPRC</a></li>
-  <li><a href="#objetivo-artefatos-manifest" id="toc-objetivo-artefatos-manifest" class="nav-link" data-scroll-target="#objetivo-artefatos-manifest"><span class="header-section-number">5.5</span> 5) Objetivo: Artefatos &amp; Manifest</a></li>
-  </ul></li>
-  <li><a href="#resultados-exemplo-de-run" id="toc-resultados-exemplo-de-run" class="nav-link" data-scroll-target="#resultados-exemplo-de-run"><span class="header-section-number">6</span> Resultados (exemplo de <em>run</em>)</a></li>
-  <li><a href="#metodologia-de-modelagem-visão-geral" id="toc-metodologia-de-modelagem-visão-geral" class="nav-link" data-scroll-target="#metodologia-de-modelagem-visão-geral"><span class="header-section-number">7</span> Metodologia de modelagem (visão geral)</a></li>
-  <li><a href="#conclusões" id="toc-conclusões" class="nav-link" data-scroll-target="#conclusões"><span class="header-section-number">8</span> Conclusões</a></li>
+  <li><a href="#estrutura-planejada" id="toc-estrutura-planejada" class="nav-link active" data-scroll-target="#estrutura-planejada">Estrutura planejada</a></li>
   </ul>
 </nav>
     </div>
@@ -109,26 +126,14 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Projeto de Machine Learning I</h1>
+<h1 class="title">04 - PTLS Sequence Embeddings</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Autor</div>
-    <div class="quarto-title-meta-contents">
-             <p>Bruno Lenz, Danilo Santos, Diogo de Araujo, Jonathan e Osvaldo Jeronymo Neto </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Data de Publicação</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">25 de agosto de 2025</p>
-    </div>
-  </div>
   
     
   </div>
@@ -138,172 +143,21 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="introdução" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> Introdução</h1>
-<p>Este projeto explora a aplicação de técnicas de <em>Machine Learning (ML)</em> para a análise de dados bancários <strong>multimodais</strong>, com o objetivo de desenvolver um modelo preditivo para otimizar campanhas de <strong>cross-sell</strong> (venda-cruzada). A análise se baseia no <strong>Multimodal Banking Dataset (MBD)</strong>, um conjunto de dados em larga escala que reflete interações reais de clientes corporativos.</p>
-<p>O ciclo do projeto cobre: definição do problema de negócio; tratamento e transformação dos dados; escolha de métricas adequadas a <strong>desbalanceamento</strong> (AUPRC); desenvolvimento de pelo menos três estimadores; <em>tuning</em> de hiperparâmetros; comparação e seleção do melhor modelo; e registro reprodutível dos resultados.</p>
-</section>
-<section id="contexto-e-problema-de-negócio" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> Contexto e problema de negócio</h1>
-<p><strong>Problema:</strong> predição de propensão à compra em campanhas de <em>cross-sell</em>. Dado o histórico multimodal de cada cliente até um mês de referência <code>mon</code>, estimamos a probabilidade de <strong>emissão de um produto no mês seguinte</strong> (<code>target_1</code>).</p>
-<p><strong>Por que AUPRC?</strong> Em cenários de baixa prevalência de positivos, <strong>PR-AUC (Average Precision)</strong> é mais informativa que ROC-AUC. O <em>baseline</em> aleatório para AUPRC é aproximadamente a <strong>prevalência</strong> da classe positiva.</p>
-</section>
-<section id="dados" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> Dados</h1>
-<p>Trabalhamos com o <strong>MBD-mini</strong> (≈10% dos clientes do MBD completo), que preserva a estrutura do conjunto principal e acelera a fase de prototipagem.</p>
-<section id="visão-geral-resumo" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="visão-geral-resumo"><span class="header-section-number">3.1</span> Visão geral (resumo)</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 15%">
-<col style="width: 20%">
-<col style="width: 15%">
-<col style="width: 20%">
-<col style="width: 15%">
-<col style="width: 15%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Conjunto de dados</th>
-<th style="text-align: right;">Nº de clientes</th>
-<th>Tarefas</th>
-<th style="text-align: right;">Nº de eventos</th>
-<th>Balanço</th>
-<th>Modalidades</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>MBD-mini</td>
-<td style="text-align: right;">~70 mil</td>
-<td>Classificação binária multirrótulo; <em>matching</em></td>
-<td style="text-align: right;">~80 milhões</td>
-<td>Desbalanceado</td>
-<td>Transações; Geo; Diálogos</td>
-</tr>
-<tr class="even">
-<td>MBD (completo)</td>
-<td style="text-align: right;">~2 milhões</td>
-<td>Idem</td>
-<td style="text-align: right;">~2 bilhões</td>
-<td>Altamente desbalanceado</td>
-<td>Transações; Geo; Diálogos</td>
-</tr>
-</tbody>
-</table>
-</section>
-</section>
-<section id="repositório-organização" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> Repositório (organização)</h1>
-<pre><code>machine-learning-project/
-├─ notebooks/
-│  ├─ 01_explore_mbd_mini.ipynb    # EDA por objetivos (targets &amp; client_split)
-│  ├─ 02_features_tabular.ipynb    # Engenharia de atributos tabulares
-│  ├─ 03_train_compare_tabular.ipynb  # Treino/validação e comparação
-│  └─ 04_ptls_sequence_embeddings.ipynb # Sequências/embeddings (opcional)
-├─ src/
-│  └─ eda/
-│     ├─ io_tar.py           # Leitura TAR + Parquet; reconstrói fold; normaliza mon
-│     ├─ check_schema_vol.py # Esquema, vazamento, volumetria
-│     ├─ prevalence.py       # Prevalência (ALL, por mês, por fold)
-│     ├─ baseline.py         # Baseline AUPRC ≈ prevalência
-│     └─ artifacts.py        # manifest.json (hashes, caminhos, notas)
-├─ reports/                  # Artefatos gerados pela EDA (json/csv)
-├─ requirements.txt          # pandas, pyarrow, etc.
-└─ README.md</code></pre>
-<p><strong>Glossário rápido</strong><br>
-- <strong>fold</strong>: partição para validação (GroupKFold por cliente). No <em>dataset</em>, o <code>fold</code> aparece no <strong>caminho</strong> dos arquivos parquet (<code>.../fold=K/part-*.parquet</code>) e é <strong>reconstruído</strong> na leitura.<br>
-- <strong>mon</strong>: mês de referência; normalizado para <code>Period[M]</code> (ex.: <code>2022-09</code>).</p>
-</section>
-<section id="notebook-01_explore_mbd_mini.ipynb-passos" class="level1" data-number="5">
-<h1 data-number="5"><span class="header-section-number">5</span> Notebook <code>01_explore_mbd_mini.ipynb</code> — passos</h1>
-<section id="leitura-e-normalização" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="leitura-e-normalização"><span class="header-section-number">5.1</span> 1) Leitura e normalização</h2>
+<p>Este notebook é um <strong>esqueleto</strong> temporário. Ele foi criado apenas para permitir a renderização do projeto no Quarto.</p>
+<section id="estrutura-planejada" class="level2">
+<h2 class="anchored" data-anchor-id="estrutura-planejada">Estrutura planejada</h2>
 <ul>
-<li>Abrir <code>targets.tar.gz</code> e <code>client_split.tar.gz</code>; varrer <code>part-*.parquet</code> sob <code>targets/</code> e <code>client_split/</code>.</li>
-<li>Extrair <code>fold</code> do caminho (<code>fold=K</code>) e inserir como coluna; converter <code>mon</code> para <code>Period[M]</code>.</li>
+<li>Leitura de sequências do dataset MBD-mini</li>
+<li>Aplicação de técnicas de sequence embeddings com PTLS</li>
+<li>Exportação de representações para modelos posteriores</li>
 </ul>
-</section>
-<section id="objetivo-esquema-volumetria" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="objetivo-esquema-volumetria"><span class="header-section-number">5.2</span> 2) Objetivo: Esquema &amp; Volumetria</h2>
-<ul>
-<li><strong>Esquema:</strong> <code>dtypes</code>, nulos, <code>nunique</code>, memória, domínios (<code>target_* ∈ {0,1}</code>).<br>
-</li>
-<li><strong>Volumetria:</strong> nº de linhas/clientes; distribuição por <code>mon</code> e por <code>fold</code>.<br>
-</li>
-<li><strong>Vazamento:</strong> garantir que cada <code>client_id</code> apareça em <strong>um único fold</strong>.<br>
-</li>
-<li><strong>Saídas:</strong> <code>reports/schema_*.json</code>, <code>reports/volumetria.json</code>, <code>reports/fold_leakage.csv</code> (se houver).</li>
-</ul>
-</section>
-<section id="objetivo-prevalência-por-mês-e-por-fold" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="objetivo-prevalência-por-mês-e-por-fold"><span class="header-section-number">5.3</span> 3) Objetivo: Prevalência por mês e por fold</h2>
-<ul>
-<li>Tabela com linhas <code>ALL</code>, <code>mon=YYYY-MM</code>, <code>fold=K</code> × colunas <code>target_1..4</code>.<br>
-</li>
-<li><strong>Saída:</strong> <code>reports/prevalencia.csv</code>.</li>
-</ul>
-</section>
-<section id="objetivo-baseline-auprc" class="level2" data-number="5.4">
-<h2 data-number="5.4" class="anchored" data-anchor-id="objetivo-baseline-auprc"><span class="header-section-number">5.4</span> 4) Objetivo: Baseline AUPRC</h2>
-<ul>
-<li><strong>AUPRC (aleatório) ≈ prevalência</strong> → copiar a tabela de prevalência.<br>
-</li>
-<li><strong>Saída:</strong> <code>reports/baseline_auprc.csv</code>.</li>
-</ul>
-</section>
-<section id="objetivo-artefatos-manifest" class="level2" data-number="5.5">
-<h2 data-number="5.5" class="anchored" data-anchor-id="objetivo-artefatos-manifest"><span class="header-section-number">5.5</span> 5) Objetivo: Artefatos &amp; Manifest</h2>
-<ul>
-<li><strong>Manifesto:</strong> <code>reports/manifest.json</code> com caminhos dos insumos, <strong>hashes</strong> (md5/sha256) dos <code>.tar.gz</code>, tamanhos e notas (dtype de <code>mon</code>, nº de linhas etc.).</li>
-</ul>
-</section>
-</section>
-<section id="resultados-exemplo-de-run" class="level1" data-number="6">
-<h1 data-number="6"><span class="header-section-number">6</span> Resultados (exemplo de <em>run</em>)</h1>
-<p>Resumo típico impresso pelo notebook:</p>
-<pre><code>[INFO] Executando pipeline EDA...
-[OK] Lidos 435 arquivos parquet de 'targets/' (fold recuperado)
-[OK] Lidos 1000 arquivos parquet de 'client_split/' (fold recuperado)
-[OK] volumetria.json salvo.
-[OK] prevalencia.csv salvo.
-[OK] baseline_auprc.csv salvo (≈ prevalência).
-[OK] manifest.json salvo.
-
-===== RESUMO =====
-targets total rows: 1.202.688
-nº de clientes (client_split): 100.224</code></pre>
-<blockquote class="blockquote">
-<p>A linha <code>ALL</code> em <code>prevalencia.csv</code> é o <strong>baseline</strong> de AUPRC para cada <code>target_k</code>.</p>
-</blockquote>
-</section>
-<section id="metodologia-de-modelagem-visão-geral" class="level1" data-number="7">
-<h1 data-number="7"><span class="header-section-number">7</span> Metodologia de modelagem (visão geral)</h1>
-<ul>
-<li><strong>Features tabulares:</strong> agregações de transações (RFM, sazonalidade, entropias), geo (diversidade/mobilidade) e diálogos (pooling de embeddings).<br>
-</li>
-<li><strong>Modelos:</strong> Regressão Logística, LightGBM/XGBoost, CatBoost.<br>
-</li>
-<li><strong>Validação:</strong> GroupKFold por <code>client_id</code> (ou <code>fold</code> nativo).<br>
-</li>
-<li><strong>Métrica-alvo:</strong> <strong>AUPRC</strong>; complementares: ROC-AUC, Precision@k, Recall@k, Brier, calibração.<br>
-</li>
-<li><strong>HPO:</strong> Optuna (TPE) com <em>early stopping</em> quando aplicável.</li>
-</ul>
-</section>
-<section id="conclusões" class="level1" data-number="8">
-<h1 data-number="8"><span class="header-section-number">8</span> Conclusões</h1>
-<ul>
-<li><strong>Contratos de dados</strong> (esquema/volumetria) e <strong>integridade do split</strong> (por cliente) são checados e registrados.<br>
-</li>
-<li><strong>Baseline honesto:</strong> AUPRC ≈ prevalência → meta mínima para qualquer modelo.<br>
-</li>
-<li><strong>Reprodutibilidade:</strong> artefatos versionados em <code>reports/</code> + <code>manifest.json</code> com hashes.</li>
-</ul>
-<hr>
-<blockquote class="blockquote">
-<p>Para detalhes operacionais da EDA (código e artefatos), veja o apêndice <code>apendice.qmd</code> neste mesmo projeto.</p>
-</blockquote>
+<div id="cell-2" class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Importações iniciais (placeholder)</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Esqueleto do notebook PTLS Sequence Embeddings carregado com sucesso.'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
 
 </section>
@@ -334,12 +188,12 @@ nº de clientes (client_split): 100.224</code></pre>
       // flash "checked"
       button.classList.add('code-copy-button-checked');
       var currentTitle = button.getAttribute("title");
-      button.setAttribute("title", "Copiada");
+      button.setAttribute("title", "Copied!");
       let tooltip;
       if (window.bootstrap) {
         button.setAttribute("data-bs-toggle", "tooltip");
         button.setAttribute("data-bs-placement", "left");
-        button.setAttribute("data-bs-title", "Copiada");
+        button.setAttribute("data-bs-title", "Copied!");
         tooltip = new bootstrap.Tooltip(button, 
           { trigger: "manual", 
             customClass: "code-copy-button-tooltip",
