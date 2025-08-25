@@ -5,7 +5,6 @@ date: today
 date-format: long
 lang: pt-BR
 number-sections: true
-
 # Rotular tabelas como "Quadro" e personalizar Apêndice
 crossref:
   tbl-title: "Quadro"      # muda o rótulo na legenda
@@ -13,13 +12,11 @@ crossref:
   title-delim: " — "
   appendix-title: "Apêndice"
   appendix-delim: " — "
-
 format:
   html:
     toc: true
     theme: cosmo
     tbl-cap-location: top
-
 bibliography: referencias.bib
 csl: abnt.csl
 ---
@@ -69,26 +66,26 @@ Como a base é muito desbalanceada, a métrica-alvo será AUPRC; baseline aleat�
 
 ## Repositório
 
-Os artefatos gerados durante o desenvolvimento estão organizados assim (com objetivo curto ao lado). Repositório: <https://github.com/osvaldojeronymo/machine-learning-project>.
+Os artefatos gerados durante o desenvolvimento desse projeto estão disponíveis no seguinte repositório: <https://github.com/osvaldojeronymo/machine-learning-project>.
 
 - `/notebooks`
-  - `01_explore_mbd_mini.ipynb` — EDA inicial: esquema/volumetria de `targets` e `client_split`, prevalência por mês e por fold, artefatos em `reports/`.
-  - `02_features_tabular.ipynb` — Engenharia de atributos (trx/geo/dialog) com janelas temporais, *pooling* de embeddings e junção mensal `mon`.
-  - `03_train_compare_tabular.ipynb` — Treino/validação (GroupKFold por cliente), métricas (AUPRC, ROC-AUC, Precision@k), calibração, *feature importance*.
-  - `04_ptls_sequence_embeddings.ipynb` — Representações sequenciais (pytorch-lifestream) + cabeçote leve (MLP/GBM) para *late fusion*.
+  - `01_explore_mbd_mini.ipynb` [EDA inicial: esquema/volumetria de `targets` e `client_split`, prevalência por mês e por fold, artefatos em `reports/`.]
+  - `02_features_tabular.ipynb` [Engenharia de atributos (trx/geo/dialog) com janelas temporais, *pooling* de embeddings e junção mensal `mon`.]
+  - `03_train_compare_tabular.ipynb` [Treino/validação (GroupKFold por cliente), métricas (AUPRC, ROC-AUC, Precision@k), calibração, *feature importance*.]
+  - `04_ptls_sequence_embeddings.ipynb`[Representações sequenciais (pytorch-lifestream) + cabeçote leve (MLP/GBM) para *late fusion*.]
 
 - `/src`
-  - `data_loading.py` — Leitura do HF Hub (snapshot/cache), carregamento seguro sem vazamento temporal.
-  - `features_trx.py` — RFM, sazonalidade, entropias e contagens (transações).
-  - `features_geo.py` — Mobilidade/geohash, diversidade e recência (geo).
-  - `features_dialog.py` — *Pooling* + redução de dimensionalidade para embeddings de diálogo.
-  - `train_tabular.py` — Pipeline de treino (LR, LGBM/CatBoost), Optuna (TPE), *early stopping*, salvando métricas.
-  - `train_ptls.py` — Treino de representações/seqs (ptls) e integração no fluxo.
-
+  - `data_loading.py` [Leitura do HF Hub (snapshot/cache), carregamento seguro sem vazamento temporal.]
+  - `features_trx.py` [RFM, sazonalidade, entropias e contagens (transações).]
+  - `features_geo.py` [Mobilidade/geohash, diversidade e recência (geo).]
+  - `features_dialog.py`[*Pooling* + redução de dimensionalidade para embeddings de diálogo.]
+  - `train_tabular.py` [Pipeline de treino (LR, LGBM/CatBoost), Optuna (TPE), *early stopping*, salvando métricas.]
+  - `train_ptls.py` [Treino de representações/seqs (ptls) e integração no fluxo.
+]
 - `/reports`
-  - `metrics_by_fold.csv` — Métricas por dobra.
-  - `feature_importance_{model}.csv` — Importâncias por estimador.
-  - `calibration_plots/` — Curvas de calibração e confiabilidade.
+  - `metrics_by_fold.csv` [Métricas por dobra.]
+  - `feature_importance_{model}.csv` [Importâncias por estimador.]
+  - `calibration_plots/`[Curvas de calibração e confiabilidade.]
 
 ## Pré-processamento
 
@@ -517,27 +514,202 @@ Se o **AUPRC** do melhor modelo superar com folga baselines simples (ex.: RegLog
 * MOLLAEV, D. **et al.** **Multimodal Banking Dataset: Understanding Client Needs through Event Sequences**. *arXiv preprint* arXiv:2409.17587, v2, 2025. DOI: 10.48550/arXiv.2409.17587. Disponível em: `https://arxiv.org/abs/2409.17587`. Acesso em: 16 ago. 2025. ([arXiv][1])
 * SBERBANK AI LAB. **pytorch-lifestream: a library for embeddings on discrete event sequences**. Software. GitHub, 2025. Disponível em: `https://github.com/sberbank-ai-lab/pytorch-lifestream`. Acesso em: 16 ago. 2025. ([GitHub][3])
 
-[1]: https://arxiv.org/pdf/2409.17587?utm_source=chatgpt.com "multimodal banking dataset: understanding client needs ..."
-[2]: https://huggingface.co/datasets/ai-lab/MBD?utm_source=chatgpt.com "ai-lab/MBD · Datasets at Hugging Face"
-[3]: https://github.com/sberbank-ai-lab/pytorch-lifestream?utm_source=chatgpt.com "sberbank-ai-lab/pytorch-lifestream: A library built upon ..."
-[4]: https://arxiv.org/abs/2002.08232?utm_source=chatgpt.com "CoLES: Contrastive Learning for Event Sequences with Self-Supervision"
-[5]: https://huggingface.co/datasets/ai-lab/MBD-mini?utm_source=chatgpt.com "ai-lab/MBD-mini · Datasets at Hugging Face"
+https://arxiv.org/pdf/2409.17587?utm_source=chatgpt.com "multimodal banking dataset: understanding client needs ..."
+https://huggingface.co/datasets/ai-lab/MBD?utm_source=chatgpt.com "ai-lab/MBD · Datasets at Hugging Face"
+https://github.com/sberbank-ai-lab/pytorch-lifestream?utm_source=chatgpt.com "sberbank-ai-lab/pytorch-lifestream: A library built upon ..."
+https://arxiv.org/abs/2002.08232?utm_source=chatgpt.com "CoLES: Contrastive Learning for Event Sequences with Self-Supervision"
+https://huggingface.co/datasets/ai-lab/MBD-mini?utm_source=chatgpt.com "ai-lab/MBD-mini · Datasets at Hugging Face"
 
 * **Paper MBD (arXiv)** – define tarefas **campaigning** e **matching** e descreve as modalidades/escala. ([arXiv][1])
 * **Hugging Face – MBD e MBD-mini** – descrição, estrutura, flag `is_balanced`, uso para prototipagem. ([Hugging Face][2])
 * **pytorch-lifestream (ptls)** – biblioteca para sequências de eventos em larga escala. ([GitHub][4])
 * **Repo do benchmark (GitHub)** – notebooks, scripts, late-fusion, requisitos. ([GitHub][5])
 
-[1]: https://arxiv.org/abs/2409.17587?utm_source=chatgpt.com "Multimodal Banking Dataset: Understanding Client Needs through Event Sequences"
-[2]: https://huggingface.co/datasets/ai-lab/MBD?utm_source=chatgpt.com "ai-lab/MBD · Datasets at Hugging Face"
-[3]: https://arxiv.org/html/2409.17587v2?utm_source=chatgpt.com "Multimodal Banking Dataset: Understanding Client Needs ..."
-[4]: https://github.com/dllllb/pytorch-lifestream?utm_source=chatgpt.com "pytorch-lifestream/pytorch-lifestream: A library built upon ..."
-[5]: https://github.com/dzhambo/mbd "GitHub - Dzhambo/MBD"
-[6]: https://ar5iv.labs.arxiv.org/html/2409.17587?utm_source=chatgpt.com "[2409.17587] Multimodal Banking Dataset ... - ar5iv - arXiv"
-[7]: https://arxiv.org/pdf/2409.17587?utm_source=chatgpt.com "multimodal banking dataset: understanding client needs ..."
-[8]: https://huggingface.co/datasets/ai-lab/MBD-mini?utm_source=chatgpt.com "ai-lab/MBD-mini · Datasets at Hugging Face"
+https://arxiv.org/abs/2409.17587?utm_source=chatgpt.com "Multimodal Banking Dataset: Understanding Client Needs through Event Sequences"
+https://huggingface.co/datasets/ai-lab/MBD?utm_source=chatgpt.com "ai-lab/MBD · Datasets at Hugging Face"
+https://arxiv.org/html/2409.17587v2?utm_source=chatgpt.com "Multimodal Banking Dataset: Understanding Client Needs ..."
+https://github.com/dllllb/pytorch-lifestream?utm_source=chatgpt.com "pytorch-lifestream/pytorch-lifestream: A library built upon ..."
+https://github.com/dzhambo/mbd "GitHub - Dzhambo/MBD"
+https://ar5iv.labs.arxiv.org/html/2409.17587?utm_source=chatgpt.com "[2409.17587] Multimodal Banking Dataset ... - ar5iv - arXiv"
+https://arxiv.org/pdf/2409.17587?utm_source=chatgpt.com "multimodal banking dataset: understanding client needs ..."
+https://huggingface.co/datasets/ai-lab/MBD-mini?utm_source=chatgpt.com "ai-lab/MBD-mini · Datasets at Hugging Face"
 
 # Apêndices {.unnumbered}
+
+## Entendo os artefatos {.appendix .unnumbered #apx-artefatos}
+
+> Este apêndice documenta **como o repositório está organizado** e **como cada notebook funciona começando pelo `01_explore_mbd_mini.ipynb`**, incluindo os artefatos gerados e um resumo da execução real mostrada no terminal.
+
+`machine-learning-project/`
+`├─ notebooks/`
+`│ ├─ 01_explore_mbd_mini.ipynb # EDA dividida em 4 objetivos`
+`│ ├─ 02_features_tabular.ipynb # (exemplo) featurização tabular`
+`│ ├─ 03_train_compare_tabular.ipynb # (exemplo) treino/validação`
+`│ └─ 04_ptls_sequence_embeddings.ipynb# (exemplo) sequências/embeddings`
+`├─ src/`
+`│ └─ eda/`
+`│ ├─ io_tar.py # leitura TAR + Parquet particionado; reconstrói fold; normaliza mon`
+`│ ├─ check_schema_vol.py # esquema, vazamento, volumetria`
+`│ ├─ prevalence.py # tabela de prevalência (ALL, por mês, por fold)`
+`│ ├─ baseline.py # baseline AUPRC ≈ prevalência`
+`│ └─ artifacts.py # manifest.json (hashes, caminhos, notas)`
+`├─ reports/ # artefatos (json/csv) gerados pela EDA`
+`├─ requirements.txt # pandas, pyarrow`
+`└─ README.md`
+
+**Glossário:**  
+
+- **fold**: partição para validação (GroupKFold por cliente). O `fold` não vem como coluna: ele está no **caminho** do parquet (`.../fold=K/part-*.parquet`) e é **reconstruído** pelo leitor.
+
+- **mon**: mês de referência; normalizado para `Period[M]` (ex.: `2022-09`).
+
+# Notebook `01_explore_mbd_mini.ipynb` — passo a passo
+
+## Setup & Config
+
+- Define `ROOT`, `PATH_TARGETS`, `PATH_SPLIT` e o diretório `reports/`.
+
+- Liga modo rápido (`FAST_MODE`, `LIMIT_FOLDS`, `MAX_PARTS_PER_PREFIX`) quando necessário.
+
+- Importa funções de `src/eda`.
+
+## Leitura dos dados (TAR → Parquet particionado)
+
+- Função: `read_parquet_partitions_from_tar()`
+
+- **O que faz**: abre `*.tar.gz`, percorre todos os `part-*.parquet` sob um prefixo (`targets/`, `client_split/`), **lê e concatena**; extrai `fold=K` do caminho e injeta como coluna.
+
+- **Por que assim?**: o dataset está fisicamente particionado por pasta, não por coluna.
+
+## Normalização de datas
+
+- `normalize_mon_period_m(df, "mon")` → `mon` vira `Period[M]` (`datetime64` mensal).
+
+## Objetivo 1 — Esquema & Volumetria
+
+- Funções: `schema_report()`, `leakage_report()`, `volumetria_report()`
+
+- **Esquema**: `dtypes`, nulos, `nunique`, memória, domínios (`target_* ∈ {0,1}`).
+
+- **Volumetria**: nº linhas, nº clientes, distribuição por `mon` e por `fold`.
+
+- **Vazamento**: `client_id` em mais de um `fold`.
+
+- **Outputs**: `reports/schema_*.json`, `reports/volumetria.json`, `reports/fold_leakage.csv` (se houver).
+
+## Objetivo 2 — Prevalência (target_1..4) por mês e por fold
+
+- Função: `prevalence_table()`
+
+- **Linhas**: `ALL`, `mon=YYYY-MM`, `fold=K`. **Colunas**: `target_1..4`.
+
+- **Output**: `reports/prevalencia.csv`.
+
+## Objetivo 3 — Baseline AUPRC ≈ prevalência
+
+- Função: `baseline_from_prevalence()` (copia a tabela de prevalência).  
+
+- **Output**: `reports/baseline_auprc.csv`.
+
+## Objetivo 4 — Artefatos & Manifest
+
+- Função: `write_manifest()`
+
+- Salva `reports/manifest.json` com caminhos, **hashes** (md5/sha256) dos `*.tar.gz`, tamanhos e notas (dtype de `mon`, nº de linhas etc.).
+
+# Resultado da execução (logs e números desta run)
+
+A execução relatada no terminal foi:
+
+[INFO] Executando pipeline EDA...
+[OK] Lidos 435 arquivos parquet de 'targets/' em targets.tar.gz. Partições recuperadas: ['fold']
+[OK] Lidos 1000 arquivos parquet de 'client_split/' em client_split.tar.gz. Partições recuperadas: ['fold']
+[OK] volumetria.json salvo.
+[OK] prevalencia.csv salvo.
+[OK] baseline_auprc.csv salvo (≈ prevalência).
+[OK] manifest.json salvo.
+===== RESUMO =====
+targets total rows: 1202688
+nº de clientes (client_split): 100224
+
+Prevalência global (linha 'ALL'):
+
+**Leituras rápidas a partir desses números**
+
+- **Escala**: `targets` com **1.202.688** linhas; `client_split` com **100.224** clientes (espera-se K folds estratificados por cliente).  
+
+- **Integridade do split**: se houver clientes em mais de um fold, sai `reports/fold_leakage.csv` (não houve alerta extra nessa execução).  
+
+- **Prevalência global**: a linha `ALL` em `prevalencia.csv` é o baseline aproximado de **AUPRC** para cada `target_k` (ranking aleatório).
+
+> Para materializar a tabela aqui no apêndice, o chunk abaixo carrega `reports/prevalencia.csv` e mostra as primeiras linhas.
+
+
+# Artefatos gerados (onde encontrar)
+
+- reports/schema_targets.json — raio-X do targets
+
+- reports/schema_client_split.json — raio-X do client_split
+
+- reports/volumetria.json — contagens por mês e por (mês, fold)
+
+- reports/prevalencia.csv — tabela (ALL / mon / fold × target_1..4)
+
+- reports/baseline_auprc.csv — baseline ≈ prevalência
+
+- reports/fold_leakage.csv — (se houver) clientes em > 1 fold
+
+- reports/manifest.json — quem gerou o quê (caminhos, hashes, tamanhos)
+
+#  Boas práticas, checks e troubleshooting
+
+## Checks rápidos
+
+- target_* ∈ {0,1} (alerta se não).
+
+- Cada client_id em um único fold.
+
+- mon normalizado para Period[M] (verifique NaT após a conversão).
+
+- Distribuição por mon e por fold razoável (sem meses/folds vazios inesperados).
+
+## Problemas comuns e correções
+
+- Arquivo não encontrado: ajuste ROOT/PATH_* no notebook (Setup & Config).
+
+- pyarrow ausente: pip install pyarrow.
+
+- mon virando NaT: inspecione o formato original e trate antes de Period[M].
+
+- Prevalência vazia: verifique se target_1..4 existem após a leitura.
+
+# Como reproduzir (exemplo de sessão)
+
+```
+# 1) Criar venv e instalar deps
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+
+# 2) Abrir o notebook e rodar as células (ou executar o runner no fim)
+jupyter lab  # ou code notebooks/01_explore_mbd_mini.ipynb
+
+# 3) Conferir artefatos
+ls -lah reports/
+
+```
+# Conclusão
+
+Este apêndice deixa operacionalizado como ler, auditar e resumir o dataset MBD-mini, com ênfase em:
+
+- contratos de dados (esquema/volumetria),
+
+- integridade de splits (GroupKFold por cliente),
+
+- baseline honesto (AUPRC ≈ prevalência),
+
+- e reprodutibilidade (artefatos + manifest com hashes).
+
 ## Dicionário de dados {.appendix .unnumbered #apx-dados}
 
 **client_split**  

@@ -1,9 +1,15 @@
 project:
   type: website
   output-dir: docs
-website:
-  title: "Machine Learning Project"
-  page-navigation: true
+
+python: ".venv/bin/python"   # <- topo, fora de 'execute'
+
+execute:
+  echo: true
+  warning: false
+  message: false
+  cache: false
+
 format:
   html:
     theme: cosmo

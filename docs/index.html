@@ -153,6 +153,28 @@ div.csl-indent {
   <ul class="collapse">
   
   </ul></li>
+  <li><a href="#notebook-01_explore_mbd_mini.ipynb-passo-a-passo" id="toc-notebook-01_explore_mbd_mini.ipynb-passo-a-passo" class="nav-link" data-scroll-target="#notebook-01_explore_mbd_mini.ipynb-passo-a-passo"><span class="header-section-number">6</span> Notebook <code>01_explore_mbd_mini.ipynb</code> — passo a passo</a>
+  <ul class="collapse">
+  <li><a href="#setup-config" id="toc-setup-config" class="nav-link" data-scroll-target="#setup-config"><span class="header-section-number">6.1</span> Setup &amp; Config</a></li>
+  <li><a href="#leitura-dos-dados-tar-parquet-particionado" id="toc-leitura-dos-dados-tar-parquet-particionado" class="nav-link" data-scroll-target="#leitura-dos-dados-tar-parquet-particionado"><span class="header-section-number">6.2</span> Leitura dos dados (TAR → Parquet particionado)</a></li>
+  <li><a href="#normalização-de-datas" id="toc-normalização-de-datas" class="nav-link" data-scroll-target="#normalização-de-datas"><span class="header-section-number">6.3</span> Normalização de datas</a></li>
+  <li><a href="#objetivo-1-esquema-volumetria" id="toc-objetivo-1-esquema-volumetria" class="nav-link" data-scroll-target="#objetivo-1-esquema-volumetria"><span class="header-section-number">6.4</span> Objetivo 1 — Esquema &amp; Volumetria</a></li>
+  <li><a href="#objetivo-2-prevalência-target_1..4-por-mês-e-por-fold" id="toc-objetivo-2-prevalência-target_1..4-por-mês-e-por-fold" class="nav-link" data-scroll-target="#objetivo-2-prevalência-target_1..4-por-mês-e-por-fold"><span class="header-section-number">6.5</span> Objetivo 2 — Prevalência (target_1..4) por mês e por fold</a></li>
+  <li><a href="#objetivo-3-baseline-auprc-prevalência" id="toc-objetivo-3-baseline-auprc-prevalência" class="nav-link" data-scroll-target="#objetivo-3-baseline-auprc-prevalência"><span class="header-section-number">6.6</span> Objetivo 3 — Baseline AUPRC ≈ prevalência</a></li>
+  <li><a href="#objetivo-4-artefatos-manifest" id="toc-objetivo-4-artefatos-manifest" class="nav-link" data-scroll-target="#objetivo-4-artefatos-manifest"><span class="header-section-number">6.7</span> Objetivo 4 — Artefatos &amp; Manifest</a></li>
+  </ul></li>
+  <li><a href="#resultado-da-execução-logs-e-números-desta-run" id="toc-resultado-da-execução-logs-e-números-desta-run" class="nav-link" data-scroll-target="#resultado-da-execução-logs-e-números-desta-run"><span class="header-section-number">7</span> Resultado da execução (logs e números desta run)</a></li>
+  <li><a href="#artefatos-gerados-onde-encontrar" id="toc-artefatos-gerados-onde-encontrar" class="nav-link" data-scroll-target="#artefatos-gerados-onde-encontrar"><span class="header-section-number">8</span> Artefatos gerados (onde encontrar)</a></li>
+  <li><a href="#boas-práticas-checks-e-troubleshooting" id="toc-boas-práticas-checks-e-troubleshooting" class="nav-link" data-scroll-target="#boas-práticas-checks-e-troubleshooting"><span class="header-section-number">9</span> Boas práticas, checks e troubleshooting</a>
+  <ul class="collapse">
+  <li><a href="#checks-rápidos" id="toc-checks-rápidos" class="nav-link" data-scroll-target="#checks-rápidos"><span class="header-section-number">9.1</span> Checks rápidos</a></li>
+  <li><a href="#problemas-comuns-e-correções" id="toc-problemas-comuns-e-correções" class="nav-link" data-scroll-target="#problemas-comuns-e-correções"><span class="header-section-number">9.2</span> Problemas comuns e correções</a></li>
+  </ul></li>
+  <li><a href="#como-reproduzir-exemplo-de-sessão" id="toc-como-reproduzir-exemplo-de-sessão" class="nav-link" data-scroll-target="#como-reproduzir-exemplo-de-sessão"><span class="header-section-number">10</span> Como reproduzir (exemplo de sessão)</a></li>
+  <li><a href="#conclusão" id="toc-conclusão" class="nav-link" data-scroll-target="#conclusão"><span class="header-section-number">11</span> Conclusão</a>
+  <ul class="collapse">
+  
+  </ul></li>
   </ul>
 </nav>
 </div>
@@ -177,7 +199,7 @@ div.csl-indent {
     <div>
     <div class="quarto-title-meta-heading">Data de Publicação</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">24 de agosto de 2025</p>
+      <p class="date">25 de agosto de 2025</p>
     </div>
   </div>
   
@@ -301,29 +323,29 @@ Quadro&nbsp;1— Visão geral de conjuntos de dados de transações existentes
 </section>
 <section id="repositório" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="repositório"><span class="header-section-number">2.3</span> Repositório</h2>
-<p>Os artefatos gerados durante o desenvolvimento estão organizados assim (com objetivo curto ao lado). Repositório: <a href="https://github.com/osvaldojeronymo/machine-learning-project" class="uri">https://github.com/osvaldojeronymo/machine-learning-project</a>.</p>
+<p>Os artefatos gerados durante o desenvolvimento desse projeto estão disponíveis no seguinte repositório: <a href="https://github.com/osvaldojeronymo/machine-learning-project" class="uri">https://github.com/osvaldojeronymo/machine-learning-project</a>.</p>
 <ul>
 <li><code>/notebooks</code>
 <ul>
-<li><code>01_explore_mbd_mini.ipynb</code> — EDA inicial: esquema/volumetria de <code>targets</code> e <code>client_split</code>, prevalência por mês e por fold, artefatos em <code>reports/</code>.</li>
-<li><code>02_features_tabular.ipynb</code> — Engenharia de atributos (trx/geo/dialog) com janelas temporais, <em>pooling</em> de embeddings e junção mensal <code>mon</code>.</li>
-<li><code>03_train_compare_tabular.ipynb</code> — Treino/validação (GroupKFold por cliente), métricas (AUPRC, ROC-AUC, Precision@k), calibração, <em>feature importance</em>.</li>
-<li><code>04_ptls_sequence_embeddings.ipynb</code> — Representações sequenciais (pytorch-lifestream) + cabeçote leve (MLP/GBM) para <em>late fusion</em>.</li>
+<li><code>01_explore_mbd_mini.ipynb</code> [EDA inicial: esquema/volumetria de <code>targets</code> e <code>client_split</code>, prevalência por mês e por fold, artefatos em <code>reports/</code>.]</li>
+<li><code>02_features_tabular.ipynb</code> [Engenharia de atributos (trx/geo/dialog) com janelas temporais, <em>pooling</em> de embeddings e junção mensal <code>mon</code>.]</li>
+<li><code>03_train_compare_tabular.ipynb</code> [Treino/validação (GroupKFold por cliente), métricas (AUPRC, ROC-AUC, Precision@k), calibração, <em>feature importance</em>.]</li>
+<li><code>04_ptls_sequence_embeddings.ipynb</code>[Representações sequenciais (pytorch-lifestream) + cabeçote leve (MLP/GBM) para <em>late fusion</em>.]</li>
 </ul></li>
 <li><code>/src</code>
 <ul>
-<li><code>data_loading.py</code> — Leitura do HF Hub (snapshot/cache), carregamento seguro sem vazamento temporal.</li>
-<li><code>features_trx.py</code> — RFM, sazonalidade, entropias e contagens (transações).</li>
-<li><code>features_geo.py</code> — Mobilidade/geohash, diversidade e recência (geo).</li>
-<li><code>features_dialog.py</code> — <em>Pooling</em> + redução de dimensionalidade para embeddings de diálogo.</li>
-<li><code>train_tabular.py</code> — Pipeline de treino (LR, LGBM/CatBoost), Optuna (TPE), <em>early stopping</em>, salvando métricas.</li>
-<li><code>train_ptls.py</code> — Treino de representações/seqs (ptls) e integração no fluxo.</li>
+<li><code>data_loading.py</code> [Leitura do HF Hub (snapshot/cache), carregamento seguro sem vazamento temporal.]</li>
+<li><code>features_trx.py</code> [RFM, sazonalidade, entropias e contagens (transações).]</li>
+<li><code>features_geo.py</code> [Mobilidade/geohash, diversidade e recência (geo).]</li>
+<li><code>features_dialog.py</code>[<em>Pooling</em> + redução de dimensionalidade para embeddings de diálogo.]</li>
+<li><code>train_tabular.py</code> [Pipeline de treino (LR, LGBM/CatBoost), Optuna (TPE), <em>early stopping</em>, salvando métricas.]</li>
+<li><code>train_ptls.py</code> [Treino de representações/seqs (ptls) e integração no fluxo.]</li>
 </ul></li>
 <li><code>/reports</code>
 <ul>
-<li><code>metrics_by_fold.csv</code> — Métricas por dobra.</li>
-<li><code>feature_importance_{model}.csv</code> — Importâncias por estimador.</li>
-<li><code>calibration_plots/</code> — Curvas de calibração e confiabilidade.</li>
+<li><code>metrics_by_fold.csv</code> [Métricas por dobra.]</li>
+<li><code>feature_importance_{model}.csv</code> [Importâncias por estimador.]</li>
+<li><code>calibration_plots/</code>[Curvas de calibração e confiabilidade.]</li>
 </ul></li>
 </ul>
 </section>
@@ -422,7 +444,7 @@ Dica
 <p>Boas práticas anti-vazamento: sempre respeite event_time ≤ mon; valide por cliente; normalize pipelines com fit no treino e transform no teste/validação.</p>
 </div>
 </div>
-<p><strong>Campanha de cross-sell:</strong> dada a historização de <strong>transações (trx)</strong>, <strong>atividade geográfica (geo)</strong> e <strong>embeddings de diálogo (dialog)</strong> até um mês de referência <code>mon</code>, <strong>prever a probabilidade de emissão de um produto</strong> no(s) próximo(s) mês(es). O MBD já vem com rótulos mensais <code>target_1</code>…<code>target_4</code> (emissão no +1, +2, +3, +4) e split por cliente/folds — é exatamente o cenário de “campaigning” proposto pelos autores. (<a href="https://huggingface.co/datasets/ai-lab/MBD?utm_source=chatgpt.com" title="ai-lab/MBD · Datasets at Hugging Face">Hugging Face</a>, <a href="https://arxiv.org/html/2409.17587v2?utm_source=chatgpt.com" title="Multimodal Banking Dataset: Understanding Client Needs ...">arXiv</a>)</p>
+<p><strong>Campanha de cross-sell:</strong> dada a historização de <strong>transações (trx)</strong>, <strong>atividade geográfica (geo)</strong> e <strong>embeddings de diálogo (dialog)</strong> até um mês de referência <code>mon</code>, <strong>prever a probabilidade de emissão de um produto</strong> no(s) próximo(s) mês(es). O MBD já vem com rótulos mensais <code>target_1</code>…<code>target_4</code> (emissão no +1, +2, +3, +4) e split por cliente/folds — é exatamente o cenário de “campaigning” proposto pelos autores. ([Hugging Face][2], [arXiv][3])</p>
 <blockquote class="blockquote">
 <ul>
 <li><strong>Tarefa principal:</strong> classificação binária para <strong><code>target_1</code></strong> (emissão no mês seguinte).</li>
@@ -433,7 +455,7 @@ Dica
 <p><strong>Premissas anti-vazamento (essenciais):</strong></p>
 <ul>
 <li>Para cada snapshot mensal <code>mon</code>, <strong>use apenas eventos com <code>event_time</code> ≤ fim de <code>mon</code></strong>.</li>
-<li>Respeite o split por <strong>cliente</strong> (use <code>fold</code>/<code>client_id</code>) para validação, evitando overlap. O dataset já fornece dobras e até versão “mini” para prototipagem. (<a href="https://huggingface.co/datasets/ai-lab/MBD?utm_source=chatgpt.com" title="ai-lab/MBD · Datasets at Hugging Face">Hugging Face</a>)</li>
+<li>Respeite o split por <strong>cliente</strong> (use <code>fold</code>/<code>client_id</code>) para validação, evitando overlap. O dataset já fornece dobras e até versão “mini” para prototipagem. ([Hugging Face][2])</li>
 </ul>
 <p><strong><em>Transações (<code>detail.trx</code> ou <code>ptls.trx</code>)</em></strong></p>
 <p>Agregue janelas <strong>1, 3 e 6 meses</strong> (rolling/expanding) até <code>mon</code>:</p>
@@ -456,13 +478,13 @@ Dica
 <li><strong>Redução</strong>: PCA/UMAP dos embeddings agregados para 16–64 dims (evita overfit).</li>
 </ul>
 <blockquote class="blockquote">
-<p>Observação: o MBD também disponibiliza os dados no <strong>formato ptls (pytorch-lifestream)</strong> para modelagem sequencial em larga escala. (<a href="https://github.com/dllllb/pytorch-lifestream?utm_source=chatgpt.com" title="pytorch-lifestream/pytorch-lifestream: A library built upon ...">GitHub</a>)</p>
+<p>Observação: o MBD também disponibiliza os dados no <strong>formato ptls (pytorch-lifestream)</strong> para modelagem sequencial em larga escala. ([GitHub][4])</p>
 </blockquote>
 <p><strong><em>Junção + alvo</em></strong></p>
 <ul>
 <li><strong>Chave:</strong> (<code>client_id</code>, <code>mon</code>).</li>
 <li><strong>Alvos:</strong> <code>target_1</code> (principal) e, opcional, <code>target_2..4</code>.</li>
-<li><strong>Controles:</strong> <code>is_balanced</code> pode filtrar um subconjunto balanceado para experimentos rápidos (ou pesar classes). (<a href="https://huggingface.co/datasets/ai-lab/MBD?utm_source=chatgpt.com" title="ai-lab/MBD · Datasets at Hugging Face">Hugging Face</a>)</li>
+<li><strong>Controles:</strong> <code>is_balanced</code> pode filtrar um subconjunto balanceado para experimentos rápidos (ou pesar classes). ([Hugging Face][2])</li>
 </ul>
 <p><strong>Métricas</strong></p>
 <p>Como campanhas têm <strong>baixa prevalência</strong>, priorize métricas robustas a desbalanceamento:</p>
@@ -481,7 +503,7 @@ Dica
 </ol>
 <p><strong><em>Track 2 — Sequencial (opcional, eleva teto de performance)</em></strong></p>
 <ol start="4" type="1">
-<li><strong><code>ptls</code> (pytorch-lifestream)</strong> para aprender embeddings de sequência (trx/geo) via auto-supervisão (p.ex., <strong>CoLES</strong>), seguidos de um <strong>cabeçote MLP</strong> para previsão. Esse é o caminho alinhado ao benchmark oficial do MBD. (<a href="https://github.com/dzhambo/mbd" title="GitHub - Dzhambo/MBD">GitHub</a>)</li>
+<li><strong><code>ptls</code> (pytorch-lifestream)</strong> para aprender embeddings de sequência (trx/geo) via auto-supervisão (p.ex., <strong>CoLES</strong>), seguidos de um <strong>cabeçote MLP</strong> para previsão. Esse é o caminho alinhado ao benchmark oficial do MBD. ([GitHub][5])</li>
 </ol>
 <p><strong>Otimização</strong></p>
 <ul>
@@ -499,11 +521,11 @@ Dica
 <ul>
 <li>Treine todos os modelos nas mesmas dobras.</li>
 <li>Relate <strong>AUPRC/ROC-AUC</strong>, <strong>Top-k</strong> (5%, 10%, 20%), <strong>calibração</strong> e <strong>curvas de ganho/lift</strong>.</li>
-<li>Faça <strong>ablação por modalidade</strong> (trx/geo/dialog) e <strong>late-fusion</strong> (concat/blending) — também alinhado ao repositório dos autores. (<a href="https://github.com/dzhambo/mbd" title="GitHub - Dzhambo/MBD">GitHub</a>)</li>
+<li>Faça <strong>ablação por modalidade</strong> (trx/geo/dialog) e <strong>late-fusion</strong> (concat/blending) — também alinhado ao repositório dos autores. ([GitHub][5])</li>
 <li>Escolha o <strong>melhor compromisso</strong> entre <strong>AUPRC</strong>, <strong>estabilidade nas dobras</strong>, <strong>custo/latência</strong> e <strong>calibração</strong>.</li>
 </ul>
 <p><strong>Formulação do problema</strong></p>
-<p>Este estudo aborda a tarefa de <strong>campanha (purchase prediction)</strong>: dados históricos multimodais de cada cliente até um mês de referência <code>mon</code>, estima-se a <strong>probabilidade de emissão de produto no mês subsequente</strong> (<code>target_1</code>). A formulação segue o delineamento do <strong>Multimodal Banking Dataset (MBD)</strong>, que provê rótulos mensais (<code>target_1</code>…<code>target_4</code>) e dados temporais de <strong>transações (trx)</strong>, <strong>atividade geográfica (geo)</strong> e <strong>embeddings de diálogos (dialog)</strong>. (MOLLAEV et al., 2025). (<a href="https://arxiv.org/abs/2409.17587?utm_source=chatgpt.com" title="Multimodal Banking Dataset: Understanding Client Needs through Event Sequences">arXiv</a>)</p>
+<p>Este estudo aborda a tarefa de <strong>campanha (purchase prediction)</strong>: dados históricos multimodais de cada cliente até um mês de referência <code>mon</code>, estima-se a <strong>probabilidade de emissão de produto no mês subsequente</strong> (<code>target_1</code>). A formulação segue o delineamento do <strong>Multimodal Banking Dataset (MBD)</strong>, que provê rótulos mensais (<code>target_1</code>…<code>target_4</code>) e dados temporais de <strong>transações (trx)</strong>, <strong>atividade geográfica (geo)</strong> e <strong>embeddings de diálogos (dialog)</strong>. (MOLLAEV et al., 2025). ([arXiv][1])</p>
 <p><strong>Organização dos dados</strong></p>
 <p>O <a href="#tbl-mbd-schema" class="quarto-xref">Quadro&nbsp;2</a> apresenta a organização do <strong>MBD</strong> realizada por <span class="citation" data-cites="mollaev2025">Mollaev <em>et al.</em> (<a href="#ref-mollaev2025" role="doc-biblioref">2025</a>)</span>:</p>
 <div id="tbl-mbd-schema" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -564,23 +586,23 @@ Quadro&nbsp;2— Organização dos dados do MBD (resumo)
 <p>Fonte: Adaptado de MOLLAEV, D. et al.&nbsp;(2025). DOI: 10.48550/arXiv.2409.17587. Tradução nossa.</p>
 <p>Veja o <a href="#apx-dados">Apêndice A — Dicionário de dados</a>.</p>
 <p><strong>Dados, versões e partições</strong></p>
-<p>Utiliza-se o <strong>MBD</strong> hospedado na Hugging Face, com dados anonimizados por cliente ao longo de ~12 meses, concebido para prever propensão de compra após a data de referência. Para prototipagem e <em>tuning</em> inicial, emprega-se o <strong>MBD-mini</strong>, que preserva a estrutura e acelera ciclos de experimento, com posterior migração ao conjunto completo. Para reprodutibilidade, o carregamento é fixado (<em>pinado</em>) a uma revisão específica do dataset. (AI-LAB, 2025; MOLLAEV et al., 2025). (<a href="https://huggingface.co/datasets/ai-lab/MBD?utm_source=chatgpt.com" title="ai-lab/MBD · Datasets at Hugging Face">Hugging Face</a>, <a href="https://arxiv.org/abs/2409.17587?utm_source=chatgpt.com" title="Multimodal Banking Dataset: Understanding Client Needs through Event Sequences">arXiv</a>) A validação respeita a unidade natural de generalização (<strong>cliente</strong>). Adota-se <strong>GroupKFold</strong> com <strong><code>client_id</code></strong> como agrupador ou, alternativamente, as <strong>dobras (<code>fold</code>)</strong> fornecidas pelo próprio dataset, evitando vazamento por sobreposição de clientes entre treino e validação. Em todas as montagens por mês de referência, <strong>somente eventos com <code>event_time</code> ≤ fim de <code>mon</code></strong> são elegíveis para <em>features</em> (“no-lookahead”). (MOLLAEV et al., 2025). (<a href="https://arxiv.org/abs/2409.17587?utm_source=chatgpt.com" title="Multimodal Banking Dataset: Understanding Client Needs through Event Sequences">arXiv</a>)</p>
+<p>Utiliza-se o <strong>MBD</strong> hospedado na Hugging Face, com dados anonimizados por cliente ao longo de ~12 meses, concebido para prever propensão de compra após a data de referência. Para prototipagem e <em>tuning</em> inicial, emprega-se o <strong>MBD-mini</strong>, que preserva a estrutura e acelera ciclos de experimento, com posterior migração ao conjunto completo. Para reprodutibilidade, o carregamento é fixado (<em>pinado</em>) a uma revisão específica do dataset. (AI-LAB, 2025; MOLLAEV et al., 2025). ([Hugging Face][2], [arXiv][1]) A validação respeita a unidade natural de generalização (<strong>cliente</strong>). Adota-se <strong>GroupKFold</strong> com <strong><code>client_id</code></strong> como agrupador ou, alternativamente, as <strong>dobras (<code>fold</code>)</strong> fornecidas pelo próprio dataset, evitando vazamento por sobreposição de clientes entre treino e validação. Em todas as montagens por mês de referência, <strong>somente eventos com <code>event_time</code> ≤ fim de <code>mon</code></strong> são elegíveis para <em>features</em> (“no-lookahead”). (MOLLAEV et al., 2025). ([arXiv][1])</p>
 <p><strong>Pré-processamento e engenharia de atributos</strong></p>
 <section id="transações-trx-1" class="level3" data-number="3.8.1">
 <h3 data-number="3.8.1" class="anchored" data-anchor-id="transações-trx-1"><span class="header-section-number">3.8.1</span> Transações (trx)</h3>
-<p>Para cada par (<code>client_id</code>, <code>mon</code>), agregam-se janelas <strong>1, 3 e 6 meses</strong> até o fim de <code>mon</code>: (i) <strong>volume/frequência</strong>: contagem de transações; recência (dias desde a última); (ii) <strong>valor</strong>: soma, mediana, desvio-padrão e ticket médio de <code>amount</code>; (iii) <strong>mix de tipos</strong>: contagens/percentuais por <code>event_type</code> e <code>event_subtype</code>; (iv) <strong>diversidade/rede</strong>: número de contrapartes únicas e entropias em <code>dst_type*</code>/<code>src_type*</code>; (v) <strong>sazonalidade</strong>: indicadores de dia da semana/hora (one-hot e codificação seno/cosseno). (MOLLAEV et al., 2025). (<a href="https://arxiv.org/abs/2409.17587?utm_source=chatgpt.com" title="Multimodal Banking Dataset: Understanding Client Needs through Event Sequences">arXiv</a>)</p>
+<p>Para cada par (<code>client_id</code>, <code>mon</code>), agregam-se janelas <strong>1, 3 e 6 meses</strong> até o fim de <code>mon</code>: (i) <strong>volume/frequência</strong>: contagem de transações; recência (dias desde a última); (ii) <strong>valor</strong>: soma, mediana, desvio-padrão e ticket médio de <code>amount</code>; (iii) <strong>mix de tipos</strong>: contagens/percentuais por <code>event_type</code> e <code>event_subtype</code>; (iv) <strong>diversidade/rede</strong>: número de contrapartes únicas e entropias em <code>dst_type*</code>/<code>src_type*</code>; (v) <strong>sazonalidade</strong>: indicadores de dia da semana/hora (one-hot e codificação seno/cosseno). (MOLLAEV et al., 2025). ([arXiv][1])</p>
 </section>
 <section id="geolocalização-geo-1" class="level3" data-number="3.8.2">
 <h3 data-number="3.8.2" class="anchored" data-anchor-id="geolocalização-geo-1"><span class="header-section-number">3.8.2</span> Geolocalização (geo)</h3>
-<p>A partir da sequência de geohashes: (i) <strong>intensidade/diversidade</strong>: número de eventos; células únicas em <code>geohash_5/6</code>; entropia espacial; (ii) <strong>mobilidade</strong>: <em>radius of gyration</em> aproximado, trocas de célula, razões dia/noite e semana/fim-de-semana; (iii) <strong>recência</strong>: dias desde o último evento geo. (MOLLAEV et al., 2025). (<a href="https://arxiv.org/abs/2409.17587?utm_source=chatgpt.com" title="Multimodal Banking Dataset: Understanding Client Needs through Event Sequences">arXiv</a>)</p>
+<p>A partir da sequência de geohashes: (i) <strong>intensidade/diversidade</strong>: número de eventos; células únicas em <code>geohash_5/6</code>; entropia espacial; (ii) <strong>mobilidade</strong>: <em>radius of gyration</em> aproximado, trocas de célula, razões dia/noite e semana/fim-de-semana; (iii) <strong>recência</strong>: dias desde o último evento geo. (MOLLAEV et al., 2025). ([arXiv][1])</p>
 </section>
 <section id="diálogos-dialog-1" class="level3" data-number="3.8.3">
 <h3 data-number="3.8.3" class="anchored" data-anchor-id="diálogos-dialog-1"><span class="header-section-number">3.8.3</span> Diálogos (dialog)</h3>
-<p>Os <strong>embeddings</strong> de diálogo são agregados temporalmente por cliente via <strong>média</strong>, <strong>máximo</strong>, <strong>média ponderada pela recência</strong> e <strong>vetor do último diálogo</strong>; aplica-se <strong>PCA (16–64 dimensões)</strong> sobre vetores agregados para reduzir dimensionalidade e mitigar <em>overfitting</em>. (MOLLAEV et al., 2025). (<a href="https://arxiv.org/abs/2409.17587?utm_source=chatgpt.com" title="Multimodal Banking Dataset: Understanding Client Needs through Event Sequences">arXiv</a>)</p>
+<p>Os <strong>embeddings</strong> de diálogo são agregados temporalmente por cliente via <strong>média</strong>, <strong>máximo</strong>, <strong>média ponderada pela recência</strong> e <strong>vetor do último diálogo</strong>; aplica-se <strong>PCA (16–64 dimensões)</strong> sobre vetores agregados para reduzir dimensionalidade e mitigar <em>overfitting</em>. (MOLLAEV et al., 2025). ([arXiv][1])</p>
 </section>
 <section id="junção-e-alvo-1" class="level3" data-number="3.8.4">
 <h3 data-number="3.8.4" class="anchored" data-anchor-id="junção-e-alvo-1"><span class="header-section-number">3.8.4</span> Junção e alvo</h3>
-<p>As <em>features</em> de cada modalidade são unidas por (<code>client_id</code>, <code>mon</code>) e associadas ao rótulo <strong>binário</strong> <code>target_1</code>. <strong>Valores ausentes</strong> pós-agregação são imputados com zero (ou estatísticas de janela, quando aplicável). Para experimentos com foco em tempo de execução, pode-se filtrar <code>is_balanced == 1</code>, preservando a comparação final no conjunto completo. (AI-LAB, 2025). (<a href="https://huggingface.co/datasets/ai-lab/MBD?utm_source=chatgpt.com" title="ai-lab/MBD · Datasets at Hugging Face">Hugging Face</a>)</p>
+<p>As <em>features</em> de cada modalidade são unidas por (<code>client_id</code>, <code>mon</code>) e associadas ao rótulo <strong>binário</strong> <code>target_1</code>. <strong>Valores ausentes</strong> pós-agregação são imputados com zero (ou estatísticas de janela, quando aplicável). Para experimentos com foco em tempo de execução, pode-se filtrar <code>is_balanced == 1</code>, preservando a comparação final no conjunto completo. (AI-LAB, 2025). ([Hugging Face][2])</p>
 </section>
 </section>
 <section id="modelagem-1" class="level2" data-number="3.9">
@@ -591,25 +613,25 @@ Quadro&nbsp;2— Organização dos dados do MBD (resumo)
 </section>
 <section id="trilho-sequencial-aprendizado-de-representações" class="level3" data-number="3.9.2">
 <h3 data-number="3.9.2" class="anchored" data-anchor-id="trilho-sequencial-aprendizado-de-representações"><span class="header-section-number">3.9.2</span> Trilho sequencial (aprendizado de representações)</h3>
-<p>Explora-se o caráter <strong>sequencial</strong> por meio do ecossistema <strong>pytorch-lifestream (ptls)</strong>, que aprende <strong>embeddings auto-supervisionados</strong> de sequências discretas em grande escala (por exemplo, <strong>CoLES</strong>). Treinam-se <em>encoders</em> para <strong>trx</strong> e/ou <strong>geo</strong> e, em seguida, aplica-se um <strong>cabeçote leve</strong> (MLP ou GBM) para prever <code>target_1</code>. (SBERBANK AI LAB, 2025; BABAEV et al., 2020). (<a href="https://arxiv.org/html/2409.17587v2?utm_source=chatgpt.com" title="Multimodal Banking Dataset: Understanding Client Needs ...">GitHub</a>, <a href="https://github.com/dllllb/pytorch-lifestream?utm_source=chatgpt.com" title="pytorch-lifestream/pytorch-lifestream: A library built upon ...">arXiv</a>)</p>
+<p>Explora-se o caráter <strong>sequencial</strong> por meio do ecossistema <strong>pytorch-lifestream (ptls)</strong>, que aprende <strong>embeddings auto-supervisionados</strong> de sequências discretas em grande escala (por exemplo, <strong>CoLES</strong>). Treinam-se <em>encoders</em> para <strong>trx</strong> e/ou <strong>geo</strong> e, em seguida, aplica-se um <strong>cabeçote leve</strong> (MLP ou GBM) para prever <code>target_1</code>. (SBERBANK AI LAB, 2025; BABAEV et al., 2020). ([GitHub][3], [arXiv][4])</p>
 </section>
 </section>
 <section id="validação-ajuste-de-hiperparâmetros-e-métrica-alvo" class="level2" data-number="3.10">
 <h2 data-number="3.10" class="anchored" data-anchor-id="validação-ajuste-de-hiperparâmetros-e-métrica-alvo"><span class="header-section-number">3.10</span> Validação, ajuste de hiperparâmetros e métrica-alvo</h2>
-<p>O protocolo de validação usa <strong>GroupKFold (5 dobras)</strong> por <strong><code>client_id</code></strong> (ou <em>folds</em> nativos do MBD). A <strong>métrica-alvo</strong> de <em>tuning</em> é <strong>AUPRC (PR-AUC)</strong>, apropriada a cenários desbalanceados; <strong>ROC-AUC</strong> é métrica complementar. O ajuste utiliza <strong>Optuna</strong> (Tree-Parzen) com <em>early stopping</em> quando suportado: a) <strong>LR</strong>: <code>C</code> (log-space), <code>penalty</code> (L1/L2), <code>class_weight</code>; b) <strong>LightGBM</strong>: <code>num_leaves</code>, <code>max_depth</code>, <code>min_data_in_leaf</code>, <code>feature_fraction</code>, <code>bagging_fraction</code>, <code>lambda_l1/l2</code>, <code>learning_rate</code>, <code>n_estimators</code>; c) <strong>CatBoost</strong>: <code>depth</code>, <code>l2_leaf_reg</code>, <code>learning_rate</code>, <code>iterations</code>, <code>scale_pos_weight</code>; d) <strong>ptls</strong>: <code>hidden_size</code>, <code>n_layers</code>, <code>dropout</code>, <code>lr</code>, <code>seq_len</code> e estratégia de <em>pooling</em> dos <em>embeddings</em>. (SBERBANK AI LAB, 2025). (<a href="https://arxiv.org/html/2409.17587v2?utm_source=chatgpt.com" title="Multimodal Banking Dataset: Understanding Client Needs ...">GitHub</a>)</p>
+<p>O protocolo de validação usa <strong>GroupKFold (5 dobras)</strong> por <strong><code>client_id</code></strong> (ou <em>folds</em> nativos do MBD). A <strong>métrica-alvo</strong> de <em>tuning</em> é <strong>AUPRC (PR-AUC)</strong>, apropriada a cenários desbalanceados; <strong>ROC-AUC</strong> é métrica complementar. O ajuste utiliza <strong>Optuna</strong> (Tree-Parzen) com <em>early stopping</em> quando suportado: a) <strong>LR</strong>: <code>C</code> (log-space), <code>penalty</code> (L1/L2), <code>class_weight</code>; b) <strong>LightGBM</strong>: <code>num_leaves</code>, <code>max_depth</code>, <code>min_data_in_leaf</code>, <code>feature_fraction</code>, <code>bagging_fraction</code>, <code>lambda_l1/l2</code>, <code>learning_rate</code>, <code>n_estimators</code>; c) <strong>CatBoost</strong>: <code>depth</code>, <code>l2_leaf_reg</code>, <code>learning_rate</code>, <code>iterations</code>, <code>scale_pos_weight</code>; d) <strong>ptls</strong>: <code>hidden_size</code>, <code>n_layers</code>, <code>dropout</code>, <code>lr</code>, <code>seq_len</code> e estratégia de <em>pooling</em> dos <em>embeddings</em>. (SBERBANK AI LAB, 2025). ([GitHub][3])</p>
 <p>**Ablação, fusão e seleção de limiar</p>
-<p>Conduz-se <strong>ablação por modalidade</strong> (somente trx; somente geo; somente dialog; multimodal) e <strong>fusão tardia</strong> por concatenação de <em>features</em> ou <em>blending</em> de escores. A seleção de limiar (τ) é orientada por <strong>calibração</strong> (Brier/curva de confiabilidade) e <strong>restrições de orçamento</strong> (p.&nbsp;ex., <em>precision@k</em> no topo de 5–10% dos clientes). (MOLLAEV et al., 2025). (<a href="https://arxiv.org/abs/2409.17587?utm_source=chatgpt.com" title="Multimodal Banking Dataset: Understanding Client Needs through Event Sequences">arXiv</a>)</p>
+<p>Conduz-se <strong>ablação por modalidade</strong> (somente trx; somente geo; somente dialog; multimodal) e <strong>fusão tardia</strong> por concatenação de <em>features</em> ou <em>blending</em> de escores. A seleção de limiar (τ) é orientada por <strong>calibração</strong> (Brier/curva de confiabilidade) e <strong>restrições de orçamento</strong> (p.&nbsp;ex., <em>precision@k</em> no topo de 5–10% dos clientes). (MOLLAEV et al., 2025). ([arXiv][1])</p>
 <p>**Controles de risco e vieses</p>
-<p>Mitigam-se riscos com: (i) <strong>bloqueio temporal</strong> nas agregações (<code>event_time ≤ mon</code>); (ii) tratamento do <strong>desbalanceamento</strong> com AUPRC, <code>class_weight/scale_pos_weight</code> e avaliação em <strong>top-k</strong>; (iii) <strong>monitoramento de <em>drift</em></strong> (distribuições de <em>features</em> e fração de positivos); (iv) análise por <strong>segmentos</strong> para identificar vieses e impactos desiguais. (MOLLAEV et al., 2025). (<a href="https://arxiv.org/abs/2409.17587?utm_source=chatgpt.com" title="Multimodal Banking Dataset: Understanding Client Needs through Event Sequences">arXiv</a>)</p>
+<p>Mitigam-se riscos com: (i) <strong>bloqueio temporal</strong> nas agregações (<code>event_time ≤ mon</code>); (ii) tratamento do <strong>desbalanceamento</strong> com AUPRC, <code>class_weight/scale_pos_weight</code> e avaliação em <strong>top-k</strong>; (iii) <strong>monitoramento de <em>drift</em></strong> (distribuições de <em>features</em> e fração de positivos); (iv) análise por <strong>segmentos</strong> para identificar vieses e impactos desiguais. (MOLLAEV et al., 2025). ([arXiv][1])</p>
 <p>**Reprodutibilidade e implantação</p>
-<p>Para reprodutibilidade, fixam-se <strong>sementes</strong>, <strong>versionamento</strong> de código/artefatos, <strong>pin</strong> da revisão do dataset e registro de ambiente (versões). Para implantação, <em>features</em> agregadas permitem <em>scoring</em> <strong>batch</strong> mensal com baixa latência; no trilho sequencial, <strong>embeddings ptls</strong> podem ser pré-computados e servidos a um <strong>classificador leve</strong> (GBM/MLP), equilibrando desempenho e custo operacional. (AI-LAB, 2025; SBERBANK AI LAB, 2025). (<a href="https://huggingface.co/datasets/ai-lab/MBD?utm_source=chatgpt.com" title="ai-lab/MBD · Datasets at Hugging Face">Hugging Face</a>, <a href="https://arxiv.org/html/2409.17587v2?utm_source=chatgpt.com" title="Multimodal Banking Dataset: Understanding Client Needs ...">GitHub</a>)</p>
+<p>Para reprodutibilidade, fixam-se <strong>sementes</strong>, <strong>versionamento</strong> de código/artefatos, <strong>pin</strong> da revisão do dataset e registro de ambiente (versões). Para implantação, <em>features</em> agregadas permitem <em>scoring</em> <strong>batch</strong> mensal com baixa latência; no trilho sequencial, <strong>embeddings ptls</strong> podem ser pré-computados e servidos a um <strong>classificador leve</strong> (GBM/MLP), equilibrando desempenho e custo operacional. (AI-LAB, 2025; SBERBANK AI LAB, 2025). ([Hugging Face][2], [GitHub][3])</p>
 </section>
 </section>
 <section id="resultados" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> Resultados</h1>
 <p><strong>Código base (funciona com MBD-mini para iterar rápido)</strong></p>
 <blockquote class="blockquote">
-<p>Use <strong>MBD-mini</strong> (≈10% dos clientes, mesma estrutura) para prototipar e depois migre ao completo. (<a href="https://huggingface.co/datasets/ai-lab/MBD-mini?utm_source=chatgpt.com" title="ai-lab/MBD-mini · Datasets at Hugging Face">Hugging Face</a>)</p>
+<p>Use <strong>MBD-mini</strong> (≈10% dos clientes, mesma estrutura) para prototipar e depois migre ao completo. ([Hugging Face][8])</p>
 </blockquote>
 <p><strong>1) Carregar dados e preparar snapshots</strong></p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datasets <span class="im">import</span> load_dataset</span>
@@ -709,7 +731,7 @@ Quadro&nbsp;2— Organização dos dados do MBD (resumo)
 <span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>ap_cat <span class="op">=</span> cv_ap(X, y, client_ids, CatBoostClassifier(iterations<span class="op">=</span><span class="dv">400</span>, learning_rate<span class="op">=</span><span class="fl">0.05</span>, verbose<span class="op">=</span><span class="dv">0</span>))</span>
 <span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ap_lr, ap_lgb, ap_cat)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <blockquote class="blockquote">
-<p>Para <strong>sequencial/ptls</strong>, use o formato <code>ptls.*</code> e treine um encoder (p.ex., <strong>CoLES</strong>) para <code>trx</code> e/ou <code>geo</code>, salve os <strong>embeddings por cliente</strong> e <strong>alimente um GBM/MLP</strong> — exatamente como no benchmark (há scripts/notebooks oficiais). (<a href="https://github.com/dzhambo/mbd" title="GitHub - Dzhambo/MBD">GitHub</a>)</p>
+<p>Para <strong>sequencial/ptls</strong>, use o formato <code>ptls.*</code> e treine um encoder (p.ex., <strong>CoLES</strong>) para <code>trx</code> e/ou <code>geo</code>, salve os <strong>embeddings por cliente</strong> e <strong>alimente um GBM/MLP</strong> — exatamente como no benchmark (há scripts/notebooks oficiais). ([GitHub][5])</p>
 </blockquote>
 <hr>
 </section>
@@ -717,15 +739,15 @@ Quadro&nbsp;2— Organização dos dados do MBD (resumo)
 <h1 data-number="5"><span class="header-section-number">5</span> Conclusões</h1>
 <section id="perguntas-chave" class="level2" data-number="5.1">
 <h2 data-number="5.1" class="anchored" data-anchor-id="perguntas-chave"><span class="header-section-number">5.1</span> Perguntas-chave</h2>
-<p><strong>i. Resolve o problema?</strong> Se o <strong>AUPRC</strong> do melhor modelo superar com folga baselines simples (ex.: RegLog e rules-based) e entregar <strong>lift</strong> alto no top-k, sim — o MBD foi criado justamente para <strong>predição de compra futura (campaigning)</strong> e mostrou vantagem do multimodal sobre unimodal. (<a href="https://arxiv.org/abs/2409.17587?utm_source=chatgpt.com" title="Multimodal Banking Dataset: Understanding Client Needs through Event Sequences">arXiv</a>, <a href="https://ar5iv.labs.arxiv.org/html/2409.17587?utm_source=chatgpt.com" title="[2409.17587] Multimodal Banking Dataset ... - ar5iv - arXiv">ar5iv</a>)</p>
+<p><strong>i. Resolve o problema?</strong> Se o <strong>AUPRC</strong> do melhor modelo superar com folga baselines simples (ex.: RegLog e rules-based) e entregar <strong>lift</strong> alto no top-k, sim — o MBD foi criado justamente para <strong>predição de compra futura (campaigning)</strong> e mostrou vantagem do multimodal sobre unimodal. ([arXiv][1], [ar5iv][6])</p>
 <p><strong>ii. Vai para produção? (checklist)</strong></p>
 <p>(dados, latência, monitoramento, ética/LGPD)</p>
 <ul>
 <li><strong>Dados online:</strong> consegue materializar as features (ou sequências) <strong>diariamente/mensalmente</strong> sem usar informação futura?</li>
-<li><strong>Latency/custo:</strong> Tabular (LightGBM/CatBoost) é leve; sequencial (ptls) pede GPU em treino, mas <strong>inferencia</strong> pode ser só MLP/GBM sobre embeddings pré-computados. Repositório traz requisitos de HW/stack para o benchmark. (<a href="https://github.com/dzhambo/mbd" title="GitHub - Dzhambo/MBD">GitHub</a>)</li>
+<li><strong>Latency/custo:</strong> Tabular (LightGBM/CatBoost) é leve; sequencial (ptls) pede GPU em treino, mas <strong>inferencia</strong> pode ser só MLP/GBM sobre embeddings pré-computados. Repositório traz requisitos de HW/stack para o benchmark. ([GitHub][5])</li>
 <li><strong>Calibração &amp; Orçamento:</strong> defina um <strong>threshold</strong> para respeitar o budget (ex.: disparar para top 8% com prob ≥ τ calibrado).</li>
 <li><strong>Monitoramento:</strong> AUPRC em amostras de controle, <strong>drift</strong> de features, <strong>fração de positivos</strong> por segmento, e re-treino mensal/trimestral.</li>
-<li><strong>Ética &amp; privacidade:</strong> MBD é <strong>anonimizado</strong>; ainda assim avalie bias por <strong>segmentos de cliente</strong> (porte/região/setor). (<a href="https://arxiv.org/pdf/2409.17587?utm_source=chatgpt.com" title="multimodal banking dataset: understanding client needs ...">arXiv</a>)</li>
+<li><strong>Ética &amp; privacidade:</strong> MBD é <strong>anonimizado</strong>; ainda assim avalie bias por <strong>segmentos de cliente</strong> (porte/região/setor). ([arXiv][7])</li>
 </ul>
 </section>
 <section id="trabalhos-futuros" class="level2" data-number="5.2">
@@ -733,7 +755,7 @@ Quadro&nbsp;2— Organização dos dados do MBD (resumo)
 <ul>
 <li><p><strong>Vazamento temporal</strong> ao agregar além de <code>mon</code>.</p></li>
 <li><p><strong>Desbalanceamento</strong>: preferir <strong>AUPRC</strong>, <code>class_weight</code>/<code>scale_pos_weight</code> e <strong>Top-k</strong>.</p></li>
-<li><p><strong>Latência &amp; custo</strong> para sequencial: usar embeddings pré-computados + GBM em produção. (<a href="https://github.com/dzhambo/mbd" title="GitHub - Dzhambo/MBD">GitHub</a>)</p></li>
+<li><p><strong>Latência &amp; custo</strong> para sequencial: usar embeddings pré-computados + GBM em produção. ([GitHub][5])</p></li>
 <li><p><strong>Download e conversão:</strong></p>
 <ul>
 <li>Utilização do script <code>baixa_arquivos_login.py</code> para baixar arquivos.</li>
@@ -747,26 +769,169 @@ Quadro&nbsp;2— Organização dos dados do MBD (resumo)
 <ul>
 <li>Categorias definidas a partir das não conformidades nos checklists.</li>
 </ul></li>
-<li><p>AI-LAB. <strong>MBD – Multimodal Banking Dataset</strong>. Dataset. Hugging Face, 2025. Disponível em: <code>https://huggingface.co/datasets/ai-lab/MBD</code>. Acesso em: 16 ago. 2025. (<a href="https://huggingface.co/datasets/ai-lab/MBD?utm_source=chatgpt.com" title="ai-lab/MBD · Datasets at Hugging Face">Hugging Face</a>)</p></li>
-<li><p>AI-LAB. <strong>MBD-mini – Multimodal Banking Dataset (versão reduzida)</strong>. Dataset. Hugging Face, 2025. Disponível em: <code>https://huggingface.co/datasets/ai-lab/MBD-mini</code>. Acesso em: 16 ago. 2025. (<a href="https://github.com/dzhambo/mbd" title="GitHub - Dzhambo/MBD">Hugging Face</a>)</p></li>
-<li><p>BABAEV, D. <strong>et al.</strong> <strong>CoLES: Contrastive Learning for Event Sequences with Self-Supervision</strong>. <em>arXiv preprint</em> arXiv:2002.08232, 2020. Disponível em: <code>https://arxiv.org/abs/2002.08232</code>. Acesso em: 16 ago. 2025. (<a href="https://github.com/dllllb/pytorch-lifestream?utm_source=chatgpt.com" title="pytorch-lifestream/pytorch-lifestream: A library built upon ...">arXiv</a>)</p></li>
-<li><p>MOLLAEV, D. <strong>et al.</strong> <strong>Multimodal Banking Dataset: Understanding Client Needs through Event Sequences</strong>. <em>arXiv preprint</em> arXiv:2409.17587, v2, 2025. DOI: 10.48550/arXiv.2409.17587. Disponível em: <code>https://arxiv.org/abs/2409.17587</code>. Acesso em: 16 ago. 2025. (<a href="https://arxiv.org/abs/2409.17587?utm_source=chatgpt.com" title="Multimodal Banking Dataset: Understanding Client Needs through Event Sequences">arXiv</a>)</p></li>
-<li><p>SBERBANK AI LAB. <strong>pytorch-lifestream: a library for embeddings on discrete event sequences</strong>. Software. GitHub, 2025. Disponível em: <code>https://github.com/sberbank-ai-lab/pytorch-lifestream</code>. Acesso em: 16 ago. 2025. (<a href="https://arxiv.org/html/2409.17587v2?utm_source=chatgpt.com" title="Multimodal Banking Dataset: Understanding Client Needs ...">GitHub</a>)</p></li>
+<li><p>AI-LAB. <strong>MBD – Multimodal Banking Dataset</strong>. Dataset. Hugging Face, 2025. Disponível em: <code>https://huggingface.co/datasets/ai-lab/MBD</code>. Acesso em: 16 ago. 2025. ([Hugging Face][2])</p></li>
+<li><p>AI-LAB. <strong>MBD-mini – Multimodal Banking Dataset (versão reduzida)</strong>. Dataset. Hugging Face, 2025. Disponível em: <code>https://huggingface.co/datasets/ai-lab/MBD-mini</code>. Acesso em: 16 ago. 2025. ([Hugging Face][5])</p></li>
+<li><p>BABAEV, D. <strong>et al.</strong> <strong>CoLES: Contrastive Learning for Event Sequences with Self-Supervision</strong>. <em>arXiv preprint</em> arXiv:2002.08232, 2020. Disponível em: <code>https://arxiv.org/abs/2002.08232</code>. Acesso em: 16 ago. 2025. ([arXiv][4])</p></li>
+<li><p>MOLLAEV, D. <strong>et al.</strong> <strong>Multimodal Banking Dataset: Understanding Client Needs through Event Sequences</strong>. <em>arXiv preprint</em> arXiv:2409.17587, v2, 2025. DOI: 10.48550/arXiv.2409.17587. Disponível em: <code>https://arxiv.org/abs/2409.17587</code>. Acesso em: 16 ago. 2025. ([arXiv][1])</p></li>
+<li><p>SBERBANK AI LAB. <strong>pytorch-lifestream: a library for embeddings on discrete event sequences</strong>. Software. GitHub, 2025. Disponível em: <code>https://github.com/sberbank-ai-lab/pytorch-lifestream</code>. Acesso em: 16 ago. 2025. ([GitHub][3])</p></li>
 </ul>
+<p>https://arxiv.org/pdf/2409.17587?utm_source=chatgpt.com “multimodal banking dataset: understanding client needs …” https://huggingface.co/datasets/ai-lab/MBD?utm_source=chatgpt.com “ai-lab/MBD · Datasets at Hugging Face” https://github.com/sberbank-ai-lab/pytorch-lifestream?utm_source=chatgpt.com “sberbank-ai-lab/pytorch-lifestream: A library built upon …” https://arxiv.org/abs/2002.08232?utm_source=chatgpt.com “CoLES: Contrastive Learning for Event Sequences with Self-Supervision” https://huggingface.co/datasets/ai-lab/MBD-mini?utm_source=chatgpt.com “ai-lab/MBD-mini · Datasets at Hugging Face”</p>
 <ul>
-<li><strong>Paper MBD (arXiv)</strong> – define tarefas <strong>campaigning</strong> e <strong>matching</strong> e descreve as modalidades/escala. (<a href="https://arxiv.org/abs/2409.17587?utm_source=chatgpt.com" title="Multimodal Banking Dataset: Understanding Client Needs through Event Sequences">arXiv</a>)</li>
-<li><strong>Hugging Face – MBD e MBD-mini</strong> – descrição, estrutura, flag <code>is_balanced</code>, uso para prototipagem. (<a href="https://huggingface.co/datasets/ai-lab/MBD?utm_source=chatgpt.com" title="ai-lab/MBD · Datasets at Hugging Face">Hugging Face</a>)</li>
-<li><strong>pytorch-lifestream (ptls)</strong> – biblioteca para sequências de eventos em larga escala. (<a href="https://github.com/dllllb/pytorch-lifestream?utm_source=chatgpt.com" title="pytorch-lifestream/pytorch-lifestream: A library built upon ...">GitHub</a>)</li>
-<li><strong>Repo do benchmark (GitHub)</strong> – notebooks, scripts, late-fusion, requisitos. (<a href="https://github.com/dzhambo/mbd" title="GitHub - Dzhambo/MBD">GitHub</a>)</li>
+<li><strong>Paper MBD (arXiv)</strong> – define tarefas <strong>campaigning</strong> e <strong>matching</strong> e descreve as modalidades/escala. ([arXiv][1])</li>
+<li><strong>Hugging Face – MBD e MBD-mini</strong> – descrição, estrutura, flag <code>is_balanced</code>, uso para prototipagem. ([Hugging Face][2])</li>
+<li><strong>pytorch-lifestream (ptls)</strong> – biblioteca para sequências de eventos em larga escala. ([GitHub][4])</li>
+<li><strong>Repo do benchmark (GitHub)</strong> – notebooks, scripts, late-fusion, requisitos. ([GitHub][5])</li>
 </ul>
+<p>https://arxiv.org/abs/2409.17587?utm_source=chatgpt.com “Multimodal Banking Dataset: Understanding Client Needs through Event Sequences” https://huggingface.co/datasets/ai-lab/MBD?utm_source=chatgpt.com “ai-lab/MBD · Datasets at Hugging Face” https://arxiv.org/html/2409.17587v2?utm_source=chatgpt.com “Multimodal Banking Dataset: Understanding Client Needs …” https://github.com/dllllb/pytorch-lifestream?utm_source=chatgpt.com “pytorch-lifestream/pytorch-lifestream: A library built upon …” https://github.com/dzhambo/mbd “GitHub - Dzhambo/MBD” https://ar5iv.labs.arxiv.org/html/2409.17587?utm_source=chatgpt.com “[2409.17587] Multimodal Banking Dataset … - ar5iv - arXiv” https://arxiv.org/pdf/2409.17587?utm_source=chatgpt.com “multimodal banking dataset: understanding client needs …” https://huggingface.co/datasets/ai-lab/MBD-mini?utm_source=chatgpt.com “ai-lab/MBD-mini · Datasets at Hugging Face”</p>
 </section>
 </section>
 <section id="apêndices" class="level1 unnumbered">
 <h1 class="unnumbered">Apêndices</h1>
 
 </section>
+<section id="notebook-01_explore_mbd_mini.ipynb-passo-a-passo" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Notebook <code>01_explore_mbd_mini.ipynb</code> — passo a passo</h1>
+<section id="setup-config" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="setup-config"><span class="header-section-number">6.1</span> Setup &amp; Config</h2>
+<ul>
+<li><p>Define <code>ROOT</code>, <code>PATH_TARGETS</code>, <code>PATH_SPLIT</code> e o diretório <code>reports/</code>.</p></li>
+<li><p>Liga modo rápido (<code>FAST_MODE</code>, <code>LIMIT_FOLDS</code>, <code>MAX_PARTS_PER_PREFIX</code>) quando necessário.</p></li>
+<li><p>Importa funções de <code>src/eda</code>.</p></li>
+</ul>
+</section>
+<section id="leitura-dos-dados-tar-parquet-particionado" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="leitura-dos-dados-tar-parquet-particionado"><span class="header-section-number">6.2</span> Leitura dos dados (TAR → Parquet particionado)</h2>
+<ul>
+<li><p>Função: <code>read_parquet_partitions_from_tar()</code></p></li>
+<li><p><strong>O que faz</strong>: abre <code>*.tar.gz</code>, percorre todos os <code>part-*.parquet</code> sob um prefixo (<code>targets/</code>, <code>client_split/</code>), <strong>lê e concatena</strong>; extrai <code>fold=K</code> do caminho e injeta como coluna.</p></li>
+<li><p><strong>Por que assim?</strong>: o dataset está fisicamente particionado por pasta, não por coluna.</p></li>
+</ul>
+</section>
+<section id="normalização-de-datas" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="normalização-de-datas"><span class="header-section-number">6.3</span> Normalização de datas</h2>
+<ul>
+<li><code>normalize_mon_period_m(df, "mon")</code> → <code>mon</code> vira <code>Period[M]</code> (<code>datetime64</code> mensal).</li>
+</ul>
+</section>
+<section id="objetivo-1-esquema-volumetria" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="objetivo-1-esquema-volumetria"><span class="header-section-number">6.4</span> Objetivo 1 — Esquema &amp; Volumetria</h2>
+<ul>
+<li><p>Funções: <code>schema_report()</code>, <code>leakage_report()</code>, <code>volumetria_report()</code></p></li>
+<li><p><strong>Esquema</strong>: <code>dtypes</code>, nulos, <code>nunique</code>, memória, domínios (<code>target_* ∈ {0,1}</code>).</p></li>
+<li><p><strong>Volumetria</strong>: nº linhas, nº clientes, distribuição por <code>mon</code> e por <code>fold</code>.</p></li>
+<li><p><strong>Vazamento</strong>: <code>client_id</code> em mais de um <code>fold</code>.</p></li>
+<li><p><strong>Outputs</strong>: <code>reports/schema_*.json</code>, <code>reports/volumetria.json</code>, <code>reports/fold_leakage.csv</code> (se houver).</p></li>
+</ul>
+</section>
+<section id="objetivo-2-prevalência-target_1..4-por-mês-e-por-fold" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="objetivo-2-prevalência-target_1..4-por-mês-e-por-fold"><span class="header-section-number">6.5</span> Objetivo 2 — Prevalência (target_1..4) por mês e por fold</h2>
+<ul>
+<li><p>Função: <code>prevalence_table()</code></p></li>
+<li><p><strong>Linhas</strong>: <code>ALL</code>, <code>mon=YYYY-MM</code>, <code>fold=K</code>. <strong>Colunas</strong>: <code>target_1..4</code>.</p></li>
+<li><p><strong>Output</strong>: <code>reports/prevalencia.csv</code>.</p></li>
+</ul>
+</section>
+<section id="objetivo-3-baseline-auprc-prevalência" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="objetivo-3-baseline-auprc-prevalência"><span class="header-section-number">6.6</span> Objetivo 3 — Baseline AUPRC ≈ prevalência</h2>
+<ul>
+<li><p>Função: <code>baseline_from_prevalence()</code> (copia a tabela de prevalência).</p></li>
+<li><p><strong>Output</strong>: <code>reports/baseline_auprc.csv</code>.</p></li>
+</ul>
+</section>
+<section id="objetivo-4-artefatos-manifest" class="level2" data-number="6.7">
+<h2 data-number="6.7" class="anchored" data-anchor-id="objetivo-4-artefatos-manifest"><span class="header-section-number">6.7</span> Objetivo 4 — Artefatos &amp; Manifest</h2>
+<ul>
+<li><p>Função: <code>write_manifest()</code></p></li>
+<li><p>Salva <code>reports/manifest.json</code> com caminhos, <strong>hashes</strong> (md5/sha256) dos <code>*.tar.gz</code>, tamanhos e notas (dtype de <code>mon</code>, nº de linhas etc.).</p></li>
+</ul>
+</section>
+</section>
+<section id="resultado-da-execução-logs-e-números-desta-run" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Resultado da execução (logs e números desta run)</h1>
+<p>A execução relatada no terminal foi:</p>
+<p>[INFO] Executando pipeline EDA… [OK] Lidos 435 arquivos parquet de ‘targets/’ em targets.tar.gz. Partições recuperadas: [‘fold’] [OK] Lidos 1000 arquivos parquet de ‘client_split/’ em client_split.tar.gz. Partições recuperadas: [‘fold’] [OK] volumetria.json salvo. [OK] prevalencia.csv salvo. [OK] baseline_auprc.csv salvo (≈ prevalência). [OK] manifest.json salvo. ===== RESUMO ===== targets total rows: 1202688 nº de clientes (client_split): 100224</p>
+<p>Prevalência global (linha ‘ALL’):</p>
+<p><strong>Leituras rápidas a partir desses números</strong></p>
+<ul>
+<li><p><strong>Escala</strong>: <code>targets</code> com <strong>1.202.688</strong> linhas; <code>client_split</code> com <strong>100.224</strong> clientes (espera-se K folds estratificados por cliente).</p></li>
+<li><p><strong>Integridade do split</strong>: se houver clientes em mais de um fold, sai <code>reports/fold_leakage.csv</code> (não houve alerta extra nessa execução).</p></li>
+<li><p><strong>Prevalência global</strong>: a linha <code>ALL</code> em <code>prevalencia.csv</code> é o baseline aproximado de <strong>AUPRC</strong> para cada <code>target_k</code> (ranking aleatório).</p></li>
+</ul>
+<blockquote class="blockquote">
+<p>Para materializar a tabela aqui no apêndice, o chunk abaixo carrega <code>reports/prevalencia.csv</code> e mostra as primeiras linhas.</p>
+</blockquote>
+</section>
+<section id="artefatos-gerados-onde-encontrar" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> Artefatos gerados (onde encontrar)</h1>
+<ul>
+<li><p>reports/schema_targets.json — raio-X do targets</p></li>
+<li><p>reports/schema_client_split.json — raio-X do client_split</p></li>
+<li><p>reports/volumetria.json — contagens por mês e por (mês, fold)</p></li>
+<li><p>reports/prevalencia.csv — tabela (ALL / mon / fold × target_1..4)</p></li>
+<li><p>reports/baseline_auprc.csv — baseline ≈ prevalência</p></li>
+<li><p>reports/fold_leakage.csv — (se houver) clientes em &gt; 1 fold</p></li>
+<li><p>reports/manifest.json — quem gerou o quê (caminhos, hashes, tamanhos)</p></li>
+</ul>
+</section>
+<section id="boas-práticas-checks-e-troubleshooting" class="level1" data-number="9">
+<h1 data-number="9"><span class="header-section-number">9</span> Boas práticas, checks e troubleshooting</h1>
+<section id="checks-rápidos" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="checks-rápidos"><span class="header-section-number">9.1</span> Checks rápidos</h2>
+<ul>
+<li><p>target_* ∈ {0,1} (alerta se não).</p></li>
+<li><p>Cada client_id em um único fold.</p></li>
+<li><p>mon normalizado para Period[M] (verifique NaT após a conversão).</p></li>
+<li><p>Distribuição por mon e por fold razoável (sem meses/folds vazios inesperados).</p></li>
+</ul>
+</section>
+<section id="problemas-comuns-e-correções" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="problemas-comuns-e-correções"><span class="header-section-number">9.2</span> Problemas comuns e correções</h2>
+<ul>
+<li><p>Arquivo não encontrado: ajuste ROOT/PATH_* no notebook (Setup &amp; Config).</p></li>
+<li><p>pyarrow ausente: pip install pyarrow.</p></li>
+<li><p>mon virando NaT: inspecione o formato original e trate antes de Period[M].</p></li>
+<li><p>Prevalência vazia: verifique se target_1..4 existem após a leitura.</p></li>
+</ul>
+</section>
+</section>
+<section id="como-reproduzir-exemplo-de-sessão" class="level1" data-number="10">
+<h1 data-number="10"><span class="header-section-number">10</span> Como reproduzir (exemplo de sessão)</h1>
+<pre><code># 1) Criar venv e instalar deps
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
 
-<div id="quarto-appendix" class="default"><section id="apx-dados" class="level2 appendix unnumbered"><h2 class="anchored quarto-appendix-heading">Dicionário de dados</h2><div class="quarto-appendix-contents">
+# 2) Abrir o notebook e rodar as células (ou executar o runner no fim)
+jupyter lab  # ou code notebooks/01_explore_mbd_mini.ipynb
+
+# 3) Conferir artefatos
+ls -lah reports/
+</code></pre>
+</section>
+<section id="conclusão" class="level1" data-number="11">
+<h1 data-number="11"><span class="header-section-number">11</span> Conclusão</h1>
+<p>Este apêndice deixa operacionalizado como ler, auditar e resumir o dataset MBD-mini, com ênfase em:</p>
+<ul>
+<li><p>contratos de dados (esquema/volumetria),</p></li>
+<li><p>integridade de splits (GroupKFold por cliente),</p></li>
+<li><p>baseline honesto (AUPRC ≈ prevalência),</p></li>
+<li><p>e reprodutibilidade (artefatos + manifest com hashes).</p></li>
+</ul>
+
+</section>
+
+<div id="quarto-appendix" class="default"><section id="apx-artefatos" class="level2 appendix unnumbered"><h2 class="anchored quarto-appendix-heading">Entendo os artefatos</h2><div class="quarto-appendix-contents">
+
+<blockquote class="blockquote">
+<p>Este apêndice documenta <strong>como o repositório está organizado</strong> e <strong>como cada notebook funciona começando pelo <code>01_explore_mbd_mini.ipynb</code></strong>, incluindo os artefatos gerados e um resumo da execução real mostrada no terminal.</p>
+</blockquote>
+<p><code>machine-learning-project/</code> <code>├─ notebooks/</code> <code>│ ├─ 01_explore_mbd_mini.ipynb # EDA dividida em 4 objetivos</code> <code>│ ├─ 02_features_tabular.ipynb # (exemplo) featurização tabular</code> <code>│ ├─ 03_train_compare_tabular.ipynb # (exemplo) treino/validação</code> <code>│ └─ 04_ptls_sequence_embeddings.ipynb# (exemplo) sequências/embeddings</code> <code>├─ src/</code> <code>│ └─ eda/</code> <code>│ ├─ io_tar.py # leitura TAR + Parquet particionado; reconstrói fold; normaliza mon</code> <code>│ ├─ check_schema_vol.py # esquema, vazamento, volumetria</code> <code>│ ├─ prevalence.py # tabela de prevalência (ALL, por mês, por fold)</code> <code>│ ├─ baseline.py # baseline AUPRC ≈ prevalência</code> <code>│ └─ artifacts.py # manifest.json (hashes, caminhos, notas)</code> <code>├─ reports/ # artefatos (json/csv) gerados pela EDA</code> <code>├─ requirements.txt # pandas, pyarrow</code> <code>└─ README.md</code></p>
+<p><strong>Glossário:</strong></p>
+<ul>
+<li><p><strong>fold</strong>: partição para validação (GroupKFold por cliente). O <code>fold</code> não vem como coluna: ele está no <strong>caminho</strong> do parquet (<code>.../fold=K/part-*.parquet</code>) e é <strong>reconstruído</strong> pelo leitor.</p></li>
+<li><p><strong>mon</strong>: mês de referência; normalizado para <code>Period[M]</code> (ex.: <code>2022-09</code>).</p></li>
+</ul>
+</div></section><section id="apx-dados" class="level2 appendix unnumbered"><h2 class="anchored quarto-appendix-heading">Dicionário de dados</h2><div class="quarto-appendix-contents">
 
 <dl>
 <dt><strong>client_split</strong></dt>

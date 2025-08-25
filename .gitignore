@@ -34,3 +34,5 @@ rstudio-export/
 Thumbs.db
 .vscode/
 .Rproj.user
+
+/.quarto/
